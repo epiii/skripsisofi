@@ -23,7 +23,7 @@ echo "<ul>
                     
 					$sub = mysqli_query($con,"SELECT * FROM submenu, mainmenu 
           WHERE submenu.id_main = mainmenu.id_main AND submenu.id_main = $r[id_main] AND submenu.aktif='N'");
-                    $jml = mysql_num_rows($sub);
+                    $jml = mysqli_num_rows($sub);
                     // apabila sub menu ditemukan
                     if($jml > 0) {
                        	echo '<ul>';

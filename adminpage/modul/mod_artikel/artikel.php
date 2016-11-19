@@ -59,12 +59,12 @@ switch($_GET[act]){
 
     
 
-    if ($_SESSION[leveluser]=='admin'){
+    if ($_SESSION['leveluser']=='admin'){
       $tampil = mysqli_query($con,"SELECT * FROM artikel ORDER BY id_artikel DESC ");
     }
     else{
       $tampil=mysqli_query($con,"SELECT * FROM artikel 
-                           WHERE username='$_SESSION[namauser]'       
+                           WHERE username='$_SESSION['namauser']'       
                            ORDER BY id_artikel DESC");
     }
   
@@ -89,11 +89,11 @@ switch($_GET[act]){
     }
     echo "</tbody></table>";
 
-    if ($_SESSION[leveluser]=='admin'){
-      $jmldata = mysql_num_rows(mysqli_query($con,"SELECT * FROM artikel"));
+    if ($_SESSION['leveluser']=='admin'){
+      $jmldata = mysqli_num_rows(mysqli_query($con,"SELECT * FROM artikel"));
     }
     else{
-      $jmldata = mysql_num_rows(mysqli_query($con,"SELECT * FROM artikel WHERE username='$_SESSION[namauser]'"));
+      $jmldata = mysqli_num_rows(mysqli_query($con,"SELECT * FROM artikel WHERE username='$_SESSION['namauser']'"));
     } 
     break; 
     $no = 1;

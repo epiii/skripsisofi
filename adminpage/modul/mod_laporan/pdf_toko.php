@@ -52,7 +52,7 @@ $sql = mysqli_query($con,"SELECT orders.id_orders as faktur,DATE_FORMAT(tgl_orde
                     AND (orders_detail.id_orders=orders.id_orders) 
                     AND (orders.status_order='Lunas') 
                     AND (orders.tgl_order BETWEEN '$mulai' AND '$selesai')");
-$jml = mysql_num_rows($sql);
+$jml = mysqli_num_rows($sql);
 
 if ($jml > 0){
 $i = 1;

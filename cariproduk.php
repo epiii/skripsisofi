@@ -102,7 +102,7 @@
     }
   $cari .= " ORDER BY id_produk DESC LIMIT 7";
   $hasil  = mysqli_query($con,$cari);
-  $ketemu = mysql_num_rows($hasil); 
+  $ketemu = mysqli_num_rows($hasil); 
    if ($ketemu > 0){
   	
   echo "<h5>Ditemukan <b>$ketemu</b> produk dengan kata <font style='background-color:#00FFFF'><b>$kata</b></font> : </h5>";

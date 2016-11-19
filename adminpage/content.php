@@ -14,7 +14,7 @@ echo "
                     <!-- Sidebar user panel -->
                     <div class='user-panel'>
                         <div class='pull-left image'>";
-                        $staff= $_SESSION[namauser];                            
+                        $staff= $_SESSION['namauser'];                            
 $sq1 = mysqli_query($con,"SELECT * from users where username='$staff'");
 $n1 = mysqli_fetch_array($sq1);
 echo "
@@ -40,7 +40,7 @@ if ($_GET['module']=='home'){
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <script src="js/AdminLTE/dashboard.js" type="text/javascript"></script>
 <?php
-    if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
       $jam=date("H:i:s");
 $tgl=tgl_indo(date("Y m d")); 
 
@@ -225,20 +225,20 @@ while($p=mysqli_fetch_array($produk)){
               // Mencek berdasarkan IPnya, apakah user sudah pernah mengakses hari ini 
               $s = mysqli_query($con,"SELECT * FROM statistik WHERE ip='$ip' AND tanggal='$tanggal'");
               // Kalau belum ada, simpan data user tersebut ke database
-              if(mysql_num_rows($s) == 0){
+              if(mysqli_num_rows($s) == 0){
                 mysqli_query($con,"INSERT INTO statistik(ip, tanggal, hits, online) VALUES('$ip','$tanggal','1','$waktu')");
               } 
               else{
                 mysqli_query($con,"UPDATE statistik SET hits=hits+1, online='$waktu' WHERE ip='$ip' AND tanggal='$tanggal'");
               }
 
-              $pengunjung       = mysql_num_rows(mysqli_query($con,"SELECT * FROM statistik WHERE tanggal='$tanggal' GROUP BY ip"));
+              $pengunjung       = mysqli_num_rows(mysqli_query($con,"SELECT * FROM statistik WHERE tanggal='$tanggal' GROUP BY ip"));
               $totalpengunjung  = mysql_result(mysqli_query($con,"SELECT COUNT(hits) FROM statistik"), 0); 
               $hits             = mysql_fetch_assoc(mysqli_query($con,"SELECT SUM(hits) as hitstoday FROM statistik WHERE tanggal='$tanggal' GROUP BY tanggal")); 
               $totalhits        = mysql_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
               $tothitsgbr       = mysql_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
               $bataswaktu       = time() - 300;
-              $pengunjungonline = mysql_num_rows(mysqli_query($con,"SELECT * FROM statistik WHERE online > '$bataswaktu'"));
+              $pengunjungonline = mysqli_num_rows(mysqli_query($con,"SELECT * FROM statistik WHERE online > '$bataswaktu'"));
 
               $path = "counter/";
               $ext = ".png";
@@ -311,29 +311,29 @@ while($p=mysqli_fetch_array($produk)){
 }
 // Bagian Modul
 elseif ($_GET[module]=='modul'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_modul/modul.php";
   }
 }
 // Bagian User
 elseif ($_GET['module']=='user'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_users/users.php";
   }
 }
  
 elseif ($_GET['module']=='artikel'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_artikel/artikel.php";
   }
 }  
 elseif ($_GET['module']=='label'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_label/label.php";
   }
 }      
 elseif ($_GET['module']=='produk'){
-	   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+	   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
   	
     include "modul/mod_produk/produk.php";
   }
@@ -341,135 +341,135 @@ elseif ($_GET['module']=='produk'){
 
 // Bagian label Produk
 elseif ($_GET['module']=='kategori'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_kategori/kategori.php";
   }
 }  
 // Bagian Order
 elseif ($_GET[module]=='order'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_order/order.php";
   }
 }
 
 // Bagian Profil
 elseif ($_GET[module]=='profil'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_profil/profil.php";
   }
 }
 
 // Bagian Order
 elseif ($_GET[module]=='hubungi'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_hubungi/hubungi.php";
   }
 }
 
 // Bagian Cara Pembelian
 elseif ($_GET[module]=='carabeli'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_carabeli/carabeli.php";
   }
 }
 
 // Bagian Banner
 elseif ($_GET[module]=='banner'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_banner/banner.php";
   }
 }
 
 // Bagian Kota/Ongkos Kirim
 elseif ($_GET[module]=='ongkoskirim'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_ongkoskirim/ongkoskirim.php";
   }
 }
 
 // Bagian Password
 elseif ($_GET[module]=='password'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_password/password.php";
   }
 }
 
 // Bagian Laporan
 elseif ($_GET[module]=='laporan'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_laporan/laporan.php";
   }
 }
 
 //bagian testimoni
 elseif ($_GET[module]=='testimoni'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_testimoni/testimoni.php";
   }
 }
 
 // Modul bank
 elseif ($_GET[module]=='bank'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_bank/bank.php";
   }
 }
 
 // Bagian Download
 elseif ($_GET[module]=='download'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_download/download.php";
   }
 }
 // Bagian Download
 elseif ($_GET[module]=='kontak'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_kontak/kontak.php";
   }
 }
 
 // Bagian Menu Utama
 elseif ($_GET['module']=='menuutama'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_menuutama/menuutama.php";
   }
 }
 
 // Bagian Sub Menu
 elseif ($_GET['module']=='submenu'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_submenu/submenu.php";
   }
 }
 
 // Bagian Download
 elseif ($_GET[module]=='fb'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_fb/fb.php";
   }
 }
 elseif ($_GET[module]=='tag'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_tag/tag.php";
   }
 }
 elseif ($_GET[module]=='katajelek'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_katajelek/katajelek.php";
   }
 }
 elseif ($_GET[module]=='komentar'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_komentar/komentar.php";
   }
 }
 elseif ($_GET[module]=='header'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_header/header.php";
   }
 }
 elseif ($_GET[module]=='laporan'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_laporan/laporan.php";
   }
 }

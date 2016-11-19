@@ -111,7 +111,7 @@ $p      = new Paging1;
 								<p><a href='artikel-$r[id_artikel]-$r[judul_seo].html' class='theme'>Read More...</a></p>					
 							</article>";
 						}
-						$jmldata     = mysql_num_rows(mysqli_query($con,"SELECT * FROM artikel"));
+						$jmldata     = mysqli_num_rows(mysqli_query($con,"SELECT * FROM artikel"));
   $jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
   $linkHalaman = $p->navHalaman($_GET[halartikel], $jmlhalaman);
 

@@ -52,7 +52,7 @@
 
   // Komentar artikel
 	$sql = mysqli_query($con,"SELECT * FROM komentar WHERE id_artikel='".$val->validasi($_GET['id'],'sql')."' AND aktif='Y' LIMIT $posisi,$batas");
-	$jml = mysql_num_rows($sql);
+	$jml = mysqli_num_rows($sql);
   // Apabila sudah ada komentar, tampilkan 
   if ($jml > 0){
     while ($s = mysqli_fetch_array($sql)){
@@ -84,7 +84,7 @@
 								</article>";	 		  
     }
 
-		$jmldata     = mysql_num_rows(mysqli_query($con,"SELECT * FROM komentar WHERE id_artikel='".$val->validasi($_GET['id'],'sql')."' AND aktif='Y'"));
+		$jmldata     = mysqli_num_rows(mysqli_query($con,"SELECT * FROM komentar WHERE id_artikel='".$val->validasi($_GET['id'],'sql')."' AND aktif='Y'"));
     $jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
     $linkHalaman = $p->navHalaman($_GET['halkomentar'], $jmlhalaman);
 

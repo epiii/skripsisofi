@@ -1,15 +1,17 @@
 <?php
 session_start();
-//error_reporting(0);
 include "../config/koneksi.php";
+// include "../config/library.php";
 include "timeout.php";
-
-if($_SESSION[login]==1){
+// vd($_SESSION['login']);
+// exit();
+//error_reporting(0);
+if($_SESSION['login']==1){
 	if(!cek_login()){
-		$_SESSION[login] = 0;
+		$_SESSION['login'] = 0;
 	}
 }
-if($_SESSION[login]==0){
+if($_SESSION['login']==0){
   header('location:logout.php');
 }
 else{
@@ -169,7 +171,7 @@ $ord = mysqli_query($con,"select count(orders.id_orders) as jmlorder from orders
                             </a>
                             <ul class='dropdown-menu'>
                                 <!-- User image -->";                               
-                               $staff= $_SESSION[namauser];                            
+                               $staff= $_SESSION['namauser'];                            
 $sq1 = mysqli_query($con,"SELECT * from users where username='$staff'");
 $n1 = mysqli_fetch_array($sq1);
                                 echo "

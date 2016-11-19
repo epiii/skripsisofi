@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 //error_reporting(0);
@@ -20,7 +21,7 @@ if ($module=='keranjang' AND $act=='tambah'){
 		// check if the product is already
 		// in cart table for this session
 		$sql = mysqli_query($con,"SELECT id_produk FROM orders_temp WHERE id_produk='$_GET[id]' AND id_session='$sid'");
-		$ketemu=mysql_num_rows($sql);
+		$ketemu=mysqli_num_rows($sql);
 		if ($ketemu==0){
 			// put the product in cart table
 			mysqli_query($con,"INSERT INTO orders_temp (id_produk, jumlah, id_session, tgl_order_temp, jam_order_temp, stok_temp)

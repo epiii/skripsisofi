@@ -4,7 +4,7 @@
 	$sid = session_id();
 	$sql = mysqli_query($con,"SELECT * FROM orders_temp, produk 
 			                WHERE id_session='$sid' AND orders_temp.id_produk=produk.id_produk");
-  $ketemu=mysql_num_rows($sql);
+  $ketemu=mysqli_num_rows($sql);
   if($ketemu < 1){
     echo "<script>window.alert('Keranjang Belanjanya Masih Kosong');
         window.location=('index.php')</script>";

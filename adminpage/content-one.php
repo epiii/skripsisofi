@@ -10,15 +10,16 @@
 include "../config/koneksi.php";
  
 
-if ($_SESSION[leveluser]=='admin'){
+if ($_SESSION['leveluser']=='admin'){
 	
   $sql=mysqli_query($con,"select * from menuutama where aktif='Y' AND lokasi='Admin' order by urutan");
  
  
+                                // <i class='fa fa-dashboard'></i> <span>Dashboard $zz</span>
   echo "<ul class='sidebar-menu'>
    <li class='active'>
                             <a href='?module=home'>
-                                <i class='fa fa-dashboard'></i> <span>Dashboard $zz</span>
+                                <i class='fa fa-dashboard'></i> <span>Dashboard </span>
                             </a> 
                             </li>
  <li class='active'>
@@ -48,7 +49,7 @@ $carimenu=mysqli_query($con,"select * from submenu where link_sub='?$page_name1'
 	             $sub=mysqli_query($con,"SELECT * FROM submenu, menuutama  
                             WHERE submenu.id_main=menuutama.id_main 
                             AND submenu.id_main=$m[id_main] AND submenu.id_submain=0 AND submenu.aktif='Y'");
-               $jml=mysql_num_rows($sub);
+               $jml=mysqli_num_rows($sub);
                 // apabila sub menu ditemukan                
                 if ($jml > 0){
                   echo " <ul class='treeview-menu'>";                 
@@ -56,7 +57,7 @@ $carimenu=mysqli_query($con,"select * from submenu where link_sub='?$page_name1'
                     echo "<li><a href='$w[link_sub]'><i class='fa fa-angle-double-right'></i> $w[nama_sub]</a>
                     ";
             			  $sub2 = mysqli_query($con,"SELECT * FROM submenu WHERE id_submain=$w[id_sub] AND id_submain!=0");
-                    $jml2=mysql_num_rows($sub2);
+                    $jml2=mysqli_num_rows($sub2);
                     if ($jml2 > 0){
 			         			  echo "<ul class='treeview-menu'>";
 			                 while($s=mysqli_fetch_array($sub2)){
@@ -79,11 +80,12 @@ $carimenu=mysqli_query($con,"select * from submenu where link_sub='?$page_name1'
   
 
 else{
+                                // <i class='fa fa-dashboard'></i> <span>Dashboard $zz</span>
   $sql=mysqli_query($con,"select * from menuutama where hakakses='user' AND lokasi='Admin' order by urutan");
     echo "<ul class='sidebar-menu'>
    <li class='active'>
                             <a href='?module=home'>
-                                <i class='fa fa-dashboard'></i> <span>Dashboard $zz</span>
+                                <i class='fa fa-dashboard'></i> <span>Dashboard</span>
                             </a> 
                             </li>
  <li class='active'>
@@ -114,7 +116,7 @@ $carimenu=mysqli_query($con,"select * from submenu where link_sub='?$page_name1'
 	             $sub=mysqli_query($con,"SELECT * FROM submenu, menuutama  
                             WHERE submenu.id_main=menuutama.id_main 
                             AND submenu.id_main=$m[id_main] AND submenu.id_submain=0 AND submenu.aktif='Y'");
-               $jml=mysql_num_rows($sub);
+               $jml=mysqli_num_rows($sub);
                 // apabila sub menu ditemukan                
                 if ($jml > 0){
                   echo " <ul class='treeview-menu'>";                 
@@ -122,7 +124,7 @@ $carimenu=mysqli_query($con,"select * from submenu where link_sub='?$page_name1'
                     echo "<li><a href='$w[link_sub]'><i class='fa fa-angle-double-right'></i> $w[nama_sub]</a>
                     ";
             			  $sub2 = mysqli_query($con,"SELECT * FROM submenu WHERE id_submain=$w[id_sub] AND id_submain!=0");
-                    $jml2=mysql_num_rows($sub2);
+                    $jml2=mysqli_num_rows($sub2);
                     if ($jml2 > 0){
 			         			  echo "<ul class='treeview-menu'>";
 			                 while($s=mysqli_fetch_array($sub2)){

@@ -210,14 +210,14 @@ echo "<a href='index.php'><img src='foto_banner/$bb[gambar]' alt='$bb[nama_toko]
 	             $sub=mysqli_query($con,"SELECT * FROM submenu, menuutama  
                             WHERE submenu.id_main=menuutama.id_main 
                             AND submenu.id_main=$r[id_main] AND submenu.id_submain=0 AND submenu.aktif='Y'");
-               $jml=mysql_num_rows($sub);
+               $jml=mysqli_num_rows($sub);
                 // apabila sub menu ditemukan                
                 if ($jml > 0){
                   echo "<div><ul>";                 
 	                while($w=mysqli_fetch_array($sub)){
                     echo "<li><a href='$w[link_sub]' class='parent'>&#187; $w[nama_sub]</a>";
             			  $sub2 = mysqli_query($con,"SELECT * FROM submenu WHERE id_submain=$w[id_sub] AND id_submain!=0");
-                    $jml2=mysql_num_rows($sub2);
+                    $jml2=mysqli_num_rows($sub2);
                     if ($jml2 > 0){
 			         			  echo "<div><ul>";
 			                 while($s=mysqli_fetch_array($sub2)){

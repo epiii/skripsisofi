@@ -228,7 +228,7 @@ elseif ($_GET[module]=='lupapassword'){
 elseif ($_GET[module]=='kirimpassword'){
 
 // Cek email kustomer di database
-$cek_email=mysql_num_rows(mysqli_query($con,"SELECT email FROM kustomer WHERE email='$_POST[email]'"));
+$cek_email=mysqli_num_rows(mysqli_query($con,"SELECT email FROM kustomer WHERE email='$_POST[email]'"));
 // Kalau email tidak ditemukan
 if ($cek_email == 0){
   echo "Email <b>$_POST[email]</b> tidak terdaftar di database kami.<br />
@@ -270,7 +270,7 @@ $kar1=strstr($_POST[email], "@");
 $kar2=strstr($_POST[email], ".");
 
 // Cek email kustomer di database
-$cek_email=mysql_num_rows(mysqli_query($con,"SELECT email FROM kustomer WHERE email='$_POST[email]'"));
+$cek_email=mysqli_num_rows(mysqli_query($con,"SELECT email FROM kustomer WHERE email='$_POST[email]'"));
 // Kalau email sudah ada yang pakai
 if ($cek_email > 0){
   echo "Email <b>$_POST[email]</b> sudah ada yang pakai.<br />
@@ -499,7 +499,7 @@ $sql = "SELECT * FROM	kustomer WHERE email='$email' AND password='$password'";
 $hasil = mysqli_query($con,$sql);
 $r = mysqli_fetch_array($hasil);
 
-if(mysql_num_rows($hasil) == 0){
+if(mysqli_num_rows($hasil) == 0){
 			 echo "Email atau Password Anda tidak benar<br />";
 			 echo "<a href=javascript:history.go(-1)><b>Ulangi Lagi</b></a>";
 }

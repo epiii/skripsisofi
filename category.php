@@ -91,7 +91,7 @@
   // Tampilkan daftar produk yang sesuai dengan kategori yang dipilih
  	$sql = mysqli_query($con,"SELECT * FROM produk WHERE id_kategori='$_GET[id]' 
             ORDER BY id_produk DESC LIMIT $posisi,$batas");		 
-	$jumlah = mysql_num_rows($sql);
+	$jumlah = mysqli_num_rows($sql);
 
 	// Apabila ditemukan produk dalam kategori
 	if ($jumlah > 0){
@@ -130,7 +130,7 @@
 				</div>
 			";
 		
-		$jmldata     = mysql_num_rows(mysqli_query($con,"SELECT * FROM produk WHERE id_kategori='$_GET[id]'"));
+		$jmldata     = mysqli_num_rows(mysqli_query($con,"SELECT * FROM produk WHERE id_kategori='$_GET[id]'"));
   $jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
   $linkHalaman = $p->navHalaman($_GET[halkategori], $jmlhalaman);
 

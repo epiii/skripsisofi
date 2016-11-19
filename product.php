@@ -123,7 +123,7 @@
 
 				</div>
 			";
-			$jmldata     = mysql_num_rows(mysqli_query($con,"SELECT * FROM produk"));
+			$jmldata     = mysqli_num_rows(mysqli_query($con,"SELECT * FROM produk"));
   $jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
   $linkHalaman = $p->navHalaman($_GET[halproduk], $jmlhalaman);
 

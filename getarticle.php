@@ -8,7 +8,7 @@
 	
 	// Tampilkan semua isi berita yang pada tanggal sesuai format 'Bulan Tahun' ( '%M %Y' )
 	$query = mysqli_query($con,"SELECT * FROM berita WHERE DATE_FORMAT(tanggal,'%M %Y') = '$filter'");
-	if($query && mysql_num_rows($query) > 0){
+	if($query && mysqli_num_rows($query) > 0){
 	  while($row = mysql_fetch_object($query)){
 		echo '<p><li><a href="berita-'.$row->id_berita.'-'.$row->judul_seo.'.html">'.$row->judul.'</a></li></p>';
 	  }

@@ -32,7 +32,7 @@ switch($_GET[act]){
     $no++;
     }
     echo "</table>";
-    $jmldata=mysql_num_rows(mysqli_query($con,"SELECT * FROM download"));
+    $jmldata=mysqli_num_rows(mysqli_query($con,"SELECT * FROM download"));
     $jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
     $linkHalaman = $p->navHalaman($_GET[halaman], $jmlhalaman);
 

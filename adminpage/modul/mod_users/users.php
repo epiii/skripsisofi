@@ -32,7 +32,7 @@ echo "
 switch($_GET[act]){
   // Tampil User
   default:
-    if ($_SESSION[leveluser]=='admin'){
+    if ($_SESSION['leveluser']=='admin'){
       $tampil = mysqli_query($con,"SELECT * FROM users ORDER BY username");
       echo "
        <div class='box-header'>
@@ -48,7 +48,7 @@ switch($_GET[act]){
     }
     else{
       $tampil=mysqli_query($con,"SELECT * FROM users 
-                           WHERE username='$_SESSION[namauser]'");
+                           WHERE username='$_SESSION['namauser']'");
       echo " <div class='box-header'>
                                     <h3 class='box-title'>
                                    Data User</h3>
@@ -96,7 +96,7 @@ switch($_GET[act]){
     break;
   
   case "tambahuser":
-    if ($_SESSION[leveluser]=='admin'){
+    if ($_SESSION['leveluser']=='admin'){
     echo "
     <section class='content'>
 
@@ -163,7 +163,7 @@ switch($_GET[act]){
     $edit=mysqli_query($con,"SELECT * FROM users WHERE id_session='$_GET[id]'");
     $r=mysqli_fetch_array($edit);
 
-    if ($_SESSION[leveluser]=='admin'){
+    if ($_SESSION['leveluser']=='admin'){
     echo "
      <div class='row'>
                         <div class='col-md-12'>

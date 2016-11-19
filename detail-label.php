@@ -75,7 +75,7 @@ $sq = mysqli_query($con,"SELECT nama_label from label where id_label='".$val->va
             ORDER BY id_artikel DESC LIMIT $posisi,$batas";		 
 
 	$hasil = mysqli_query($con,$sql);
-	$jumlah = mysql_num_rows($hasil);
+	$jumlah = mysqli_num_rows($hasil);
 	// Apabila ditemukan artikel dalam label
 	if ($jumlah > 0){
    while($r=mysqli_fetch_array($hasil)){
@@ -93,7 +93,7 @@ $sq = mysqli_query($con,"SELECT nama_label from label where id_label='".$val->va
 								<p><a href='artikel-$r[id_artikel]-$r[judul_seo].html' class='theme'>Read More ?</a></p>					
 							</article>";
 						}
-						$jmldata     = mysql_num_rows(mysqli_query($con,"SELECT * FROM artikel WHERE id_label='".$val->validasi($_GET['id'],'sql')."'"));
+						$jmldata     = mysqli_num_rows(mysqli_query($con,"SELECT * FROM artikel WHERE id_label='".$val->validasi($_GET['id'],'sql')."'"));
   $jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
   $linkHalaman = $p->navHalaman($_GET[hallabel], $jmlhalaman);
 echo "<div class='pagination pagination-centered'>

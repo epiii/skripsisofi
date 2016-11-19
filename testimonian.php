@@ -44,7 +44,7 @@ echo "
 								<p>$aa[isi]</p>					
 							</article>";
 						}
-						$jmldata     = mysql_num_rows(mysqli_query($con,"SELECT * FROM testimoni"));
+						$jmldata     = mysqli_num_rows(mysqli_query($con,"SELECT * FROM testimoni"));
   $jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
   $linkHalaman = $p->navHalaman($_GET[haltestimoni], $jmlhalaman);
 
