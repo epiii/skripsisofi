@@ -12,3 +12,5 @@
 ![alt text](https://github.com/epiii/skripsisofi/blob/master/ss/sofi1_2.jpg "DB : tables")
 #### DB : ERD
 ![alt text](https://github.com/epiii/skripsisofi/blob/master/ss/sofi1_1.jpg "DB : ERD")
+
+[github <cheatsheet>](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) 
