@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-20 07:18:03
+Date: 2016-11-20 17:52:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5915,9 +5915,9 @@ CREATE TABLE `login` (
 -- ----------------------------
 -- Records of login
 -- ----------------------------
-INSERT INTO `login` VALUES ('1', 'admin1', 'e00cf25ad42683b3df678c61f42c6bda', '2016-11-20 06:43:48', 'r2t1boq4u7n6pcsaupaf7ftu21');
-INSERT INTO `login` VALUES ('2', 'admin2', 'c84258e9c39059a89ab77d846ddab909', '2016-11-20 06:28:05', '');
-INSERT INTO `login` VALUES ('3', 'memKop1', '158d551d82602cb167e3cc0179619fba', '2016-11-20 07:11:08', '');
+INSERT INTO `login` VALUES ('1', 'admin1', 'e00cf25ad42683b3df678c61f42c6bda', '2016-11-20 16:39:08', 'ifuk2sm767rjs057qsbm0c4d32');
+INSERT INTO `login` VALUES ('2', 'admin2', 'c84258e9c39059a89ab77d846ddab909', '2016-11-20 16:17:28', 'ueli06jmcbogo3ioj9bl266112');
+INSERT INTO `login` VALUES ('3', 'memkop1', '63ac4ab593b1c8a0a06d633a4f75fd3d', '2016-11-20 17:50:59', '2788olbbcuvkg8ca575k9tsjj7');
 
 -- ----------------------------
 -- Table structure for mainmenu
@@ -5963,18 +5963,20 @@ CREATE TABLE `member` (
   `id_member` int(11) NOT NULL AUTO_INCREMENT,
   `id_login` int(11) NOT NULL,
   `kategori` enum('k','u') NOT NULL DEFAULT 'u' COMMENT 'k=koperasi; u=umum',
-  `nama` varchar(100) NOT NULL,
+  `nama_lengkap` varchar(100) NOT NULL,
   `alamat` text NOT NULL,
   `telpon` varchar(15) NOT NULL,
   `fakultas` varchar(100) NOT NULL,
+  `foto` text NOT NULL,
   PRIMARY KEY (`id_member`),
   KEY `id_loginFK2` (`id_login`) USING BTREE,
   CONSTRAINT `id_loginFK2` FOREIGN KEY (`id_login`) REFERENCES `login` (`id_login`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of member
 -- ----------------------------
+INSERT INTO `member` VALUES ('2', '3', 'k', 'memKop1', 'jalan 1', '01111', 'FIB', '');
 
 -- ----------------------------
 -- Table structure for menuutama
@@ -5990,7 +5992,7 @@ CREATE TABLE `menuutama` (
   `icon` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
   `urutan` int(5) NOT NULL,
   PRIMARY KEY (`id_main`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of menuutama
@@ -6004,6 +6006,7 @@ INSERT INTO `menuutama` VALUES ('21', 'Kontak', '', 'Y', 'Admin', 'user', 'fa fa
 INSERT INTO `menuutama` VALUES ('22', 'Laporan', '', 'Y', 'Admin', 'admin', 'fa fa-bar-chart-o', '6');
 INSERT INTO `menuutama` VALUES ('25', 'Cara Pembelian', 'cara-pembelian.html', 'Y', 'Public', 'admin', '', '3');
 INSERT INTO `menuutama` VALUES ('26', 'Hubungi Kami', 'hubungi-kami.html', 'Y', 'Public', 'admin', '', '4');
+INSERT INTO `menuutama` VALUES ('27', 'Member', 'member.html', 'Y', 'Public', 'user', null, '1');
 
 -- ----------------------------
 -- Table structure for modul
@@ -6163,6 +6166,22 @@ CREATE TABLE `orders_detail_sewa` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for orders_detail_sewa_copy
+-- ----------------------------
+DROP TABLE IF EXISTS `orders_detail_sewa_copy`;
+CREATE TABLE `orders_detail_sewa_copy` (
+  `id_transaksi_sewa` int(5) DEFAULT NULL,
+  `no_anggota` int(3) DEFAULT NULL,
+  `id_kustomer` int(3) DEFAULT NULL,
+  `id_produk` int(3) DEFAULT NULL,
+  `total` varchar(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of orders_detail_sewa_copy
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for orders_sewa
 -- ----------------------------
 DROP TABLE IF EXISTS `orders_sewa`;
@@ -6174,6 +6193,20 @@ CREATE TABLE `orders_sewa` (
 
 -- ----------------------------
 -- Records of orders_sewa
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for orders_sewa_copy
+-- ----------------------------
+DROP TABLE IF EXISTS `orders_sewa_copy`;
+CREATE TABLE `orders_sewa_copy` (
+  `id_transaksi_sewa` int(5) DEFAULT NULL,
+  `tgl_pinjam` date DEFAULT NULL,
+  `tgl_kembali` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of orders_sewa_copy
 -- ----------------------------
 
 -- ----------------------------
@@ -6429,7 +6462,7 @@ INSERT INTO `statistik` VALUES ('::1', '2016-09-25', '16', '1474809955');
 INSERT INTO `statistik` VALUES ('::1', '2016-09-26', '12', '1474894723');
 INSERT INTO `statistik` VALUES ('::1', '2016-10-17', '2', '1476710495');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-14', '9', '1479134063');
-INSERT INTO `statistik` VALUES ('::1', '2016-11-20', '5', '1479600580');
+INSERT INTO `statistik` VALUES ('::1', '2016-11-20', '27', '1479635172');
 
 -- ----------------------------
 -- Table structure for submenu
