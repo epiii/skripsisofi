@@ -63,6 +63,16 @@ if ($_GET['module']=='home'){
 }
 
 
+// <epi>
+// Modul member 
+elseif ($_GET['module']=='member'){
+  include "member.php";   
+}
+// modul  member login 
+elseif ($_GET['module']=='memberlogin'){
+  include "memberlogin.php";   
+}
+
 // Modul detail produk
 elseif ($_GET['module']=='detailproduk'){
  include "detailproduk.php";   

@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 function timer(){
 	$time=1000;
 	$_SESSION['timeout']=time()+$time;

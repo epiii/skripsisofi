@@ -1,5 +1,6 @@
 
 <?php
+session_start();
 include "../config/koneksi.php";
 include "../config/library.php";
 include "../config/fungsi_indotgl.php";
@@ -233,10 +234,14 @@ while($p=mysqli_fetch_array($produk)){
               }
 
               $pengunjung       = mysqli_num_rows(mysqli_query($con,"SELECT * FROM statistik WHERE tanggal='$tanggal' GROUP BY ip"));
-              $totalpengunjung  = mysqli_result(mysqli_query($con,"SELECT COUNT(hits) FROM statistik"), 0); 
-              $hits             = mysql_fetch_assoc(mysqli_query($con,"SELECT SUM(hits) as hitstoday FROM statistik WHERE tanggal='$tanggal' GROUP BY tanggal")); 
-              $totalhits        = mysqli_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
-              $tothitsgbr       = mysqli_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
+              // $totalpengunjung  = mysqli_result(mysqli_query($con,"SELECT COUNT(hits) FROM statistik"), 0); 
+              $totalpengunjung  = mysqli_data_seek(mysqli_query($con,"SELECT COUNT(hits) FROM statistik"), 0); 
+              // $hits             = mysql_fetch_assoc(mysqli_query($con,"SELECT SUM(hits) as hitstoday FROM statistik WHERE tanggal='$tanggal' GROUP BY tanggal")); 
+              $hits             = mysqli_data_seek(mysqli_query($con,"SELECT SUM(hits) as hitstoday FROM statistik WHERE tanggal='$tanggal' GROUP BY tanggal"),0); 
+              // $totalhits        = mysqli_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
+              // $tothitsgbr       = mysqli_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
+              $totalhits        = mysqli_data_seek(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
+              $tothitsgbr       = mysqli_data_seek(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
               $bataswaktu       = time() - 300;
               $pengunjungonline = mysqli_num_rows(mysqli_query($con,"SELECT * FROM statistik WHERE online > '$bataswaktu'"));
 
@@ -310,7 +315,7 @@ while($p=mysqli_fetch_array($produk)){
 }
 }
 // Bagian Modul
-elseif ($_GET[module]=='modul'){
+elseif ($_GET['module']=='modul'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_modul/modul.php";
   }
@@ -346,83 +351,83 @@ elseif ($_GET['module']=='kategori'){
   }
 }  
 // Bagian Order
-elseif ($_GET[module]=='order'){
+elseif ($_GET['module']=='order'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_order/order.php";
   }
 }
 
 // Bagian Profil
-elseif ($_GET[module]=='profil'){
+elseif ($_GET['module']=='profil'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_profil/profil.php";
   }
 }
 
 // Bagian Order
-elseif ($_GET[module]=='hubungi'){
+elseif ($_GET['module']=='hubungi'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_hubungi/hubungi.php";
   }
 }
 
 // Bagian Cara Pembelian
-elseif ($_GET[module]=='carabeli'){
+elseif ($_GET['module']=='carabeli'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_carabeli/carabeli.php";
   }
 }
 
 // Bagian Banner
-elseif ($_GET[module]=='banner'){
+elseif ($_GET['module']=='banner'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_banner/banner.php";
   }
 }
 
 // Bagian Kota/Ongkos Kirim
-elseif ($_GET[module]=='ongkoskirim'){
+elseif ($_GET['module']=='ongkoskirim'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_ongkoskirim/ongkoskirim.php";
   }
 }
 
 // Bagian Password
-elseif ($_GET[module]=='password'){
+elseif ($_GET['module']=='password'){
   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_password/password.php";
   }
 }
 
 // Bagian Laporan
-elseif ($_GET[module]=='laporan'){
+elseif ($_GET['module']=='laporan'){
   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_laporan/laporan.php";
   }
 }
 
 //bagian testimoni
-elseif ($_GET[module]=='testimoni'){
+elseif ($_GET['module']=='testimoni'){
   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_testimoni/testimoni.php";
   }
 }
 
 // Modul bank
-elseif ($_GET[module]=='bank'){
+elseif ($_GET['module']=='bank'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_bank/bank.php";
   }
 }
 
 // Bagian Download
-elseif ($_GET[module]=='download'){
+elseif ($_GET['module']=='download'){
   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_download/download.php";
   }
 }
 // Bagian Download
-elseif ($_GET[module]=='kontak'){
+elseif ($_GET['module']=='kontak'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_kontak/kontak.php";
   }
@@ -443,32 +448,32 @@ elseif ($_GET['module']=='submenu'){
 }
 
 // Bagian Download
-elseif ($_GET[module]=='fb'){
+elseif ($_GET['module']=='fb'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_fb/fb.php";
   }
 }
-elseif ($_GET[module]=='tag'){
+elseif ($_GET['module']=='tag'){
   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_tag/tag.php";
   }
 }
-elseif ($_GET[module]=='katajelek'){
+elseif ($_GET['module']=='katajelek'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_katajelek/katajelek.php";
   }
 }
-elseif ($_GET[module]=='komentar'){
+elseif ($_GET['module']=='komentar'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_komentar/komentar.php";
   }
 }
-elseif ($_GET[module]=='header'){
+elseif ($_GET['module']=='header'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_header/header.php";
   }
 }
-elseif ($_GET[module]=='laporan'){
+elseif ($_GET['module']=='laporan'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_laporan/laporan.php";
   }

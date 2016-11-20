@@ -15,7 +15,7 @@
 	                    "Oktober", "November", "Desember");
 	function vd($par){
 		echo '<pre>';
-			echo $par;		
+			print_r($par);		
 		echo '</pre>';
 		exit;
 	}

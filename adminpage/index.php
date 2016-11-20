@@ -1,3 +1,9 @@
+<?php
+     session_start();
+     require_once '../config/library.php';
+     if(!empty($_SESSION))  header('Location:media.php?module=home');
+     else 
+?>
 <!DOCTYPE html>
 <html class="bg-grey">
     <head>
@@ -29,7 +35,8 @@ return (true);
 </script>
     </head>
     <body class="bg-grey">
-
+    
+        <!-- form login  <epi> -->
         <div class="form-box" id="login-box">
             <div class="header">Sign In</div>
            <form id="form-login" name="login" method="post" action="cek_login.php" onSubmit="return validasi(this)">

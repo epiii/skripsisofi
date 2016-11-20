@@ -1,16 +1,19 @@
-<script>
-$(function() {
-	$('#nav a[href~="' + location.href + '"]').parents('li').addClass('active');
-});
-</script>
+    <script>
+    $(function() {
+    	$('#nav a[href~="' + location.href + '"]').parents('li').addClass('active');
+    });
+    </script>
 <?php
-session_start();
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
-  echo "<link href='style.css' rel='stylesheet' type='text/css'>
- <center>Untuk mengakses modul, Anda harus login <br>";
-  echo "<a href=../../index.php><b>LOGIN</b></a></center>";
-}
-else{
+    // session_start();
+    // vd($_SESSION);
+    // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+    if (empty($_SESSION['namauser'])){
+        echo "<link href='style.css' rel='stylesheet' type='text/css'>
+            <center>Untuk mengakses modul, Anda harus login <br>";
+            echo "<a href=../../index.php><b>LOGIN</b></a></center>";
+    }else{ 
+?>
+<?php 
 $aksi="modul/mod_produk/aksi_produk.php";
 echo "
 <aside class='right-side'>
@@ -33,7 +36,9 @@ echo "
                         <div class='col-xs-12'>
                    
 <div class='box'>";
-switch($_GET[act]){
+// vd($_GET);
+if(isset($_GET['act']))
+switch($_GET['act']){
   // Tampil Produk
   default:
     echo "
@@ -62,10 +67,11 @@ switch($_GET[act]){
 
     $tampil = mysqli_query($con,"SELECT * FROM produk ORDER BY id_produk DESC");
   
-    $no = $posisi+1;
+    // $no = $posisi+1;
+    $no=1;
     while($r=mysqli_fetch_array($tampil)){
-      $tanggal=tgl_indo($r[tgl_masuk]);
-      $harga=format_rupiah($r[harga]);
+      $tanggal=tgl_indo($r['tgl_masuk']);
+      $harga=format_rupiah($r['harga']);
       echo "
       <tr><td>$no</td>
                 <td>$r[nama_produk]</td>
