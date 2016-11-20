@@ -58,50 +58,50 @@ function harusangka(jumlah){
 <?php
 
 // Halaman utama (Home)
-if ($_GET[module]=='home'){
+if ($_GET['module']=='home'){
 		include "content.php";  
 }
 
 
 // Modul detail produk
-elseif ($_GET[module]=='detailproduk'){
+elseif ($_GET['module']=='detailproduk'){
  include "detailproduk.php";   
                           
 }
 
 
 // Modul produk per kategori
-elseif ($_GET[module]=='detailkategori'){
+elseif ($_GET['module']=='detailkategori'){
     include "category.php";
 }
 
 // Menu utama di header
 
 // Modul profil
-elseif ($_GET[module]=='profilkami'){
+elseif ($_GET['module']=='profilkami'){
  include "profil.php";                                 
 }
 
 
 // Modul cara pembelian
-elseif ($_GET[module]=='carabeli'){
+elseif ($_GET['module']=='carabeli'){
 include "caraorder.php";                                
 }
 
 
 // Modul semua produk
-elseif ($_GET[module]=='semuaproduk'){
+elseif ($_GET['module']=='semuaproduk'){
 include "product.php";
   
 }
 
 // Modul hubungi kami
-elseif ($_GET[module]=='hubungikami'){
+elseif ($_GET['module']=='hubungikami'){
   include "contact-us.php";                            
 }
 
 // Modul hubungi aksi
-elseif ($_GET[module]=='hubungiaksi'){
+elseif ($_GET['module']=='hubungiaksi'){
 	echo "<div class='container'>
 
 			<!-- Single -->
@@ -193,17 +193,17 @@ elseif ($_GET['module']=='downloadkatalog'){
 }
 
 // Modul keranjang belanja
-elseif ($_GET[module]=='keranjangbelanja'){
+elseif ($_GET['module']=='keranjangbelanja'){
   include "cart.php";
 }
 // Modul selesai belanja
-elseif ($_GET[module]=='selesaibelanja'){
+elseif ($_GET['module']=='selesaibelanja'){
  include "checkout.php";
 }      
 
 
 // Modul lupa password
-elseif ($_GET[module]=='lupapassword'){
+elseif ($_GET['module']=='lupapassword'){
   echo "<div class='center_title_bar'>Lupa Password</div>";
     	  echo "<div class='prod_box_big'>
         	<div class='top_prod_box_big'></div>
@@ -225,7 +225,7 @@ elseif ($_GET[module]=='lupapassword'){
 
 
 // Modul kirim password
-elseif ($_GET[module]=='kirimpassword'){
+elseif ($_GET['module']=='kirimpassword'){
 
 // Cek email kustomer di database
 $cek_email=mysqli_num_rows(mysqli_query($con,"SELECT email FROM kustomer WHERE email='$_POST[email]'"));
@@ -265,7 +265,7 @@ mail($_POST[email],$subjek,$pesan,$dari);
 
 
 // Modul simpan transaksi
-elseif ($_GET[module]=='simpantransaksi'){
+elseif ($_GET['module']=='simpantransaksi'){
 $kar1=strstr($_POST[email], "@");
 $kar2=strstr($_POST[email], ".");
 
@@ -491,7 +491,7 @@ echo "Anda belum memasukkan kode<br />
 
 
 // Modul simpan transaksi member
-elseif ($_GET[module]=='simpantransaksimember'){
+elseif ($_GET['module']=='simpantransaksimember'){
 $email = $_POST['email'];
 $password = md5($_POST['password']);
 
@@ -687,7 +687,7 @@ elseif ($_GET['module']=='semuatestimoni'){
    include "testimonian.php";                           
 }
 //testimoni aksi
-elseif ($_GET[module]=='testimoniaksi'){
+elseif ($_GET['module']=='testimoniaksi'){
 	echo "<div class='container'>
 
 			<!-- Single -->

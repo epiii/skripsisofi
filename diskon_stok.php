@@ -1,8 +1,8 @@
 <?php
     // diskon  
-    $harga     = format_rupiah($r[harga]);
-    $disc      = ($r[diskon]/100)*$r[harga];
-    $hargadisc = number_format(($r[harga]-$disc),0,",",".");
+    $harga     = format_rupiah($r['harga']);
+    $disc      = ($r['diskon']/100)*$r['harga'];
+    $hargadisc = number_format(($r['harga']-$disc),0,",",".");
 
     $d=$r['diskon'];
     $hargatetap  = "<span class='price'> <br /></span>&nbsp;
