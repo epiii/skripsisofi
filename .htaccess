@@ -2,9 +2,11 @@ RewriteEngine on
 
 RewriteRule ^home$ media.php?module=home [L]
 #epi
-	RewriteRule ^member\.html$ media.php?module=member&id=$1 [L]
-	RewriteRule ^memberlogin\.html$ media.php?module=memberlogin&id=$1 [L]
-	RewriteRule ^memberdaftar\.html$ media.php?module=memberdaftar&id=$1 [L]
+	RewriteRule ^member\.html$ media.php?module=member [L]
+	#RewriteRule ^member-(.*)\.html$ media.php?module=member&act=$1 [L]
+	#RewriteRule ^member-(.*)-(.*)\.html$ media.php?module=member&act=$1&idsewa=$1 [L]
+	RewriteRule ^memberlogin\.html$ media.php?module=memberlogin [L]
+	RewriteRule ^memberdaftar\.html$ media.php?module=memberdaftar [L]
 
 RewriteRule ^profil-kami\.html$ media.php?module=profilkami&id=$1 [L]
 RewriteRule ^cara-pembelian\.html$ media.php?module=carabeli&id=$1 [L]

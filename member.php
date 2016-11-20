@@ -23,6 +23,10 @@
                     <h1>
                         History Sewa
                     </h1>
+                    <div class='left'>
+                        - Nama : ".$_SESSION['namalengkap']." <br>
+                        - Alamat : ".$_SESSION['alamat']."
+                    </div>
                 </section>
 
                 <!-- Main content -->
@@ -33,8 +37,11 @@
 // vd($_GET);
 // if(isset($_GET['act']))
 // switch($_GET['act']){
-  // Tampil Produk
-  // default:
+//     case 'edit':
+//         echo "masuk edit :".$_GET['idsewa'];
+//     break;
+//   // Tampil Produk
+//   default:
     echo "
     <div class='box-header'>
         <h3 class='box-title'>
@@ -49,6 +56,7 @@
                         <th>Keperluan</th>
                         <th>Tgl Sewa</th>
                         <th>Tgl Kembali</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -58,7 +66,7 @@
             // vd($id_member['id_member']);
             $s2= '  SELECT *
                     FROM orders_sewa 
-                    WHERE id_member = '.$id_member['id_member'];
+                    WHERE id_member = '.$id_member['id_member'].' order by tgl_pinjam desc';
             $tampil = mysqli_query($con,$s2);
             // $no = $posisi+1;
             $no=1;
@@ -68,29 +76,29 @@
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
+                    <td>-</td>
                 </tr>';
             }else
             while($r=mysqli_fetch_assoc($tampil)){
               $tgl_pinjam  =tgl_indo($r['tgl_pinjam']);
               $tgl_kembali =tgl_indo($r['tgl_kembali']);
-              echo "
-              <tr>
+              $status=$r['status']==0?'Pending':($r['status']==1?'Belum Kembali':'Sudah Kembali');
+              $icon=$r['status']==0?'clock':($r['status']==1?'plus':'check');
+
+                // <td>".($r['status']==0?'<label class="black">Pending':$r['status']==1?'<label class="warning">Belum Kembali':'<label class="info">Sudah Kembali')."</label></td>
+              echo "<tr>
                 <td>$no</td>
                 <td>$r[keterangan]</td>
                 <td>$tgl_pinjam</td>
                 <td>$tgl_kembali</td>
-                <td class='center'>";
-                if($r['status']==1){
-                    echo "<a class='btn btn-success' href='?module=produk&act=editproduk&id=$r[id_order_sewa]'>
-                            <i class='icon-search icon-white'></i>  
-                            Detail                                            
-                        </a>";
-                }else{
-                    echo"
+                <td><i class='icon-".$icon."'></i>$status</td>
+                <td class='center'>
                     <a class='btn btn-success' href='?module=produk&act=editproduk&id=$r[id_order_sewa]'>
                         <i class='icon-search icon-white'></i>  
                         Detail                                            
-                    </a>
+                    </a>";
+                if($r['status']==0){
+                    echo"
                     <a class='btn btn-info' href='?module=produk&act=editproduk&id=$r[id_order_sewa]'>
                         <i class='icon-pencil icon-white'></i>  
                         Edit                                            
@@ -104,5 +112,6 @@
               $no++;
             }
             echo "</tbody></table>";
-    // break;
-        }
+            // break;
+        // }
+    }

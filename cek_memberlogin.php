@@ -24,6 +24,7 @@ if (!ctype_alnum($username) OR !ctype_alnum($pass)){
         l.id_login,
         m.kategori,
         m.foto,
+        m.alamat,
         m.nama_lengkap
       FROM
         login l
@@ -41,9 +42,10 @@ if ($ketemu > 0){
   session_start();
   include "adminpage/timeout.php";
 
-  $_SESSION['idlogin']      = $r['id_login'];
+  $_SESSION['idlogin']     = $r['id_login'];
   $_SESSION['namauser']    = $r['username'];
   $_SESSION['namalengkap'] = $r['nama_lengkap'];
+  $_SESSION['alamat']      = $r['alamat'];
   // $_SESSION['passuser']    = $r['password'];
   $_SESSION['leveluser']   = $r['kategori'];
   // $_SESSION['leveluser']    = $r['level'];
@@ -62,7 +64,7 @@ if ($ketemu > 0){
   $ss='UPDATE login SET id_session="'.$sid_baru.'"  WHERE id_login='.$r['id_login'];
   // vd($ss);
   mysqli_query($con,$ss);
-  header('location:member.html');
+  header('location:member-view.html');
 }
 else{
   include "error-login.html";
