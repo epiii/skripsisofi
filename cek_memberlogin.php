@@ -64,7 +64,8 @@ if ($ketemu > 0){
   $ss='UPDATE login SET id_session="'.$sid_baru.'"  WHERE id_login='.$r['id_login'];
   // vd($ss);
   mysqli_query($con,$ss);
-  header('location:member-view.html');
+  header('location:member.html');
+  // header('location:member-view.html');
 }
 else{
   include "error-login.html";
