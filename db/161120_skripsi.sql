@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-20 05:44:28
+Date: 2016-11-20 07:18:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,17 +22,20 @@ DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
   `id_admin` int(11) NOT NULL AUTO_INCREMENT,
   `id_login` int(11) NOT NULL,
-  `nama` varchar(100) NOT NULL,
+  `nama_lengkap` varchar(100) NOT NULL,
   `telpon` varchar(15) NOT NULL,
   `blokir` enum('N','Y') NOT NULL DEFAULT 'N',
+  `foto` text NOT NULL,
   PRIMARY KEY (`id_admin`),
   KEY `id_login` (`id_login`) USING BTREE,
   CONSTRAINT `id_loginFK` FOREIGN KEY (`id_login`) REFERENCES `login` (`id_login`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
+INSERT INTO `admin` VALUES ('1', '1', 'nama admin1', '0457934857', 'N', 'foto1.jpg');
+INSERT INTO `admin` VALUES ('2', '2', 'nama admin2', '0317878', 'N', 'foto2.jpg');
 
 -- ----------------------------
 -- Table structure for admins
@@ -5905,12 +5908,16 @@ CREATE TABLE `login` (
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `lastlogin` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `id_session` text NOT NULL,
   PRIMARY KEY (`id_login`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of login
 -- ----------------------------
+INSERT INTO `login` VALUES ('1', 'admin1', 'e00cf25ad42683b3df678c61f42c6bda', '2016-11-20 06:43:48', 'r2t1boq4u7n6pcsaupaf7ftu21');
+INSERT INTO `login` VALUES ('2', 'admin2', 'c84258e9c39059a89ab77d846ddab909', '2016-11-20 06:28:05', '');
+INSERT INTO `login` VALUES ('3', 'memKop1', '158d551d82602cb167e3cc0179619fba', '2016-11-20 07:11:08', '');
 
 -- ----------------------------
 -- Table structure for mainmenu
@@ -5954,13 +5961,16 @@ INSERT INTO `mainmenu` VALUES ('70', 'Indeks', 'kategori-41-pendidikan.html', 'Y
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
   `id_member` int(11) NOT NULL AUTO_INCREMENT,
-  `kategori` int(1) NOT NULL,
+  `id_login` int(11) NOT NULL,
+  `kategori` enum('k','u') NOT NULL DEFAULT 'u' COMMENT 'k=koperasi; u=umum',
   `nama` varchar(100) NOT NULL,
   `alamat` text NOT NULL,
   `telpon` varchar(15) NOT NULL,
   `fakultas` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_member`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id_member`),
+  KEY `id_loginFK2` (`id_login`) USING BTREE,
+  CONSTRAINT `id_loginFK2` FOREIGN KEY (`id_login`) REFERENCES `login` (`id_login`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of member
@@ -6419,6 +6429,7 @@ INSERT INTO `statistik` VALUES ('::1', '2016-09-25', '16', '1474809955');
 INSERT INTO `statistik` VALUES ('::1', '2016-09-26', '12', '1474894723');
 INSERT INTO `statistik` VALUES ('::1', '2016-10-17', '2', '1476710495');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-14', '9', '1479134063');
+INSERT INTO `statistik` VALUES ('::1', '2016-11-20', '5', '1479600580');
 
 -- ----------------------------
 -- Table structure for submenu

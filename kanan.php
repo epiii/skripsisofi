@@ -97,10 +97,10 @@
   }
 
   $pengunjung       = mysqli_num_rows(mysqli_query($con,"SELECT * FROM statistik WHERE tanggal='$tanggal' GROUP BY ip"));
-  $totalpengunjung  = mysql_result(mysqli_query($con,"SELECT COUNT(hits) FROM statistik"), 0); 
+  $totalpengunjung  = mysqli_result(mysqli_query($con,"SELECT COUNT(hits) FROM statistik"), 0); 
   $hits             = mysql_fetch_assoc(mysqli_query($con,"SELECT SUM(hits) as hitstoday FROM statistik WHERE tanggal='$tanggal' GROUP BY tanggal")); 
-  $totalhits        = mysql_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
-  $tothitsgbr       = mysql_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
+  $totalhits        = mysqli_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
+  $tothitsgbr       = mysqli_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
   $bataswaktu       = time() - 300;
   $pengunjungonline = mysqli_num_rows(mysqli_query($con,"SELECT * FROM statistik WHERE online > '$bataswaktu'"));
 
