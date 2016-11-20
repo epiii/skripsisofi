@@ -40,7 +40,8 @@ if (!ctype_alnum($username) OR !ctype_alnum($pass)){
 if ($ketemu > 0){
   session_start();
   include "adminpage/timeout.php";
-  
+
+  $_SESSION['idlogin']      = $r['id_login'];
   $_SESSION['namauser']    = $r['username'];
   $_SESSION['namalengkap'] = $r['nama_lengkap'];
   // $_SESSION['passuser']    = $r['password'];
@@ -64,7 +65,7 @@ if ($ketemu > 0){
   header('location:member.html');
 }
 else{
-  include "adminpage/error-login.php";
+  include "error-login.html";
 }
 }
 ?>

@@ -42,8 +42,8 @@ if ($ketemu > 0){
   $_SESSION['namalengkap']  = $r['nama_lengkap'];
   $_SESSION['passuser']     = $r['password'];
   $_SESSION['leveluser']    = 'admin';
-  // $_SESSION['leveluser']    = $r['level'];
-  $_SESSION['poto']  = $r['foto'];
+  // $_SESSION['leveluser'] = $r['level'];
+  $_SESSION['poto']         = $r['foto'];
  
   
   // session timeout

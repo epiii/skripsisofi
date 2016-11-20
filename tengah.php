@@ -72,6 +72,10 @@ elseif ($_GET['module']=='member'){
 elseif ($_GET['module']=='memberlogin'){
   include "memberlogin.php";   
 }
+// modul  member login 
+elseif ($_GET['module']=='memberdaftar'){
+  include "memberdaftar.php";   
+}
 
 // Modul detail produk
 elseif ($_GET['module']=='detailproduk'){
