@@ -1,5 +1,8 @@
 # skripsisofi
 
-![Alt text](/http://prntscr.com/d9qehd?raw=true "member_view_sewa")
-![alt text](https://github.com/epiii/skripsisofi/blob/master/ss/sofi1_1.jpg "Logo Title Text 1")
-<!-- https://github.com/epiii/skripsisofi/blob/master/ss/sofi1_1.jpg -->
+![alt text](https://github.com/epiii/skripsisofi/blob/master/ss/FE_memberLogin.jpg "FrontEnd : member - login")
+![alt text](https://github.com/epiii/skripsisofi/blob/master/ss/FE_memberSewa.jpg "FrontEnd : member - history sewa")
+![alt text](https://github.com/epiii/skripsisofi/blob/master/ss/sofi1_1.jpg "BackEnd : home")
+
+![alt text](https://github.com/epiii/skripsisofi/blob/master/ss/sofi1_2.jpg "DB : tables")
+![alt text](https://github.com/epiii/skripsisofi/blob/master/ss/sofi1_1.jpg "DB : ERD")
