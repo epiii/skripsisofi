@@ -56,13 +56,11 @@ function harusangka(jumlah){
 </script>
 
 <?php
-
+require_once 'config/library.php';
 // Halaman utama (Home)
 if ($_GET['module']=='home'){
 		include "content.php";  
 }
-
-
 // <epi>
 // Modul member 
 elseif ($_GET['module']=='member'){
@@ -280,8 +278,8 @@ mail($_POST[email],$subjek,$pesan,$dari);
 
 // Modul simpan transaksi
 elseif ($_GET['module']=='simpantransaksi'){
-$kar1=strstr($_POST[email], "@");
-$kar2=strstr($_POST[email], ".");
+  $kar1=strstr($_POST['email'], "@");
+  $kar2=strstr($_POST['email'], ".");
 
 // Cek email kustomer di database
 $cek_email=mysqli_num_rows(mysqli_query($con,"SELECT email FROM kustomer WHERE email='$_POST[email]'"));
@@ -289,15 +287,14 @@ $cek_email=mysqli_num_rows(mysqli_query($con,"SELECT email FROM kustomer WHERE e
 if ($cek_email > 0){
   echo "Email <b>$_POST[email]</b> sudah ada yang pakai.<br />
         <a href=javascript:history.go(-1)><b>Ulangi Lagi</b></a>";
-}
-elseif (empty($_POST[nama]) || empty($_POST[password]) || empty($_POST[alamat]) || empty($_POST[telpon]) || empty($_POST[email]) || empty($_POST[kota]) || empty($_POST[kode])){
+}elseif (empty($_POST['nama']) || empty($_POST['password']) || empty($_POST['alamat']) || empty($_POST['telpon']) || empty($_POST['email']) || empty($_POST['kota']) || empty($_POST['kode'])){
   echo "Data yang Anda isikan belum lengkap<br />
   	    <a href='selesai-belanja.html'><b>Ulangi Lagi</b>";
 }
-elseif (!ereg("[a-z|A-Z]","$_POST[nama]")){
-  echo "Nama tidak boleh diisi dengan angka atau simbol.<br />
- 	      <a href=javascript:history.go(-1)><b>Ulangi Lagi</b></a>";
-}
+// elseif (!ereg("[a-z|A-Z]",$_POST['nama'])){
+//   echo "Nama tidak boleh diisi dengan angka atau simbol.<br />
+//  	      <a href=javascript:history.go(-1)><b>Ulangi Lagi</b></a>";
+// }
 elseif (strlen($kar1)==0 OR strlen($kar2)==0){
   echo "Alamat email Anda tidak valid, mungkin kurang tanda titik (.) atau tanda @.<br />
  	      <a href=javascript:history.go(-1)><b>Ulangi Lagi</b></a>";
@@ -323,7 +320,8 @@ if(!empty($_POST['kode'])){
   if($_POST['kode']==$_SESSION['captcha_session']){
 
 function antiinjection($data){
-  $filter_sql = mysql_real_escape_string(stripslashes(strip_tags(htmlspecialchars($data,ENT_QUOTES))));
+  // $filter_sql = mysqli_real_escape_string(stripslashes(strip_tags(htmlspecialchars($data,ENT_QUOTES))));
+  $filter_sql = stripslashes(strip_tags(htmlspecialchars($data,ENT_QUOTES)));
   return $filter_sql;
 }
 
@@ -333,18 +331,20 @@ $telpon = antiinjection($_POST['telpon']);
 $email = antiinjection($_POST['email']);
 $password=md5($_POST['password']);
 
-// simpan data kustomer 
-mysqli_query($con,"INSERT INTO kustomer(nama_lengkap, password, alamat, telpon, email, id_kota) 
-             VALUES('$nama','$password','$alamat','$telpon','$email','$_POST[kota]')");
+// simpan data kustomer
+$s="INSERT INTO kustomer(nama_lengkap, password, alamat, telpon, email, id_kota) 
+           VALUES('$nama','$password','$alamat','$telpon','$email','$_POST[kota]')"; 
+vd($s);
+mysqli_query($con,$s);
 
 // mendapatkan nomor kustomer
-$id_kustomer=mysql_insert_id();
+$id_kustomer=mysqli_insert_id($con);
 
 // simpan data pemesanan 
 mysqli_query($con,"INSERT INTO orders(tgl_order,jam_order,id_kustomer) VALUES('$tgl_skrg','$jam_skrg','$id_kustomer')");
   
 // mendapatkan nomor orders
-$id_orders=mysql_insert_id();
+$id_orders=mysqli_insert_id($con);
 
 // panggil fungsi isi_keranjang dan hitung jumlah produk yang dipesan
 $isikeranjang = isi_keranjang();
@@ -504,85 +504,70 @@ echo "Anda belum memasukkan kode<br />
 }
 
 
-// Modul simpan transaksi member
+// Modul simpan transaksi member (checkout dari shoping_cart)
 elseif ($_GET['module']=='simpantransaksimember'){
-$email = $_POST['email'];
-$password = md5($_POST['password']);
-
-$sql = "SELECT * FROM	kustomer WHERE email='$email' AND password='$password'";
-$hasil = mysqli_query($con,$sql);
-$r = mysqli_fetch_array($hasil);
-
-if(mysqli_num_rows($hasil) == 0){
-			 echo "Email atau Password Anda tidak benar<br />";
-			 echo "<a href=javascript:history.go(-1)><b>Ulangi Lagi</b></a>";
-}
-else{
-// fungsi untuk mendapatkan isi keranjang belanja
-function isi_keranjang(){
-	$isikeranjang = array();
-	$sid = session_id();
-	$sql = mysqli_query($con,"SELECT * FROM orders_temp WHERE id_session='$sid'");
-	
-	while ($r=mysqli_fetch_array($sql)) {
-		$isikeranjang[] = $r;
-	}
-	return $isikeranjang;
-}
-
-$tgl_skrg = date("Ymd");
-$jam_skrg = date("H:i:s");
-
-$id = mysqli_fetch_array(mysqli_query($con,"SELECT id_kustomer FROM kustomer WHERE email='$email' AND password='$password'"));
-
-// mendapatkan nomor kustomer
-$id_kustomer=$id[id_kustomer];
-
-// simpan data pemesanan 
-mysqli_query($con,"INSERT INTO orders(tgl_order,jam_order,id_kustomer) VALUES('$tgl_skrg','$jam_skrg','$id_kustomer')");
-
+  $email    = $_POST['email'];
+  $password = md5($_POST['password']);
   
-// mendapatkan nomor orders
-$id_orders=mysql_insert_id();
+  $sql      = "SELECT * FROM	kustomer WHERE email='$email' AND password='$password'";
+  $hasil    = mysqli_query($con,$sql);
+  $r        = mysqli_fetch_assoc($hasil);
 
-// panggil fungsi isi_keranjang dan hitung jumlah produk yang dipesan
-$isikeranjang = isi_keranjang();
-$jml          = count($isikeranjang);
+  if(mysqli_num_rows($hasil) == 0){
+		 echo "Email atau Password Anda tidak benar<br />";
+		 echo "<a href=javascript:history.go(-1)><b>Ulangi Lagi</b></a>";
+  }else{
+    $tgl_skrg = date("Ymd");
+    $jam_skrg = date("H:i:s");
 
-// simpan data detail pemesanan  
-for ($i = 0; $i < $jml; $i++){
-  mysqli_query($con,"INSERT INTO orders_detail(id_orders, id_produk, jumlah) 
-               VALUES('$id_orders',{$isikeranjang[$i]['id_produk']}, {$isikeranjang[$i]['jumlah']})");
-}
-  
-// setelah data pemesanan tersimpan, hapus data pemesanan di tabel pemesanan sementara (orders_temp)
-for ($i = 0; $i < $jml; $i++) {
-  mysqli_query($con,"DELETE FROM orders_temp
-	  	         WHERE id_orders_temp = {$isikeranjang[$i]['id_orders_temp']}");
-}
+    $sId="SELECT id_kustomer FROM kustomer WHERE email='$email' AND password='$password'";
+    $id = mysqli_fetch_assoc(mysqli_query($con,$sId));
+
+    // mendapatkan nomor kustomer
+    $id_kustomer=$id['id_kustomer'];
+    // simpan data pemesanan
+    $sAdd ="INSERT INTO orders(tgl_order,jam_order,id_kustomer) VALUES('$tgl_skrg','$jam_skrg','$id_kustomer')"; 
+    $q    =mysqli_query($con,$sAdd);
+    // vd($sAdd);
+      
+    // mendapatkan nomor orders
+    $id_orders=mysqli_insert_id($con);
+
+    // panggil fungsi isi_keranjang dan hitung jumlah produk yang dipesan
+    $isikeranjang = isi_keranjang();
+    // vd($isikeranjang);
+    $jml          = count($isikeranjang);
+
+    // vd($isikeranjang[0]['id_produk']);
+    // simpan data detail pemesanan  
+    for ($i = 0; $i < $jml; $i++){
+      mysqli_query($con,"INSERT INTO orders_detail(id_orders, id_produk, jumlah) 
+                   VALUES('$id_orders',{$isikeranjang[$i]['id_produk']}, {$isikeranjang[$i]['jumlah']})");
+    }
+      
+    // setelah data pemesanan tersimpan, hapus data pemesanan di tabel pemesanan sementara (orders_temp)
+    for ($i = 0; $i < $jml; $i++) {
+      mysqli_query($con,"DELETE FROM orders_temp
+    	  	         WHERE id_orders_temp = {$isikeranjang[$i]['id_orders_temp']}");
+    }
 
  echo "<div class='container'>
- 
-  <section class='order'>
-
-				<div class='row standard'>
-					<header class='span12 prime'>
-						<h3>Data Pesanan Anda :</h3>
-					</header>
-				</div>
-<h5>Data pemesan beserta ordernya adalah sebagai berikut: </h5>
+        <section class='order'>
+      				<div class='row standard'>
+      					<header class='span12 prime'>
+      						<h3>Data Pesanan Anda :</h3>
+      					</header>
+      				</div>
+      <h5>Data pemesan beserta ordernya adalah sebagai berikut: </h5>
 						
-						<p>Nama Lengkap : <b>$r[nama_lengkap]</b></p>
+			<p>Nama Lengkap : <b>$r[nama_lengkap]</b></p>
 					<p>	Alamat Lengkap : $r[alamat]</p>
 						<p>Telpon	: $r[telpon]</p>
 						<p>E-mail	: $r[email]</p>
 					<p>	Nomor Order: <b>$id_orders</b></p>
 				<div class='row cart'>
 					<div class='span12'>
-						<div class='wrap-table'>
-  
-      ";
-
+						<div class='wrap-table'>";
       $daftarproduk=mysqli_query($con,"SELECT * FROM orders_detail,produk 
                                  WHERE orders_detail.id_produk=produk.id_produk 
                                  AND id_orders='$id_orders'");
@@ -606,18 +591,19 @@ $pesan="Terimakasih telah melakukan pemesanan online di toko online kami <br /><
         Data order Anda adalah sebagai berikut: <br /><br />";
         
 $no=1;
+$total_rp=$total=$totalberat=0;
 while ($d=mysqli_fetch_array($daftarproduk)){
-   $disc        = ($d[diskon]/100)*$d[harga];
-   $hargadisc   = number_format(($d[harga]-$disc),0,",","."); 
-   $subtotal    = ($d[harga]-$disc) * $d[jumlah];
+   $disc        = ($d['diskon']/100)*$d['harga'];
+   $hargadisc   = number_format(($d['harga']-$disc),0,",","."); 
+   $subtotal    = ($d['harga']-$disc) * $d['jumlah'];
 
-   $subtotalberat = $d[berat] * $d[jumlah]; // total berat per item produk 
+   $subtotalberat = $d['berat'] * $d['jumlah']; // total berat per item produk 
    $totalberat  = $totalberat + $subtotalberat; // grand total berat all produk yang dibeli
 
    $total       = $total + $subtotal;
    $subtotal_rp = format_rupiah($subtotal);    
    $total_rp    = format_rupiah($total);    
-   $harga       = format_rupiah($d[harga]);
+   $harga       = format_rupiah($d['harga']);
 
    echo "<tbody>
 										<tr>
@@ -642,23 +628,23 @@ while ($d=mysqli_fetch_array($daftarproduk)){
    $no++;
 }
 
-$kota=$r[id_kota];
+$kota=$r['id_kota'];
 
 $ongkos=mysqli_fetch_array(mysqli_query($con,"SELECT ongkos_kirim FROM kota WHERE id_kota='$kota'"));
-$ongkoskirim1=$ongkos[ongkos_kirim];
-$ongkoskirim = $ongkoskirim1 * $totalberat;
+$ongkoskirim1    =$ongkos['ongkos_kirim'];
+$ongkoskirim     = $ongkoskirim1 * $totalberat;
 
-$grandtotal    = $total + $ongkoskirim; 
+$grandtotal      = $total + $ongkoskirim; 
 
-$ongkoskirim_rp = format_rupiah($ongkoskirim);
+// vd($total_rp);
+$ongkoskirim_rp  = format_rupiah($ongkoskirim);
 $ongkoskirim1_rp = format_rupiah($ongkoskirim1); 
-$grandtotal_rp  = format_rupiah($grandtotal);  
+$grandtotal_rp   = format_rupiah($grandtotal);  
 
 // dapatkan email_pengelola dan nomor rekening dari database
 $sql2 = mysqli_query($con,"select email_pengelola,nomor_rekening,nomor_hp from profil");
 $j2   = mysqli_fetch_array($sql2);
-
-$pesan.="<br /><br />Total : Rp. $total_rp 
+$pesan.="<br /><br />Total : Rp. $total 
          <br />Ongkos Kirim untuk Tujuan Kota Anda : Rp. $ongkoskirim1_rp/Kg 
          <br />Total Berat : $totalberat Kg
          <br />Total Ongkos Kirim  : Rp. $ongkoskirim_rp		 
@@ -673,8 +659,9 @@ $dari = "From: $j2[email_pengelola]\r\n";
 $dari .= "Content-type: text/html\r\n";
 
 // Kirim email ke kustomer
-mail($email,$subjek,$pesan,$dari);
-
+// ini_set();
+$m=mail($email,$subjek,$pesan,$dari);
+// vd($dari);
 // Kirim email ke pengelola toko online
 mail("$j2[email_pengelola]",$subjek,$pesan,$dari);
 

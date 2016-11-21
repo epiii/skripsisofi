@@ -1,7 +1,8 @@
 <div class='container'>
 <?php
- $sid = session_id();
-  $sql = mysqli_query($con,"SELECT * FROM orders_temp, produk 
+	// selesain-belanja.html
+	$sid = session_id();
+	$sql = mysqli_query($con,"SELECT * FROM orders_temp, produk 
 			                WHERE id_session='$sid' AND orders_temp.id_produk=produk.id_produk");
   $ketemu=mysqli_num_rows($sql);
   if($ketemu < 1){
@@ -37,7 +38,7 @@
 									<label class='control-label' for='inputEmail'><b>Kustomer Lama</b></label>
 									</div>
 							  <form name=form2 class='form-horizontal' action=simpan-transaksi-member.html method=POST onSubmit=\"return validasi2(this)\">
-							  <div class='control-group'>
+							  	<div class='control-group'>
 									<label class='control-label' for='inputEmail'> Email</label>
 									<div class='controls'>
 									  <input type='email' name=email id='inputEmail' placeholder='Email'>
@@ -54,8 +55,9 @@
 									  <button type='submit' class='btn theme'>Login</button>
 									</div>
 									</div>
-								</form>	
-							 <form name=form class='form-horizontal' action=simpan-transaksi.html method=POST onSubmit=\"return validasi(this)\">
+							</form>	
+
+						 	<form name=form class='form-horizontal' action=simpan-transaksi.html method=POST onSubmit=\"return validasi(this)\">
 									<div class='control-group'>
 									<label class='control-label' for='inputEmail'><b>Kustomer Baru</b></label>
 									</div>

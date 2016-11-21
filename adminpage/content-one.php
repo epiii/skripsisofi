@@ -31,7 +31,7 @@ if ($_SESSION['leveluser']=='admin'){
           <i class='fa fa-angle-left pull-right'></i>
         </a> 
         <ul class='treeview-menu'>
-          <li><a href='?module=profil'><i class='fa fa-angle-double-right'></i> Admin</a></li>
+          <li><a href='?module=user'><i class='fa fa-angle-double-right'></i> Admin</a></li>
           <li><a href='?module=menuutama'><i class='fa fa-angle-double-right'></i>Member</a></li>
         </ul>
       </li>

@@ -1,4 +1,6 @@
 <?php
+	require_once 'koneksi.php';
+	// vd($con);
 	date_default_timezone_set('Asia/Jakarta'); // PHP 6 mengharuskan penyebutan timezone.
 	$seminggu = array("Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu");
 	$hari = date("w");
@@ -18,5 +20,17 @@
 			print_r($par);		
 		echo '</pre>';
 		exit;
+	}
+	// fungsi untuk mendapatkan isi keranjang belanja
+	function isi_keranjang(){
+		global $con;
+		$isikeranjang = array();
+		$sid = session_id();
+		$sql="SELECT * FROM orders_temp WHERE id_session='$sid'";
+		$exe = mysqli_query($con,$sql);
+		
+		while ($r=mysqli_fetch_assoc($exe)) {
+			$isikeranjang[] = $r;
+		}return $isikeranjang;
 	}
 ?>

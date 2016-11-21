@@ -35,15 +35,16 @@
 										</tr>
 									</thead>";
 									$no=1;
+  $total=0;
   while($r=mysqli_fetch_array($sql)){
-    $disc        = ($r[diskon]/100)*$r[harga];
-    $hargadisc   = number_format(($r[harga]-$disc),0,",",".");
+    $disc        = ($r['diskon']/100)*$r['harga'];
+    $hargadisc   = number_format(($r['harga']-$disc),0,",",".");
 
-    $subtotal    = ($r[harga]-$disc) * $r[jumlah];
+    $subtotal    = ($r['harga']-$disc) * $r['jumlah'];
     $total       = $total + $subtotal;  
     $subtotal_rp = format_rupiah($subtotal);
     $total_rp    = format_rupiah($total);
-    $harga       = format_rupiah($r[harga]);
+    $harga       = format_rupiah($r['harga']);
     echo "
 									<tbody>
 										<tr>

@@ -106,7 +106,7 @@
 	$sid2 = session_id();
 	$sql1 = mysqli_query($con,"SELECT id_produk FROM orders_temp WHERE id_session='$sid2'");
 	while($rx=mysqli_fetch_array($sql1)){
-		$pr=$rx[id_produk];
+		$pr=$rx['id_produk'];
 	$sql2 = mysqli_query($con,"SELECT * FROM produk WHERE id_produk=$pr");                           
 	
 	while($rr=mysqli_fetch_array($sql2)){

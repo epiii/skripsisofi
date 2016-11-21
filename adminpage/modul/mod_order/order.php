@@ -246,7 +246,7 @@ $no=1;
                          $cekpembeli=mysqli_fetch_array(mysqli_query($con,"SELECT * FROM kustomer,orders 
           WHERE orders.id_kustomer=kustomer.id_kustomer AND id_orders='$_GET[id]'"));
           $ongkos=mysqli_fetch_array(mysqli_query($con,"SELECT ongkos_kirim FROM kota WHERE id_kota='$cekpembeli[id_kota]'"));
-$ongkoskirim1=$ongkos['ongkos_kirim'];
+  $ongkoskirim1=$ongkos['ongkos_kirim'];
   $ongkoskirim1=$ongkos['ongkos_kirim'];
   $ongkoskirim=$ongkoskirim1 * $totalberat;
 
