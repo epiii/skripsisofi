@@ -1,4 +1,5 @@
 <?php
+  // left side bar (menu) 
  $full_name = $_SERVER['REQUEST_URI'];
         $name_array = explode('/',$full_name);
         $count = count($name_array);
@@ -17,30 +18,37 @@ if ($_SESSION['leveluser']=='admin'){
  
                                 // <i class='fa fa-dashboard'></i> <span>Dashboard $zz</span>
   echo "<ul class='sidebar-menu'>
-   <li class='active'>
-                            <a href='?module=home'>
-                                <i class='fa fa-dashboard'></i> <span>Dashboard </span>
-                            </a> 
-                            </li>
- <li class='active'>
-                            <a href='?module=user'>
-                                <i class='fa fa-users'></i> <span>Data User</span>
-                            </a> 
-                            </li> 
-                       ";
-  while ($m=mysqli_fetch_array($sql)){
+    <li class='active'>
+      <a href='?module=home'>
+          <i class='fa fa-dashboard'></i> <span>Dashboard </span>
+      </a> 
+      </li>
+
+      <li class='treeview'>
+        <a href=''>
+          <i class='fa fa-info-circle'></i>
+          <span>User</span>
+          <i class='fa fa-angle-left pull-right'></i>
+        </a> 
+        <ul class='treeview-menu'>
+          <li><a href='?module=profil'><i class='fa fa-angle-double-right'></i> Admin</a></li>
+          <li><a href='?module=menuutama'><i class='fa fa-angle-double-right'></i>Member</a></li>
+        </ul>
+      </li>
+    ";
+while ($m=mysqli_fetch_array($sql)){
 $carimenu=mysqli_query($con,"select * from submenu where link_sub='?$page_name1'");
  $sm=mysqli_fetch_array($carimenu);
    $qq="$sm[id_main]";
    $qz="$m[id_main]";
-  	if ($qq == $qz) { 
-  		echo "<li class='treeview active'>"; 
+    if ($qq == $qz) { 
+      echo "<li class='treeview active'>"; 
   		} else{ 
   			echo "<li class='treeview'>"; 
   		} 
   		
  
-  echo "<a href='$m[link]'>
+echo "<a href='$m[link]'>
 <i class='$m[icon]'></i>
 <span>$m[nama_menu]</span>
 <i class='fa fa-angle-left pull-right'></i>

@@ -1,6 +1,7 @@
 <?php
-session_start();
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+// session_start();
+ // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+ if (empty($_SESSION['namauser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
@@ -29,7 +30,9 @@ echo "
                         <div class='col-xs-12'>
                    
 <div class='box'>";
-switch($_GET[act]){
+$act=!isset($_GET['act'])?'act':$_GET['act'];
+// vd($act);
+switch($act){ 
   // Tampil User
   default:
     if ($_SESSION['leveluser']=='admin'){
@@ -47,8 +50,7 @@ switch($_GET[act]){
         ";
     }
     else{
-      $tampil=mysqli_query($con,"SELECT * FROM users 
-                           WHERE username='$_SESSION['namauser']'");
+      $tampil=mysqli_query($con,'SELECT * FROM users WHERE username="'.$_SESSION['namauser'].'"');
       echo " <div class='box-header'>
                                     <h3 class='box-title'>
                                    Data User</h3>
@@ -201,7 +203,7 @@ switch($_GET[act]){
                                         </div>
                                          <div class='form-group'>
                                            ";
-                                                if ($r[blokir]=='N'){
+                                                if ($r['blokir']=='N'){
       echo " <label>Status Blokir </label><input type=radio name='blokir' value='Y'> Y   
                                            <input type=radio name='blokir' value='N' checked> N ";
     }

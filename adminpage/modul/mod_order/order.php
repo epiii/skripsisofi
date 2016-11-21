@@ -1,8 +1,10 @@
 <?php
-session_start();
-include "../../../config/library.php";
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
-  echo "<link href='style.css' rel='stylesheet' type='text/css'>
+// session_start();
+// include "../../../config/library.php";
+// include "../config/library.php";
+ // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+if (empty($_SESSION['namauser'])){
+echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
 }
@@ -29,7 +31,9 @@ echo "
                         <div class='col-xs-12'>
                    
 <div class='box'>";
-switch($_GET[act]){
+$act=!isset($_GET['act'])?'':$_GET['act'];
+switch($act){
+// switch($_GET['act']){
   // Tampil Order
   default:
     echo "   
@@ -50,7 +54,7 @@ $no=1;
     $tampil = mysqli_query($con,"SELECT * FROM orders,kustomer WHERE orders.id_kustomer=kustomer.id_kustomer ORDER BY id_orders DESC");
   
     while($r=mysqli_fetch_array($tampil)){
-      $tanggal=tgl_indo($r[tgl_order]);
+      $tanggal=tgl_indo($r['tgl_order']);
       echo "<tr><td align=center>$no</td>
       <td align=center>$r[id_orders]</td>
                 <td>$r[nama_lengkap]</td>
@@ -74,15 +78,15 @@ $no=1;
   case "detailorder":
     $edit = mysqli_query($con,"SELECT * FROM orders,kustomer WHERE orders.id_kustomer=kustomer.id_kustomer AND id_orders='$_GET[id]'");
     $r    = mysqli_fetch_array($edit);
-    $tanggal=tgl_indo($r[tgl_order]);
+    $tanggal=tgl_indo($r['tgl_order']);
     
-    if ($r[status_order]=='Baru'){
+    if ($r['status_order']=='Baru'){
         $pilihan_status = array('Baru', 'DP', 'Lunas');
     }
-    elseif ($r[status_order]=='DP'){
+    elseif ($r['status_order']=='DP'){
         $pilihan_status = array('DP','Lunas', 'Batal');    
     }
-    elseif ($r[status_order]=='Lunas'){
+    elseif ($r['status_order']=='Lunas'){
         $pilihan_status = array('Lunas', 'Batal');    
     }
     else{
@@ -92,7 +96,7 @@ $no=1;
     $pilihan_order = '';
     foreach ($pilihan_status as $status) {
 	   $pilihan_order .= "<option value=$status";
-	   if ($status == $r[status_order]) {
+	   if ($status == $r['status_order']) {
 		    $pilihan_order .= " selected";
 	   }
 	   $pilihan_order .= ">$status</option>\r\n";
@@ -182,19 +186,19 @@ $no=1;
                                     </tr>
                                 </thead>
                                 <tbody>";
-                                  
+  $total=$totalberat=0;
   while($s=mysqli_fetch_array($sql2)){
      // rumus untuk menghitung subtotal dan total		
-   $disc        = ($s[diskon]/100)*$s[harga];
-   $hargadisc   = number_format(($s[harga]-$disc),0,",","."); 
-   $subtotal    = ($s[harga]-$disc) * $s[jumlah];
+   $disc        = ($s['diskon']/100)*$s['harga'];
+   $hargadisc   = number_format(($s['harga']-$disc),0,",","."); 
+   $subtotal    = ($s['harga']-$disc) * $s['jumlah'];
 
     $total       = $total + $subtotal;
     $subtotal_rp = format_rupiah($subtotal);    
     $total_rp    = format_rupiah($total);    
-    $harga       = format_rupiah($s[harga]);
+    $harga       = format_rupiah($s['harga']);
 
-   $subtotalberat = $s[berat] * $s[jumlah]; // total berat per item produk 
+   $subtotalberat = $s['berat'] * $s['jumlah']; // total berat per item produk 
    $totalberat  = $totalberat + $subtotalberat; // grand total berat all produk yang dibeli
    echo "
 
@@ -242,8 +246,8 @@ $no=1;
                          $cekpembeli=mysqli_fetch_array(mysqli_query($con,"SELECT * FROM kustomer,orders 
           WHERE orders.id_kustomer=kustomer.id_kustomer AND id_orders='$_GET[id]'"));
           $ongkos=mysqli_fetch_array(mysqli_query($con,"SELECT ongkos_kirim FROM kota WHERE id_kota='$cekpembeli[id_kota]'"));
-$ongkoskirim1=$ongkos[ongkos_kirim];
-  $ongkoskirim1=$ongkos[ongkos_kirim];
+$ongkoskirim1=$ongkos['ongkos_kirim'];
+  $ongkoskirim1=$ongkos['ongkos_kirim'];
   $ongkoskirim=$ongkoskirim1 * $totalberat;
 
   $grandtotal    = $total + $ongkoskirim; 

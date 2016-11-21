@@ -1,0 +1,7 @@
+- kategori Member : 
+		- member koperasi :  registrasi oleh  admin (dg  no anggota koperasi)
+		- member umum :  daftar dari front end, ketika user mau beli sampai proses checkout. 
+			* kalau belum jadi member bisa langsung daftar kalau sudah member bisa langsung login. 
+			* halaman member : menampilkan history pembelian member (barang apa saja yang pernah dibeli)
+- penyewaan :
+	- harga poduk :   perbedaan harga antara "member umum" dengan "member koperasi"

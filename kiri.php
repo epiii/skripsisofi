@@ -1,4 +1,4 @@
-
+<!-- 
     <div class="title_box">Kategori</div>    
       <ul class="left_menu">
             <?php
@@ -94,3 +94,4 @@ while($b=mysqli_fetch_array($htmlkiri)){
 }
 ?>
      <div class="banner_adds"></div>    
+ -->

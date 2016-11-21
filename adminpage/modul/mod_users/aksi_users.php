@@ -1,6 +1,7 @@
 <?php
-session_start();
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+  session_start();
+  // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+  if (empty($_SESSION['namauser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
@@ -8,8 +9,8 @@ session_start();
 else{
 include "../../../config/koneksi.php";
 include "../../../config/fungsi_thumb.php";
-$module=$_GET[module];
-$act=$_GET[act];
+$module=$_GET['module'];
+$act=$_GET['act'];
 
 if ($module=='user' AND $act=='delcon'){
 	
@@ -19,13 +20,13 @@ if ($module=='user' AND $act=='delcon'){
 
 // Input user
 elseif ($module=='user' AND $act=='input'){
-	 $lokasi_file = $_FILES['fupload']['tmp_name'];
-  $tipe_file      = $_FILES['fupload']['type'];
-  $nama_file   = $_FILES['fupload']['name'];
-  $pass=md5($_POST[password]);
-if (!empty($lokasi_file)){
-	UploadBanner($nama_file);
-  mysqli_query($con,"INSERT INTO users(username,
+   $lokasi_file = $_FILES['fupload']['tmp_name'];
+   $tipe_file   = $_FILES['fupload']['type'];
+   $nama_file   = $_FILES['fupload']['name'];
+   $pass        = md5($_POST['password']);
+    if (!empty($lokasi_file)){
+    	UploadBanner($nama_file);
+      mysqli_query($con,"INSERT INTO users(username,
                                  password,
                                  nama_lengkap,
                                  email, 

@@ -1,6 +1,5 @@
-
 <?php
-session_start();
+// session_start();
 include "../config/koneksi.php";
 include "../config/library.php";
 include "../config/fungsi_indotgl.php";
@@ -44,10 +43,7 @@ if ($_GET['module']=='home'){
     if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
       $jam=date("H:i:s");
 $tgl=tgl_indo(date("Y m d")); 
-
 	echo "     
-               
-
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class='right-side'>
                 <!-- Content Header (Page header) -->
