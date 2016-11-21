@@ -5,3 +5,12 @@
 			* halaman member : menampilkan history pembelian member (barang apa saja yang pernah dibeli)
 - penyewaan :
 	- harga poduk :   perbedaan harga antara "member umum" dengan "member koperasi"
+
+
+--------------
+kasus :
+- double login :
+	- checkout
+	- halaman member
+- checkuot : otomatis tidak tampil form login jika sudah login sebelumnya
+

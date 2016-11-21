@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-21 04:09:52
+Date: 2016-11-21 17:23:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5862,23 +5862,26 @@ INSERT INTO `kota` VALUES ('5513', 'Sarudu', '62000');
 -- ----------------------------
 DROP TABLE IF EXISTS `kustomer`;
 CREATE TABLE `kustomer` (
-  `id_kustomer` int(5) NOT NULL,
+  `id_kustomer` int(5) NOT NULL AUTO_INCREMENT,
   `password` varchar(50) COLLATE latin1_general_ci NOT NULL,
   `nama_lengkap` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `alamat` text COLLATE latin1_general_ci NOT NULL,
   `email` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `telpon` varchar(20) COLLATE latin1_general_ci NOT NULL,
-  `id_kota` int(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `id_kota` int(5) NOT NULL,
+  PRIMARY KEY (`id_kustomer`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of kustomer
 -- ----------------------------
-INSERT INTO `kustomer` VALUES ('0', '36f17c3939ac3e7b2fc9396fa8e953ea', 'Imam Wicaksono', 'Jl. Al Barkah No. 10', 'computerz.engineerz@gmail.com', '08987575005', '1809');
-INSERT INTO `kustomer` VALUES ('0', '36f17c3939ac3e7b2fc9396fa8e953ea', 'aji', 'Jakarta', 'aji.setiaji@gmail.com', '08987575005', '1229');
-INSERT INTO `kustomer` VALUES ('0', '2d602588eb559b04c9f4fe0ec738c758', 'asrifin', 'Kraton', 'asrifin_ilham@yahoo.com', '085645985441', '4781');
-INSERT INTO `kustomer` VALUES ('0', 'e10adc3949ba59abbe56e057f20f883e', 'sofi', 'Kraton', 'vs2938@gmail.com', '081235377947', '4781');
-INSERT INTO `kustomer` VALUES ('0', 'a1565f2bf87258b7e9ddb2270176c979', 'Sarung Motor', 'Kraton Krian', 'jualsarungmotormurah@gmail.com', '0856459853441', '4781');
+INSERT INTO `kustomer` VALUES ('1', '36f17c3939ac3e7b2fc9396fa8e953ea', 'Imam Wicaksono', 'Jl. Al Barkah No. 10', 'computerz.engineerz@gmail.com', '08987575005', '1809');
+INSERT INTO `kustomer` VALUES ('2', '36f17c3939ac3e7b2fc9396fa8e953ea', 'aji', 'Jakarta', 'aji.setiaji@gmail.com', '08987575005', '1229');
+INSERT INTO `kustomer` VALUES ('3', '2d602588eb559b04c9f4fe0ec738c758', 'asrifin', 'Kraton', 'asrifin_ilham@yahoo.com', '085645985441', '4781');
+INSERT INTO `kustomer` VALUES ('4', 'e10adc3949ba59abbe56e057f20f883e', 'sofi', 'Kraton', 'vs2938@gmail.com', '081235377947', '4781');
+INSERT INTO `kustomer` VALUES ('5', 'a1565f2bf87258b7e9ddb2270176c979', 'Sarung Motor', 'Kraton Krian', 'jualsarungmotormurah@gmail.com', '0856459853441', '4781');
+INSERT INTO `kustomer` VALUES ('6', '60abedd5f2ba86f2b427bb0c1fbfd141', '', '', '', '', '4608');
+INSERT INTO `kustomer` VALUES ('7', '1f07921f4416f182a32c483ccac2b0e6', 'cust1', 'alamat cust1', 'cust1@email.com', '89898989', '4608');
 
 -- ----------------------------
 -- Table structure for label
@@ -5915,9 +5918,9 @@ CREATE TABLE `login` (
 -- ----------------------------
 -- Records of login
 -- ----------------------------
-INSERT INTO `login` VALUES ('1', 'admin1', 'e00cf25ad42683b3df678c61f42c6bda', '2016-11-20 16:39:08', 'ifuk2sm767rjs057qsbm0c4d32');
+INSERT INTO `login` VALUES ('1', 'admin1', 'e00cf25ad42683b3df678c61f42c6bda', '2016-11-21 15:24:40', 'l3v04e0m0u33hffe7ruiu7lf53');
 INSERT INTO `login` VALUES ('2', 'admin2', 'c84258e9c39059a89ab77d846ddab909', '2016-11-20 16:17:28', 'ueli06jmcbogo3ioj9bl266112');
-INSERT INTO `login` VALUES ('3', 'memkop1', '63ac4ab593b1c8a0a06d633a4f75fd3d', '2016-11-20 22:09:31', 'tb9d5vn51tv48v7uqd0oneocm5');
+INSERT INTO `login` VALUES ('3', 'memkop1', '63ac4ab593b1c8a0a06d633a4f75fd3d', '2016-11-21 04:12:45', 'e9pek03f628ond1kq6i9coeo53');
 INSERT INTO `login` VALUES ('4', '', 'd41d8cd98f00b204e9800998ecf8427e', '0000-00-00 00:00:00', '');
 INSERT INTO `login` VALUES ('5', '', 'd41d8cd98f00b204e9800998ecf8427e', '0000-00-00 00:00:00', '');
 INSERT INTO `login` VALUES ('6', '', 'd41d8cd98f00b204e9800998ecf8427e', '0000-00-00 00:00:00', '');
@@ -6120,7 +6123,7 @@ CREATE TABLE `orders` (
   `jam_order` time NOT NULL,
   `id_kustomer` int(5) NOT NULL,
   PRIMARY KEY (`id_orders`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=83 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of orders
@@ -6152,6 +6155,9 @@ INSERT INTO `orders_detail` VALUES ('32', '61', '1');
 INSERT INTO `orders_detail` VALUES ('33', '56', '1');
 INSERT INTO `orders_detail` VALUES ('34', '57', '1');
 INSERT INTO `orders_detail` VALUES ('35', '57', '1');
+INSERT INTO `orders_detail` VALUES ('64', '60', '2');
+INSERT INTO `orders_detail` VALUES ('64', '57', '1');
+INSERT INTO `orders_detail` VALUES ('81', '61', '1');
 
 -- ----------------------------
 -- Table structure for orders_detail_sewa
@@ -6241,12 +6247,13 @@ CREATE TABLE `orders_temp` (
   `jam_order_temp` time NOT NULL,
   `stok_temp` int(5) NOT NULL,
   PRIMARY KEY (`id_orders_temp`)
-) ENGINE=MyISAM AUTO_INCREMENT=183 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=187 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of orders_temp
 -- ----------------------------
 INSERT INTO `orders_temp` VALUES ('182', '62', 'k65uenug9g4nvc34hff09q03r4', '1', '2016-11-14', '20:34:13', '10');
+INSERT INTO `orders_temp` VALUES ('183', '61', 'mt8qs4084uvus8rgfba1r99gh0', '1', '2016-11-21', '14:02:59', '5');
 
 -- ----------------------------
 -- Table structure for produk
@@ -6278,6 +6285,37 @@ INSERT INTO `produk` VALUES ('59', '19', 'Sepatu Empat', 'sepatu-empat', '<p>Ini
 INSERT INTO `produk` VALUES ('60', '19', 'Sepatu Lima', 'sepatu-lima', '<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n\r\n<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n', '10000', '3', '1.00', '2015-03-09', '984.jpg', '2', '0');
 INSERT INTO `produk` VALUES ('61', '19', 'Sepatu Ajib', 'sepatu-ajib', '<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n\r\n<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n', '1550000', '5', '1.00', '2015-03-09', '705.jpg', '2', '0');
 INSERT INTO `produk` VALUES ('62', '19', 'VanTofel', 'vantofel', '<p>Masukkan keterangan produk disini.</p>\r\n', '1250000', '10', '1.00', '2016-09-26', '66Screenshot_1.jpg', '1', '0');
+
+-- ----------------------------
+-- Table structure for produk_copy
+-- ----------------------------
+DROP TABLE IF EXISTS `produk_copy`;
+CREATE TABLE `produk_copy` (
+  `id_produk` int(5) NOT NULL AUTO_INCREMENT,
+  `id_kategori` int(5) NOT NULL,
+  `nama_produk` varchar(100) COLLATE latin1_general_ci NOT NULL,
+  `produk_seo` varchar(100) COLLATE latin1_general_ci NOT NULL,
+  `deskripsi` text COLLATE latin1_general_ci NOT NULL,
+  `harga` int(20) NOT NULL,
+  `stok` int(5) NOT NULL,
+  `berat` decimal(5,2) unsigned NOT NULL DEFAULT '0.00',
+  `tgl_masuk` date NOT NULL,
+  `gambar` varchar(100) COLLATE latin1_general_ci NOT NULL,
+  `dibeli` int(5) NOT NULL DEFAULT '1',
+  `diskon` int(5) NOT NULL,
+  PRIMARY KEY (`id_produk`)
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+-- ----------------------------
+-- Records of produk_copy
+-- ----------------------------
+INSERT INTO `produk_copy` VALUES ('56', '19', 'Sepatu Satu', 'sepatu-satu', '<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n\r\n<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n', '100000', '9', '1.00', '2015-03-09', '52.jpg', '2', '5');
+INSERT INTO `produk_copy` VALUES ('57', '20', 'Sepatu Dua', 'sepatu-dua', '<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n\r\n<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n', '150000', '6', '1.00', '2015-03-09', '54sample.jpg', '5', '0');
+INSERT INTO `produk_copy` VALUES ('58', '19', 'Sepatu Tiga', 'sepatu-tiga', '<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n\r\n<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n', '10000', '9', '1.00', '2015-03-09', '121.jpg', '2', '0');
+INSERT INTO `produk_copy` VALUES ('59', '19', 'Sepatu Empat', 'sepatu-empat', '<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n\r\n<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n', '50000', '5', '1.00', '2015-03-09', '962.jpg', '1', '0');
+INSERT INTO `produk_copy` VALUES ('60', '19', 'Sepatu Lima', 'sepatu-lima', '<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n\r\n<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n', '10000', '3', '1.00', '2015-03-09', '984.jpg', '2', '0');
+INSERT INTO `produk_copy` VALUES ('61', '19', 'Sepatu Ajib', 'sepatu-ajib', '<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n\r\n<p>Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja Ini adalah contoh produk saja</p>\r\n', '1550000', '5', '1.00', '2015-03-09', '705.jpg', '2', '0');
+INSERT INTO `produk_copy` VALUES ('62', '19', 'VanTofel', 'vantofel', '<p>Masukkan keterangan produk disini.</p>\r\n', '1250000', '10', '1.00', '2016-09-26', '66Screenshot_1.jpg', '1', '0');
 
 -- ----------------------------
 -- Table structure for profil
@@ -6482,6 +6520,7 @@ INSERT INTO `statistik` VALUES ('::1', '2016-09-26', '12', '1474894723');
 INSERT INTO `statistik` VALUES ('::1', '2016-10-17', '2', '1476710495');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-14', '9', '1479134063');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-20', '27', '1479635172');
+INSERT INTO `statistik` VALUES ('::1', '2016-11-21', '16', '1479716803');
 
 -- ----------------------------
 -- Table structure for submenu
@@ -6584,3 +6623,4 @@ CREATE TABLE `users` (
 -- ----------------------------
 INSERT INTO `users` VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'info@sentrabisnisnu.com', '08238923848', 'admin', 'N', 'ciyus-miapah.jpg', 'gqv5gtshd9g352vqfstij1io90');
 INSERT INTO `users` VALUES ('ajib', 'dc8ce8751a9426bd731dc5af53e5bc49', 'Ajib Bener', 'computerz.engineerz@gmail.com', '089667791613', 'user', 'N', 'opo.jpg', '71p15m960op8fh09gc6ts7e4m7');
+INSERT INTO `users` VALUES ('ane', '6c7be0759b9fe15878dbd4cd7c5d0d84', 'nama lngkap ane', 'ane@email.com', '0828778', 'user', 'N', '11921650_1170781602937853_2602344976969667705_n.jpg', '6c7be0759b9fe15878dbd4cd7c5d0d84');

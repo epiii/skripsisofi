@@ -24,7 +24,8 @@ if ($_SESSION['leveluser']=='admin'){
       </a> 
       </li>
 
-      <li class='treeview'>
+    ";
+      /*<li class='treeview'>
         <a href=''>
           <i class='fa fa-info-circle'></i>
           <span>User</span>
@@ -34,8 +35,7 @@ if ($_SESSION['leveluser']=='admin'){
           <li><a href='?module=user'><i class='fa fa-angle-double-right'></i> Admin</a></li>
           <li><a href='?module=menuutama'><i class='fa fa-angle-double-right'></i>Member</a></li>
         </ul>
-      </li>
-    ";
+      </li>*/
 while ($m=mysqli_fetch_array($sql)){
 $carimenu=mysqli_query($con,"select * from submenu where link_sub='?$page_name1'");
  $sm=mysqli_fetch_array($carimenu);

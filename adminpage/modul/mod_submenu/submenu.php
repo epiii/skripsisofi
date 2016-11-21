@@ -1,6 +1,7 @@
 <?php
-session_start();
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+// session_start();
+ // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+  if (empty($_SESSION['namauser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
         <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
@@ -28,7 +29,8 @@ echo "
                         <div class='col-xs-12'>
                    
 <div class='box'>";
-switch($_GET[act]){
+$act=!isset($_GET['act'])?'act':$_GET['act'];
+switch($act){
   // Tampil Sub Menu
   default:
     echo " <div class='box-header'>
@@ -52,11 +54,11 @@ switch($_GET[act]){
   
     $no = 1;
     while($r=mysqli_fetch_array($tampil)){
-	if($r[id_submain]!=0){
+	if($r['id_submain']!=0){
 		$sub = mysqli_fetch_array(mysqli_query($con,"SELECT * FROM submenu WHERE id_sub=$r[id_submain]"));
-		$menuutama = $r[nama_menu]." &gt; ".$sub[nama_sub];
+		$menuutama = $r['nama_menu']." &gt; ".$sub[nama_sub];
 	} else {
-		$menuutama = $r[nama_menu];
+		$menuutama = $r['nama_menu'];
 	}
       echo "<tr><td class='left' width='25'>$no</td>
                 <td class='left'>$r[nama_sub]</td>
@@ -195,17 +197,17 @@ switch($_GET[act]){
                                         <div class='form-group'>
                                             <label>Menu Utama</label>
                                             <select name='menu_utama' class='form-control'>
-                                                <option value=0 selected>- Pilih Menu Utama -</option>";
+                                                <option value=0>- Pilih Menu Utama -</option>";
                                                 $tampil=mysqli_query($con,"SELECT * FROM menuutama WHERE aktif='Y' ORDER BY nama_menu");
-          if ($r[id_main]==0){
+          if ($r['id_main']==0){
             echo "<option value=0 selected>- Pilih Menu Utama -</option>";
           }   
           while($w=mysqli_fetch_array($tampil)){
-            if ($r[id_main]==0 || ($r[id_main]!=0 && $r[id_submain]!=0)){
+            if ($r['id_main']==0 || ($r['id_main']!=0 && $r['id_submain']!=0)){
               echo "<option value=$w[id_main] selected>$w[nama_menu]</option>";
             }
             else{
-              echo "<option value=$w[id_main]>$w[nama_menu]</option>";
+              echo "<option selected value=$w[id_main]>$w[nama_menu]</option>";
             }
           }
     echo "</select>
@@ -214,11 +216,11 @@ switch($_GET[act]){
                                             <select name='sub_menu' class='form-control'>
                                                 <option value=0 selected>- Pilih Sub Menu Dari Menu Utama -</option>";
                                                 $tampil2=mysqli_query($con,"SELECT * FROM submenu WHERE id_submain=0 AND aktif='Y' ORDER BY nama_sub");
-          if ($r[id_submain]==0){
+          if ($r['id_submain']==0){
             echo "<option value=0 selected>- Pilih Sub Menu -</option>";
           }   
           while($s=mysqli_fetch_array($tampil2)){
-            if ($r[id_submain]==$s[id_sub]){
+            if ($r['id_submain']==$s['id_sub']){
               echo "<option value=$s[id_sub] selected>$s[nama_sub]</option>";
             }
             else{
@@ -233,7 +235,7 @@ switch($_GET[act]){
                                         <div class='form-group'>
                                          <label>Status Sub Menu</label>
                                             <div class='radio'>";
-                                             if ($r[aktif]=='Y'){
+                                             if ($r['aktif']=='Y'){
                                              	echo "
                                                 <label>
                                                     <input type='radio' name='aktif' id='optionsRadios1' value='Y' checked>
