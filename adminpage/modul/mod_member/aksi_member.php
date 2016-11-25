@@ -15,7 +15,6 @@ $module=$_GET['module'];
 $act=$_GET['act'];
 
 if ($module=='member' AND $act=='delcon'){
-	
   mysqli_query($con,"DELETE FROM member WHERE id_session='$_GET[id]'");
   header('location:../../media.php?module='.$module);
 }
