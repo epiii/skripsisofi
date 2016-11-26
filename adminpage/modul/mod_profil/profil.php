@@ -19,9 +19,9 @@ echo "
                     <div class='row'>
                         <div class='col-xs-12'>
                    
-<div class='box'>
-                                ";
-switch($_GET[act]){
+<div class='box'>";
+$act=!isset($_GET['act'])?'act':$_GET['act'];                         
+switch($act){
 	
   // Tampil Profil
   default:
