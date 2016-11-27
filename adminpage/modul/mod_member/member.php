@@ -1,106 +1,103 @@
 <?php
 // session_start();
  // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
- if (empty($_SESSION['namauser'])){
+if (empty($_SESSION['namauser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
- <center>Untuk mengakses modul, Anda harus login <br>";
+  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
 }
 else{
-
-$aksi="modul/mod_member/aksi_member.php";
-echo "
-<aside class='right-side'>
-                <!-- Content Header (Page header) -->
-                <section class='content-header'>
-                    <h1>
-                        Data
-                        <small>User</small>
-                    </h1>
-                    <ol class='breadcrumb'>
-                        <li><a href='#'><i class='fa fa-dashboard'></i> Home</a></li>
-                        <li class='active'>Data User</li>
-                       
-                    </ol>
-                </section>
-
-                <!-- Main content -->
-                <section class='content'>
-                    <div class='row'>
-                        <div class='col-xs-12'>
+  $aksi="modul/mod_member/aksi_member.php";
+  echo " <aside class='right-side'>
+            <!-- Content Header (Page header) -->
+            <section class='content-header'>
+                <h1>
+                    Data
+                    <small>User</small>
+                </h1>
+                <ol class='breadcrumb'>
+                    <li><a href='#'><i class='fa fa-dashboard'></i> Home</a></li>
+                    <li class='active'>Data User</li>
                    
-<div class='box'>";
-$act=!isset($_GET['act'])?'act':$_GET['act'];
-// vd($act);
-switch($act){ 
-  // Tampil User
-  default:
-    if ($_SESSION['leveluser']=='admin'){
-      $s="SELECT *
-          FROM member m
-          JOIN login l ON l.id_login = m.id_login
-          ORDER BY nama_lengkap";
-      $tampil = mysqli_query($con,$s);
-      // vd($tampil);
-      echo "
-       <div class='box-header'>
-                                    <h3 class='box-title'>
-<input type=button class='btn btn-primary btn' value='Tambah Member' onclick=\"window.location.href='?module=member&act=tambahuser';\"></h3>
-                                </div><!-- /.box-header -->
-                                <div class='box-body table-responsive'>
-    
-    <table id='example1' class='table table-bordered table-striped'>
-                                        <thead>
-     
-        ";
-    }else{
-      $tampil=mysqli_query($con,'SELECT * FROM member WHERE username="'.$_SESSION['namauser'].'"');
-      echo " <div class='box-header'>
-                                    <h3 class='box-title'>
-                                   Data User</h3>
-                                </div><!-- /.box-header -->
-                                <div class='box-body table-responsive'>
-    
-    <table id='example1' class='table table-bordered table-striped'>
-                                        <thead><table id='example1' class='table table-bordered table-striped'>
-                                        <thead>";
-    }
-    
-    echo "           <tr>
-          <th>No</th>
-          <th>Username</th>
-          <th>Nama Lengkap</th>
-         <th>Foto User</th>          
-          <th>Level</th>
-          <th>Blokir</th>
-          <th>Aksi</th>
-          </tr></thead><tbody>"; 
-    $no=1;
-    // vd($tampil);
-    while ($r=mysqli_fetch_assoc($tampil)){
-       echo "<tr>
-       <td class='center' width='10'>$no</td>
-             <td class='left'>$r[username]</td>
-             <td class='left'>$r[nama_lengkap]</td>
-             <td class='left'><img src='../foto_banner/$r[foto]' width='100' height='100'></td>
-		         <td class='left'>".($r['kategori']=='k'?'koperasi':'umum')."</td>
-		         <td class='left'>$r[blokir]</td>
-		         <td class='center'>
-    		        <a class='btn btn-info' href='?module=member&act=editmember&id=$r[id_member]'>
-									<i class='icon-edit icon-white'></i>  
-									Edit                                            
-								</a>
-								<a class='btn btn-danger' href='$aksi?module=member&act=delcon&id=$r[id_session]'>
-									<i class='icon-trash icon-white'></i> 
-									Delete
-								</a>
-							</td>
-					</tr>";
-      $no++;
-    }
-    echo "</tbody></table>";
-    break;
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class='content'>
+              <div class='row'>
+                  <div class='col-xs-12'>
+                      <div class='box'>";
   
+  $act=!isset($_GET['act'])?'act':$_GET['act'];
+  switch($act){ 
+    // Tampil User
+    default:
+      if ($_SESSION['leveluser']=='admin'){
+          // $s="SELECT *
+          //     FROM member m
+          //     JOIN login l ON l.id_login = m.id_login
+          //     ORDER BY nama_lengkap";
+          $s='SELECT * FROM kustomer ORDER BY nama_lengkap ';
+          $tampil = mysqli_query($con,$s);
+          // vd($tampil);
+          // vd($tampil);
+          echo "
+           <div class='box-header'>
+            <h3 class='box-title'>
+            <input type=button class='btn btn-primary btn' value='Tambah Member' onclick=\"window.location.href='?module=member&act=tambahuser';\"></h3>
+            </div><!-- /.box-header -->
+            <div class='box-body table-responsive'>
+
+            <table id='example1' class='table table-bordered table-striped'>
+              <thead>";
+      }else{
+        // $tampil=mysqli_query($con,'SELECT * FROM member WHERE username="'.$_SESSION['namauser'].'"');
+        $s='SELECT * FROM kustomer WHERE username="'.$_SESSION['namauser'].'"';
+        // vd($s);
+        $tampil=mysqli_query($con,$s);
+        echo " <div class='box-header'>
+                  <h3 class='box-title'>
+                       Data User</h3>
+                    </div><!-- /.box-header -->
+                    <div class='box-body table-responsive'>
+                <table id='example1' class='table table-bordered table-striped'>
+                <thead><table id='example1' class='table table-bordered table-striped'>
+                <thead>";
+      }
+      echo "<tr>
+      <th>No</th>
+      <th>Nama Lengkap</th>
+      <th>Email</th>
+      <th>Foto User</th>          
+      <th>Kategori</th>
+      <th>Blokir</th>
+      <th>Aksi</th>
+      </tr></thead><tbody>"; 
+      $no=1;
+      // vd($no);
+      while ($r=mysqli_fetch_assoc($tampil)){
+        echo "<tr>
+          <td class='center' width='10'>$no</td>
+               <td class='left'>$r[nama_lengkap]</td>
+               <td class='left'>$r[email]</td>
+               <td class='left'><img src='../foto_banner/$r[foto]' width='100' height='100'></td>
+               <td class='left'>".($r['kategori']=='k'?'koperasi':'umum')."</td>
+               <td class='left'>$r[blokir]</td>
+               <td class='center'>
+                  <a class='btn btn-info' href='?module=member&act=editmember&id=$r[id_member]'>
+          					<i class='icon-edit icon-white'></i>  
+          					Edit                                            
+          				</a>
+          				<a class='btn btn-danger' href='$aksi?module=member&act=delcon&id=$r[id_session]'>
+          					<i class='icon-trash icon-white'></i> 
+          					Delete
+          				</a>
+          			</td>
+          	</tr>";
+        $no++;
+      }echo "</tbody></table>";
+    break;
+
   case "tambahuser":
     if ($_SESSION['leveluser']=='admin'){
     echo "

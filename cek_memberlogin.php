@@ -20,6 +20,7 @@ $pass     = anti_injection(md5($_POST['password']));
 // }else{
   // $login=mysqli_query($con,"SELECT * FROM users WHERE username='$username' AND password='$pass' AND blokir='N'");
   $s='SELECT * FROM kustomer WHERE email = "'.$username.'" AND  password = "'.$pass.'"';
+vd($s);
   $login  =mysqli_query($con,$s);
   $ketemu =mysqli_num_rows($login);
   $r      =mysqli_fetch_assoc($login);

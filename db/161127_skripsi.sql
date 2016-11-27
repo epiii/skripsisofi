@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-27 13:19:42
+Date: 2016-11-27 14:10:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5911,11 +5911,12 @@ CREATE TABLE `kustomer` (
   `fakultas` enum('FT','FIK','FE') COLLATE latin1_general_ci NOT NULL,
   `foto` text COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`id_kustomer`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of kustomer
 -- ----------------------------
+INSERT INTO `kustomer` VALUES ('8', 'u', '979f4582d8aabe8d3e4c25aaa1825213', 'cust2', 'jalan cust2', 'cust2@email.com', '078547853847', '1529', '', '');
 
 -- ----------------------------
 -- Table structure for kustomer_copy
@@ -6189,11 +6190,12 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id_orders`),
   KEY `id_kustomerFK` (`id_kustomer`) USING BTREE,
   CONSTRAINT `id_kustomerFK2` FOREIGN KEY (`id_kustomer`) REFERENCES `kustomer` (`id_kustomer`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
+INSERT INTO `orders` VALUES ('89', 'Baru', '2016-11-27', '14:07:51', '8');
 
 -- ----------------------------
 -- Table structure for orders_detail
@@ -6209,11 +6211,13 @@ CREATE TABLE `orders_detail` (
   KEY `id_produkFK3` (`id_produk`) USING BTREE,
   CONSTRAINT `id_ordersFK` FOREIGN KEY (`id_orders`) REFERENCES `orders` (`id_orders`),
   CONSTRAINT `id_produkFK` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of orders_detail
 -- ----------------------------
+INSERT INTO `orders_detail` VALUES ('1', '89', '61', '1');
+INSERT INTO `orders_detail` VALUES ('2', '89', '62', '1');
 
 -- ----------------------------
 -- Table structure for orders_detail_copy
@@ -6312,7 +6316,7 @@ CREATE TABLE `orders_temp` (
   `jam_order_temp` time NOT NULL,
   `stok_temp` int(5) NOT NULL,
   PRIMARY KEY (`id_orders_temp`)
-) ENGINE=MyISAM AUTO_INCREMENT=198 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=200 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of orders_temp
@@ -6591,7 +6595,7 @@ INSERT INTO `statistik` VALUES ('::1', '2016-11-14', '9', '1479134063');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-20', '27', '1479635172');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-21', '20', '1479747302');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-26', '8', '1480156157');
-INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '2', '1480222763');
+INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '4', '1480228689');
 
 -- ----------------------------
 -- Table structure for submenu

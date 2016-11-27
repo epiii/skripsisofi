@@ -302,16 +302,16 @@ elseif (strlen($kar1)==0 OR strlen($kar2)==0){
 else{
 
 // fungsi untuk mendapatkan isi keranjang belanja
-function isi_keranjang(){
-	$isikeranjang = array();
-	$sid = session_id();
-	$sql = mysqli_query($con,"SELECT * FROM orders_temp WHERE id_session='$sid'");
+// function isi_keranjang(){
+// 	$isikeranjang = array();
+// 	$sid = session_id();
+// 	$sql = mysqli_query($con,"SELECT * FROM orders_temp WHERE id_session='$sid'");
 	
-	while ($r=mysqli_fetch_array($sql)) {
-		$isikeranjang[] = $r;
-	}
-	return $isikeranjang;
-}
+// 	while ($r=mysqli_fetch_array($sql)) {
+// 		$isikeranjang[] = $r;
+// 	}
+// 	return $isikeranjang;
+// }
 
 $tgl_skrg = date("Ymd");
 $jam_skrg = date("H:i:s");
@@ -334,7 +334,7 @@ $password=md5($_POST['password']);
 // simpan data kustomer
 $s="INSERT INTO kustomer(nama_lengkap, password, alamat, telpon, email, id_kota) 
            VALUES('$nama','$password','$alamat','$telpon','$email','$_POST[kota]')"; 
-vd($s);
+// vd($s);
 mysqli_query($con,$s);
 
 // mendapatkan nomor kustomer
@@ -407,17 +407,17 @@ $pesan="Terimakasih telah melakukan pemesanan online di toko online kami <br /><
         
 $no=1;
 while ($d=mysqli_fetch_array($daftarproduk)){
-   $disc        = ($d[diskon]/100)*$d[harga];
-   $hargadisc   = number_format(($d[harga]-$disc),0,",","."); 
-   $subtotal    = ($d[harga]-$disc) * $d[jumlah];
+   $disc        = ($d['diskon']/100)*$d['harga'];
+   $hargadisc   = number_format(($d['harga']-$disc),0,",","."); 
+   $subtotal    = ($d['harga']-$disc) * $d['jumlah'];
 
-   $subtotalberat = $d[berat] * $d[jumlah]; // total berat per item produk 
+   $subtotalberat = $d['berat'] * $d['jumlah']; // total berat per item produk 
    $totalberat  = $totalberat + $subtotalberat; // grand total berat all produk yang dibeli
 
    $total       = $total + $subtotal;
    $subtotal_rp = format_rupiah($subtotal);    
    $total_rp    = format_rupiah($total);    
-   $harga       = format_rupiah($d[harga]);
+   $harga       = format_rupiah($d['harga']);
 
   echo "<tbody>
 										<tr>
