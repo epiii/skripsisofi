@@ -16,9 +16,11 @@ $pass     = anti_injection(md5($_POST['password']));
 // pastikan username dan password adalah berupa huruf atau angka.
 if (!ctype_alnum($username) OR !ctype_alnum($pass)){
   echo "Sekarang loginnya tidak bisa di injeksi lho.";
+ // vd($login);
 }else{
-  // $login=mysqli_query($con,"SELECT * FROM users WHERE username='$username' AND password='$pass' AND blokir='N'");
-  $s='SELECT
+  $s="SELECT * FROM users WHERE username='$username' AND password='$pass' AND blokir='N'";
+  $login=mysqli_query($con,$s);
+ /* $s='SELECT
         l.username,
         l.id_login,
         a.nama_lengkap
@@ -27,11 +29,11 @@ if (!ctype_alnum($username) OR !ctype_alnum($pass)){
       JOIN admin a ON a.id_login = l.id_login
       WHERE
         l.username = "'.$username.'"
-      AND l.`password` = "'.$pass.'"';
-// vd($s);
+      AND l.`password` = "'.$pass.'"';*/
   $login  =mysqli_query($con,$s);
   $ketemu =mysqli_num_rows($login);
-  $r      =mysqli_fetch_array($login);
+  $r      =mysqli_fetch_assoc($login);
+// vd($r);
 
 // Apabila username dan password ditemukan
 if ($ketemu > 0){

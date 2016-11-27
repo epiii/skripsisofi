@@ -13,29 +13,17 @@ $username = anti_injection($_POST['username']);
 $pass     = anti_injection(md5($_POST['password']));
 // vd($username);
 
+// vd(ctype_alnum($username));
 // pastikan username dan password adalah berupa huruf atau angka.
-if (!ctype_alnum($username) OR !ctype_alnum($pass)){
-  echo "Sekarang loginnya tidak bisa di injeksi lho.";
-}else{
+// if (!ctype_alnum($username) OR !ctype_alnum($pass)){
+//   echo "Sekarang loginnya tidak bisa di injeksi lho.";
+// }else{
   // $login=mysqli_query($con,"SELECT * FROM users WHERE username='$username' AND password='$pass' AND blokir='N'");
-  $s='SELECT
-        l.id_login,
-        l.username,
-        l.id_login,
-        m.kategori,
-        m.foto,
-        m.alamat,
-        m.nama_lengkap
-      FROM
-        login l
-      JOIN member m ON m.id_login = l.id_login
-      WHERE
-        l.username = "'.$username.'"
-        AND  l.`password` = "'.$pass.'"';
-// vd($s);
+  $s='SELECT * FROM kustomer WHERE email = "'.$username.'" AND  password = "'.$pass.'"';
   $login  =mysqli_query($con,$s);
   $ketemu =mysqli_num_rows($login);
-  $r      =mysqli_fetch_array($login);
+  $r      =mysqli_fetch_assoc($login);
+// vd($r);
 
 // Apabila username dan password ditemukan
 if ($ketemu > 0){
@@ -43,7 +31,7 @@ if ($ketemu > 0){
   include "adminpage/timeout.php";
 
   $_SESSION['idlogin']     = $r['id_login'];
-  $_SESSION['namauser']    = $r['username'];
+  $_SESSION['namauser']    = $r['email'];
   $_SESSION['namalengkap'] = $r['nama_lengkap'];
   $_SESSION['alamat']      = $r['alamat'];
   // $_SESSION['passuser']    = $r['password'];
@@ -61,14 +49,14 @@ if ($ketemu > 0){
 
   // mysqli_query($con,"UPDATE users SET id_session='$sid_baru' WHERE username='$username'");
   // mysqli_query($con,"UPDATE login SET id_session='$sid_baru' WHERE username='$username'");
-  $ss='UPDATE login SET id_session="'.$sid_baru.'"  WHERE id_login='.$r['id_login'];
+  // $ss='UPDATE login SET id_session="'.$sid_baru.'" WHERE id_login='.$r['id_login'];
   // vd($ss);
-  mysqli_query($con,$ss);
+  // mysqli_query($con,$ss);
   header('location:member.html');
   // header('location:member-view.html');
 }
 else{
   include "error-login.html";
 }
-}
+// }
 ?>

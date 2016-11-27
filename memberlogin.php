@@ -24,7 +24,7 @@
             
         <div class="form-box" id="login-box">
             <div class="header">Login</div>
-            <small>demo >> <br> username : memkop1 <br> password : memkop1</small>
+            <!-- <small>demo >> <br> username : memkop1 <br> password : memkop1</small> -->
            <form id="form-login" name="login" method="post" action="cek_memberlogin.php" onSubmit="return validasi(this)">
                 <div class="body bg-lime">
                     <div class="form-group">

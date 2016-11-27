@@ -48,7 +48,7 @@
 							<h5>Best Seller</h5>";								
       $best=mysqli_query($con,"SELECT * FROM produk ORDER BY dibeli DESC LIMIT 5");
       while($a=mysqli_fetch_array($best)){
-        $harga = format_rupiah($a[harga]);
+        $harga = format_rupiah($a['harga']);
 		    echo "<a href='produk-$a[id_produk]-$a[produk_seo].html'>
 									<article class='clearfix'>
 										<div class='thumb visible-desktop'><img src='foto_produk/$a[gambar]' alt=''/></div>
@@ -125,7 +125,7 @@
 			";
 			$jmldata     = mysqli_num_rows(mysqli_query($con,"SELECT * FROM produk"));
   $jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
-  $linkHalaman = $p->navHalaman($_GET[halproduk], $jmlhalaman);
+  $linkHalaman = $p->navHalaman($_GET['halproduk'], $jmlhalaman);
 
   echo "	<div class='pagination pagination-centered'><ul>$linkHalaman</ul></div></section>";
 			?>
