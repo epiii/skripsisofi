@@ -110,59 +110,92 @@ else{
 
   case "tambahuser":
     if ($_SESSION['leveluser']=='admin'){
+      // vd($aksi);
     echo "
     <section class='content'>
-
-                    <div class='row'>
-                        <div class='col-md-12'>
-                            <div class='box box-info'>
-                                <div class='box-header'>
-                                    <h3 class='box-title'>Tambah <small>Member</small></h3>
-                                    <!-- tools box -->
-                                    <div class='pull-right box-tools'>
-                                        <button class='btn btn-info btn-sm' data-widget='collapse' data-toggle='tooltip' title='Collapse'><i class='fa fa-minus'></i></button>
-                                        <button class='btn btn-info btn-sm' data-widget='remove' data-toggle='tooltip' title='Remove'><i class='fa fa-times'></i></button>
-                                    </div><!-- /. tools -->
-                                </div><!-- /.box-header -->
-                                <div class='box-body pad'>
-                                 <form method=POST action='$aksi?module=member&act=input' enctype='multipart/form-data'>
-                                  <div class='form-group'>
-                                            <label>Username</label>
-                                            <input type='text' class='form-control' name='username' placeholder='Username Anda ...'/>
-                                        </div>
-                                         <div class='form-group'>
-                                            <label>Password</label>
-                                            <input type='password' class='form-control' name='password' placeholder='Password ...'/>
-                                        </div>
-                                         <div class='form-group'>
-                                            <label>Nama Lengkap</label>
-                                            <input type='text' class='form-control' name='nama_lengkap' placeholder='Nama Lengkap ...'/>
-                                        </div>
-                                         <div class='form-group'>
-                                            <label>Email</label>
-                                            <input type='text' class='form-control' name='email' placeholder='Email ...'/>
-                                        </div>
-                                         <div class='form-group'>
-                                            <label>No.Telp</label>
-                                            <input type='text' class='form-control' name='no_telp' placeholder='No.Telp ...'/>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label for='exampleInputFile'>Foto</label>
-                                            <input type='file' name='fupload' id='exampleInputFile'>
-                                            <p class='help-block'><i>File gambar harus berekstention .JPG / PNG Resolusi Optimal 215 x 215</i></p>
-                                        </div>
-                                        <div class='form-group'>
-                                        <input type=submit class='btn btn-primary btn-lg' value=Simpan>
-                            <input type=button class='btn btn-warning btn-lg' value=Batal onclick=self.history.back()>
+        <div class='row'>
+            <div class='col-md-12'>
+                <div class='box box-info'>
+                    <div class='box-header'>
+                        <h3 class='box-title'>Tambah <small>Member</small></h3>
+                        <!-- tools box -->
+                        <div class='pull-right box-tools'>
+                            <button class='btn btn-info btn-sm' data-widget='collapse' data-toggle='tooltip' title='Collapse'><i class='fa fa-minus'></i></button>
+                            <button class='btn btn-info btn-sm' data-widget='remove' data-toggle='tooltip' title='Remove'><i class='fa fa-times'></i></button>
+                        </div><!-- /. tools -->
+                    </div><!-- /.box-header -->
+                    <div class='box-body pad'>
+                     <form method=POST action='$aksi?module=member&act=input' enctype='multipart/form-data'>
+                      <div class='form-group'>
+                                <label>Username</label>
+                                <input type='text' class='form-control' name='username' placeholder='Username Anda ...'/>
                             </div>
-                                    </form>
-                                </div>
-                            </div><!-- /.box -->
+                             <div class='form-group'>
+                                <label>Password</label>
+                                <input type='password' class='form-control' name='password' placeholder='Password ...'/>
+                            </div>
+                             <div class='form-group'>
+                                <label>Nama Lengkap</label>
+                                <input type='text' class='form-control' name='nama_lengkap' placeholder='Nama Lengkap ...'/>
+                            </div>
+                             <div class='form-group'>
+                                <label>Email</label>
+                                <input type='text' class='form-control' name='email' placeholder='Email ...'/>
+                            </div>
+                             <div class='form-group'>
+                                <label>No.Telp</label>
+                                <input type='text' class='form-control' name='no_telp' placeholder='No.Telp ...'/>
+                            </div>
+                             <div class='form-group'>
+                                <label>Alamat</label>
+                                <input type='text' class='form-control' name='alamat' placeholder='alamat'/>
+                            </div>
+                             <div class='form-group'>
+                                <label>Kota</label>
+                                <select class='form-control' name='kota'>";
+                            $sk='SELECT * FROM kota order by nama_kota';
+                            $ek=mysqli_query($con,$sk);
+                            echo '<option value="">-Pilih-</option>';
+                            while ($rk=mysqli_fetch_assoc($ek)) {
+                                echo '<option value="'.$rk['id_kota'].'">'.$rk['nama_kota'].'</option>';
+                            }echo"</select>
+                            </div>
+                             <div class='form-group'>
+                                <label>Fakutas</label>
+                                <select class='form-control' name='fakultas'>
+                                  <option value=''>-Pilih-</option>
+                                  <option value='FT'>FT</option>
+                                  <option value='FE'>FE</option>
+                                  <option value='FIK'>FIK</option>
+                                  <option value='FIP'>FIP</option>
+                                  <option value='FMIPA'>FMIPA</option>
+                                  <option value='FIS'>FIS</option>
+                                </select>
+                            </div>
+                            <div class='form-group'>
+                                <label>Blokir</label>
+                                <select class='form-control' name='blokir'>
+                                  <option value='N'>Tidak</option>
+                                  <option value='Y'>Ya</option>
+                                </select>
+                            </div>
+                            <div class='form-group'>
+                                <label for='exampleInputFile'>Foto</label>
+                                <input type='file' name='fupload' id='exampleInputFile'>
+                                <p class='help-block'><i>File gambar harus berekstention .JPG / PNG Resolusi Optimal 215 x 215</i></p>
+                            </div>
+                            <div class='form-group'>
+                            <input type=submit class='btn btn-primary btn-lg' value=Simpan>
+                <input type=button class='btn btn-warning btn-lg' value=Batal onclick=self.history.back()>
+                </div>
+                        </form>
+                    </div>
+                </div><!-- /.box -->
 
-                            
-                        </div><!-- /.col-->
-                    </div><!-- ./row -->
-                                    </section>
+                
+            </div><!-- /.col-->
+        </div><!-- ./row -->
+                        </section>
     
     
     ";
