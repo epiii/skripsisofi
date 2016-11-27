@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-27 17:28:08
+Date: 2016-11-27 17:43:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -233,13 +233,13 @@ CREATE TABLE `header` (
   `gambar` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `tgl_posting` date NOT NULL,
   PRIMARY KEY (`id_header`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of header
 -- ----------------------------
 INSERT INTO `header` VALUES ('1', 'DaichaShop', 'semua-produk.html', 'DaichaShop..Best Online Shop, Mudah, murah, dan Terpercaya..', 'banner-width1.png', '2014-12-20');
-INSERT INTO `header` VALUES ('2', 'We Serve Better', 'semua-produk.html', 'We Serve Better...Segera Order dan Dapatkan Produk terbaik kami', 'banner-width2.png', '2014-12-20');
+INSERT INTO `header` VALUES ('2', 'We Serve Betterx', 'semua-produk.html', 'We Serve Better...Segera Order dan Dapatkan Produk terbaik kamix', 'banner-width2.png', '2014-12-20');
 
 -- ----------------------------
 -- Table structure for htmlkanan
@@ -6065,7 +6065,7 @@ CREATE TABLE `menuutama` (
   `icon` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
   `urutan` int(5) NOT NULL,
   PRIMARY KEY (`id_main`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of menuutama
@@ -6421,7 +6421,7 @@ CREATE TABLE `profil` (
 -- ----------------------------
 -- Records of profil
 -- ----------------------------
-INSERT INTO `profil` VALUES ('1', '<p><strong>Selamat Datang di DaichaShop | GROSIR Kosmetik Murah</strong></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, his debet aliquam ne. Ei usu justo invidunt liberavisse, nec nonumes sententiae eu. Veniam decore aperiri in sed, an essent invenire definiebas eam. Te posse exerci theophrastus vel. Legimus postulant eum ut, per movet periculis adolescens ut, eros definitiones qui ad.</p>\r\n\r\n<p>Natum nostro definitionem no duo. Ex eam volutpat electram. Simul argumentum signiferumque ex mea, et quaerendum eloquentiam sea, cu nusquam persequeris complectitur eam. Consul qualisque eu vim, qui cu enim partem utamur. Mei at veniam vituperata, ex vel timeam tritani epicuri.</p>\r\n', 'logo.png', 'DaichaShop | Grosir Kosmetik Online', 'Jl. Bumiku No.17 Jakarta', 'Unit Usaha Kopma Unesa', 'toko online, aneka merchandise kampus', 'info@kopmaunesa.com', 'Mandiri 131-xxx-xxx-xxxx an. OmahWebsite', '-', '-');
+INSERT INTO `profil` VALUES ('1', '<p><strong>Selamat Datang di DaichaShop | GROSIR Kosmetik Murah</strong></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, his debet aliquam ne. Ei usu justo invidunt liberavisse, nec nonumes sententiae eu. Veniam decore aperiri in sed, an essent invenire definiebas eam. Te posse exerci theophrastus vel. Legimus postulant eum ut, per movet periculis adolescens ut, eros definitiones qui ad.</p>\r\n\r\n<p>Natum nostro definitionem no duo. Ex eam volutpat electram. Simul argumentum signiferumque ex mea, et quaerendum eloquentiam sea, cu nusquam persequeris complectitur eam. Consul qualisque eu vim, qui cu enim partem utamur. Mei at veniam vituperata, ex vel timeam tritani epicuri.</p>\r\n', 'logo.png', 'DaichaShop | Grosir Kosmetik Onlinex', 'Jl. Bumiku No.17 Jakarta', 'Unit Usaha Kopma Unesa', 'toko online, aneka merchandise kampus', 'info@kopmaunesa.com', 'Mandiri 131-xxx-xxx-xxxx an. OmahWebsite', '-', '-');
 
 -- ----------------------------
 -- Table structure for sekilasinfo
@@ -6604,7 +6604,7 @@ INSERT INTO `statistik` VALUES ('::1', '2016-11-14', '9', '1479134063');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-20', '27', '1479635172');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-21', '20', '1479747302');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-26', '8', '1480156157');
-INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '10', '1480242324');
+INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '11', '1480242833');
 
 -- ----------------------------
 -- Table structure for submenu
@@ -6619,7 +6619,7 @@ CREATE TABLE `submenu` (
   `aktif` enum('Y','N') NOT NULL DEFAULT 'Y',
   `adminsubmenu` enum('Y','N') NOT NULL,
   PRIMARY KEY (`id_sub`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of submenu
@@ -6708,4 +6708,4 @@ CREATE TABLE `users` (
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'admin@email.com', '08238923848', 'admin', 'N', 'Screenshot_1.jpg', 'gqv5gtshd9g352vqfstij1io90');
-INSERT INTO `users` VALUES ('user1', '24c9e15e52afc47c225b757e7bee1f9d', 'nama lngkap ane', 'user1@gmail.oom', '0828778ww', 'user', 'N', '11921650_1170781602937853_2602344976969667705_n.jpg', '6c7be0759b9fe15878dbd4cd7c5d0d84');
+INSERT INTO `users` VALUES ('user1', '24c9e15e52afc47c225b757e7bee1f9d', 'nama lngkap ane', 'user1@gmail.oom', '0828778ww', 'user', 'N', 'okkkkk.jpg', '6c7be0759b9fe15878dbd4cd7c5d0d84');
