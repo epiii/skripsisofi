@@ -1,4 +1,44 @@
  <script>
+function getBarang (nox) {
+    $.ajax({
+        url:'memberajax.php',
+        dataType:'json',
+        data:'aksi=baranglist',
+        type:'post',
+        success:function(dt){
+            var select='<select name="selectTB[]" id="selectTB_'+nox+'">';
+            $.each(dt,function (id,item) {
+                select+='<option value="'+item.id_produk+'">'+item.nama_produk+' (per '+item.durasi+' '+(item.jenisdurasi=='j'?'jam':'hari')+')</option>';
+            });select+='</select>';
+            $('#selectTD_'+nox).html(select);
+        },
+    });
+}
+
+function getTotal (nox) {
+    $.ajax({
+        url:'memberajax.php',
+        data:'aksi=total&id_produk='+$('#selectTB_'+nox).val(),
+        dataType:'json',
+        type:'post',
+        success:function(dt){
+            var total=parseInt(dt)*parseInt($('#jumlahTB_'+nox).val());
+            $('#totalTD_'+nox).html(total);
+        },
+    });
+}
+
+var no=1;
+function addBarang () {
+    var barangTR='<tr>'
+        +'<td id="selectTD_'+no+'"></td>'
+        +'<td><input required onkeyup="getTotal('+no+');" value="" min="1" type="number" name="jumlahTB[]" id="jumlahTB_'+no+'" /></td>'
+        +'<td id="totalTD_'+no+'">Rp.0</td>'
+    +'</tr>';
+    $('#barangTR').append(barangTR);
+    getBarang(no);
+    no++;
+ }
     // $(function() {
     //     $('#nav a[href~="' + location.href + '"]').parents('li').addClass('active');
     // });
@@ -111,17 +151,11 @@ if(!isset($_SESSION['levelmember'])){
                     <th>total</th>
                 </tr></thead>
                 <tbody>";
-                $s='SELECT
-                        o.id_orders,    
-                        od.jumlah,
-                        p.nama_produk,
-                        o.tgl_order,
-                        p.harga,    
-                        (p.harga*od.jumlah)total
+                $s='SELECT *
                     FROM
-                        orders o 
-                        JOIN orders_detail od on od.id_orders = o.id_orders
-                        JOIN produk p on p.id_produk = od.id_produk 
+                        orders_sewa o
+                        JOIN orders_detail_sewa od ON od.id_order_sewa= o.id_order_sewa
+                        JOIN produk p ON p.id_produk = od.id_produk
                     WHERE
                         o.id_kustomer ='.$_SESSION['idmember'];
                 // vd($s);
@@ -153,7 +187,14 @@ if(!isset($_SESSION['levelmember'])){
         break;
  
         case "tambahsewa":
-            echo "<section class='content'>
+            echo "
+            <section class='content'>
+                <ol class='breadcrumb'>
+                    <li class='active'>
+                        <a href='member-viewbeli-0.html'><i class='fa fa-dashboard'></i>Pembelian</a>
+                    </li>
+                    <li class='active'>/ Sewa</li>
+                </ol>
                     <div class='row'>
                         <div class='col-md-12'>
                             <div class='box box-info'>
@@ -175,6 +216,18 @@ if(!isset($_SESSION['levelmember'])){
                                 <div class='form-group'>
                                     <label>Tanggal Sewa</label>
                                     <input type='text' class='form-control' name='tgl_sewa' placeholder='tgl sewa'/>
+                                </div>
+
+                                <div class='box box-info'>
+                                    <a onclick='addBarang();' href='#' class='btn btn-primary'><i class='icon-plus'></i> Barang</a>
+                                    <table class='table table-striped'>
+                                        <thead>
+                                            <th>Nama</th>
+                                            <th>Jumlah</th>
+                                            <th>Harga Total</th>
+                                        <tbody id='barangTR'>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <div class='form-group'>
                                     <input type=submit class='btn btn-primary btn-lg' value=Simpan>
