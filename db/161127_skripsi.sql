@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-27 11:59:54
+Date: 2016-11-27 13:11:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,9 +26,7 @@ CREATE TABLE `admin` (
   `telpon` varchar(15) NOT NULL,
   `blokir` enum('N','Y') NOT NULL DEFAULT 'N',
   `foto` text NOT NULL,
-  PRIMARY KEY (`id_admin`),
-  KEY `id_login` (`id_login`) USING BTREE,
-  CONSTRAINT `id_loginFK` FOREIGN KEY (`id_login`) REFERENCES `login` (`id_login`)
+  PRIMARY KEY (`id_admin`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
@@ -181,6 +179,8 @@ CREATE TABLE `detailproduksewa` (
   `id_produk` int(11) NOT NULL,
   `hargaumum` decimal(15,0) NOT NULL,
   `hargakoperasi` decimal(15,0) NOT NULL,
+  `jenisdurasi` enum('j','h') NOT NULL DEFAULT 'h' COMMENT '''jam'', ''hari''',
+  `durasi` int(11) NOT NULL,
   PRIMARY KEY (`id_detailproduksewa`),
   KEY `id_produkFK2` (`id_produk`) USING BTREE,
   CONSTRAINT `id_produkFK2` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`)
