@@ -240,7 +240,7 @@ else{
               </div>
                <div class='form-group'>
                   <label>Password</label>
-                  <input type='text' class='form-control' name='password' placeholder='Password Baru...'/>
+                  <input type='password' class='form-control' name='password' placeholder='Password Baru...'/>
               </div>
                <div class='form-group'>
                   <label>Kategori Member</label>

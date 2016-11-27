@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-27 16:20:17
+Date: 2016-11-27 17:28:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5918,7 +5918,7 @@ CREATE TABLE `kustomer` (
 -- Records of kustomer
 -- ----------------------------
 INSERT INTO `kustomer` VALUES ('8', 'u', '270ec9b0b74535f78b7899cdf5958bfa', 'member umum 1', 'jalan memum1', 'memum1@email.com', '222222', '1529', '', '15202576_1376762425681117_4662238944514298261_n.jpg', 'N');
-INSERT INTO `kustomer` VALUES ('10', 'k', 'd41d8cd98f00b204e9800998ecf8427e', 'member koperasi 1', 'jalan memkop1', 'memkop1@email.com', '1111111111', '1064', 'FT', '11921650_1170781602937853_2602344976969667705_n.jpg', 'N');
+INSERT INTO `kustomer` VALUES ('10', 'k', '63ac4ab593b1c8a0a06d633a4f75fd3d', 'member koperasi 1', 'jalan memkop1', 'memkop1@email.com', '1111111111', '1064', 'FT', '11921650_1170781602937853_2602344976969667705_n.jpg', 'N');
 
 -- ----------------------------
 -- Table structure for kustomer_copy
@@ -6192,13 +6192,15 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id_orders`),
   KEY `id_kustomerFK` (`id_kustomer`) USING BTREE,
   CONSTRAINT `id_kustomerFK2` FOREIGN KEY (`id_kustomer`) REFERENCES `kustomer` (`id_kustomer`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
 INSERT INTO `orders` VALUES ('89', 'Baru', '2016-11-27', '14:07:51', '8');
 INSERT INTO `orders` VALUES ('90', 'Baru', '2016-11-27', '14:38:53', '8');
+INSERT INTO `orders` VALUES ('91', 'Baru', '2016-11-27', '16:24:48', '10');
+INSERT INTO `orders` VALUES ('92', 'Baru', '2016-11-27', '16:26:15', '8');
 
 -- ----------------------------
 -- Table structure for orders_detail
@@ -6214,7 +6216,7 @@ CREATE TABLE `orders_detail` (
   KEY `id_produkFK3` (`id_produk`) USING BTREE,
   CONSTRAINT `id_ordersFK` FOREIGN KEY (`id_orders`) REFERENCES `orders` (`id_orders`),
   CONSTRAINT `id_produkFK` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of orders_detail
@@ -6222,6 +6224,7 @@ CREATE TABLE `orders_detail` (
 INSERT INTO `orders_detail` VALUES ('1', '89', '61', '1');
 INSERT INTO `orders_detail` VALUES ('2', '89', '62', '1');
 INSERT INTO `orders_detail` VALUES ('3', '90', '61', '2');
+INSERT INTO `orders_detail` VALUES ('4', '92', '62', '2');
 
 -- ----------------------------
 -- Table structure for orders_detail_copy
@@ -6320,7 +6323,7 @@ CREATE TABLE `orders_temp` (
   `jam_order_temp` time NOT NULL,
   `stok_temp` int(5) NOT NULL,
   PRIMARY KEY (`id_orders_temp`)
-) ENGINE=MyISAM AUTO_INCREMENT=203 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=205 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of orders_temp
@@ -6330,6 +6333,7 @@ INSERT INTO `orders_temp` VALUES ('183', '61', 'mt8qs4084uvus8rgfba1r99gh0', '1'
 INSERT INTO `orders_temp` VALUES ('189', '57', 'njcppgmfht0hmdbroaum486cq0', '1', '2016-11-26', '01:59:04', '6');
 INSERT INTO `orders_temp` VALUES ('188', '61', 'njcppgmfht0hmdbroaum486cq0', '2', '2016-11-26', '01:57:24', '5');
 INSERT INTO `orders_temp` VALUES ('190', '60', 'h3impj6sq7rtp4fd8khsj798a5', '1', '2016-11-26', '15:33:09', '3');
+INSERT INTO `orders_temp` VALUES ('203', '61', '8os58bt4car38gjaorimhq0j44', '1', '2016-11-27', '16:22:32', '5');
 INSERT INTO `orders_temp` VALUES ('202', '61', '5l2dsbijh6ckiarkpnoal8iba5', '1', '2016-11-27', '15:08:21', '5');
 
 -- ----------------------------
@@ -6600,7 +6604,7 @@ INSERT INTO `statistik` VALUES ('::1', '2016-11-14', '9', '1479134063');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-20', '27', '1479635172');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-21', '20', '1479747302');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-26', '8', '1480156157');
-INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '7', '1480234202');
+INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '10', '1480242324');
 
 -- ----------------------------
 -- Table structure for submenu
@@ -6703,6 +6707,5 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'info@sentrabisnisnu.com', '08238923848', 'admin', 'N', 'ciyus-miapah.jpg', 'gqv5gtshd9g352vqfstij1io90');
-INSERT INTO `users` VALUES ('ajib', 'dc8ce8751a9426bd731dc5af53e5bc49', 'Ajib Bener', 'computerz.engineerz@gmail.com', '089667791613', 'user', 'N', 'opo.jpg', '71p15m960op8fh09gc6ts7e4m7');
-INSERT INTO `users` VALUES ('ane1', '71ceb310e9e1104c9c5fff9239d5efd1', 'nama lngkap ane', 'ane1@gmail.oom', '0828778', 'user', 'N', '11921650_1170781602937853_2602344976969667705_n.jpg', '6c7be0759b9fe15878dbd4cd7c5d0d84');
+INSERT INTO `users` VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3', 'Administrator', 'admin@email.com', '08238923848', 'admin', 'N', 'Screenshot_1.jpg', 'gqv5gtshd9g352vqfstij1io90');
+INSERT INTO `users` VALUES ('user1', '24c9e15e52afc47c225b757e7bee1f9d', 'nama lngkap ane', 'user1@gmail.oom', '0828778ww', 'user', 'N', '11921650_1170781602937853_2602344976969667705_n.jpg', '6c7be0759b9fe15878dbd4cd7c5d0d84');

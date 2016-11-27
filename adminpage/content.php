@@ -319,7 +319,7 @@ elseif ($_GET['module']=='modul'){
 // Bagian User - admin
 elseif ($_GET['module']=='admin'){
   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
-    include "modul/mod_admin/admin.php";
+    include "modul/mod_admin/admins.php";
   }
 }
 // Bagian User - member
