@@ -1,117 +1,144 @@
-<!-- <script src="js/jquery-1.12.3.js"></script> -->
-<!-- <script src="js/jquery.dataTables.min.js"></script> -->
-<!-- <link rel="stylesheet" type="text/css" href="css/query.dataTables.min.css"> -->
-    // <script>
+ <script>
     // $(function() {
     //     $('#nav a[href~="' + location.href + '"]').parents('li').addClass('active');
     // });
     // </script>
-
-
-<div class='container'>
 <?php
-	// vd($_SESSION);
-	if(empty($_SESSION)){
-		echo "<script>location.href='memberlogin.html'</script>";
-	} else{
-		echo '<a class="btn" href="memberlogout.php">Logout</a>';
-		// epi
-        echo "
-            <aside class='right-side'>
-                <!-- Content Header (Page header) -->
-                <section class='content-header'>
-                    <h1>
-                        History Sewa
-                    </h1>
-                    <div class='left'>
-                        - Nama : ".$_SESSION['namalengkap']." <br>
-                        - Alamat : ".$_SESSION['alamat']."
-                    </div>
-                </section>
-
-                <!-- Main content -->
-                <section class='content'>
-                    <div class='row'>
-                        <div class='col-xs-12'>
-                            <div class='box'>";
-// vd($_GET);
-// if(isset($_GET['act']))
-// switch($_GET['act']){
-//     case 'edit':
-//         echo "masuk edit :".$_GET['idsewa'];
-//     break;
-//   // Tampil Produk
-//   default:
-    echo "
-    <div class='box-header'>
-        <h3 class='box-title'>
-        <input type=button class='btn btn-primary btn' value='Tambah Sewa' onclick=\"window.location.href='?module=produk&act=tambahproduk';\">
-        </h3>
-            </div><!-- /.box-header -->
+if(!isset($_SESSION['levelmember'])){
+    echo "<script>location.href='memberlogin.html'</script>";
+} else{
+    $aksi="modul/mod_tag/aksi_tag.php";
+    echo"<div class='container'>            
+    <section class='page'>
+    <a class='btn ' href='memberlogout.php'>Logout</a>";
+    $act=!isset($_GET['act'])?'act':$_GET['act'];
+// vd($act);
+    switch($act){
+            // <div class='box-header'>
+            //         <h3 class='box-title'>
+            //             <input type=button class='btn btn-primary btn' value='Tambah Banner'
+            //             onclick=\"window.location.href='?module=tag&act=tambahtag';\">
+            //         </h3>
+            //     </div>
+        default:
+        // vd($_SESSION);
+            echo"
+            <h4><center>History Pembelian</center></h4><br>
+            - Nama : ".$_SESSION['namamember']."<br>
+            - Anggota : ".($_SESSION['levelmember']=='u'?'umum':'koperasi')."<br>
+            - Alamat: ".$_SESSION['alamatmember']." <br>
             <div class='box-body table-responsive'>
             <table id='example1' class='table table-bordered table-striped'>
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Keperluan</th>
-                        <th>Tgl Sewa</th>
-                        <th>Tgl Kembali</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
+                <thead><tr>
+                    <th>no</th>
+                    <th>Tgl Order</th>
+                    <th>Produk</th>
+                    <th>Jumlah</th>
+                    <th>harga</th>
+                    <th>total</th>
+                </tr></thead>
                 <tbody>";
-            $s1= 'SELECT id_member from member WHERE id_login ='.$_SESSION['idlogin'];
-            $id_member = mysqli_fetch_assoc(mysqli_query($con,$s1));
-            // vd($id_member['id_member']);
-            $s2= '  SELECT *
-                    FROM orders_sewa 
-                    WHERE id_member = '.$id_member['id_member'].' order by tgl_pinjam desc';
-            $tampil = mysqli_query($con,$s2);
-            // $no = $posisi+1;
-            $no=1;
-            if(mysqli_num_rows($tampil)==0) {
-                echo '<tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>';
-            }else
-            while($r=mysqli_fetch_assoc($tampil)){
-              $tgl_pinjam  =tgl_indo($r['tgl_pinjam']);
-              $tgl_kembali =tgl_indo($r['tgl_kembali']);
-              $status=$r['status']==0?'Pending':($r['status']==1?'Belum Kembali':'Sudah Kembali');
-              $icon=$r['status']==0?'clock':($r['status']==1?'plus':'check');
+                $s='SELECT
+                        o.id_orders,    
+                        od.jumlah,
+                        p.nama_produk,
+                        o.tgl_order,
+                        p.harga,    
+                        (p.harga*od.jumlah)total
+                    FROM
+                        orders o 
+                        JOIN orders_detail od on od.id_orders = o.id_orders
+                        JOIN produk p on p.id_produk = od.id_produk 
+                    WHERE
+                        o.id_kustomer ='.$_SESSION['idmember'];
+                // vd($s);
+                $tampil=mysqli_query($con,$s);
+                $no=1;
+                while ($r=mysqli_fetch_assoc($tampil)){
+                   echo "<tr><td>$no</td>
+                            <td>".tgl_indo($r['tgl_order'])."</td>                
+                            <td>$r[nama_produk]</td>                
+                            <td>$r[jumlah]</td>                
+                            <td>Rp. ".format_rupiah($r['harga'])."</td>                
+                            <td>Rp. ".format_rupiah($r['total'])."</td>                
+                        </td>
+                    </tr>";
+                    $no++;
+                }echo "</tbody>
+            </table>";
+        break;
 
-                // <td>".($r['status']==0?'<label class="black">Pending':$r['status']==1?'<label class="warning">Belum Kembali':'<label class="info">Sudah Kembali')."</label></td>
-              echo "<tr>
-                <td>$no</td>
-                <td>$r[keterangan]</td>
-                <td>$tgl_pinjam</td>
-                <td>$tgl_kembali</td>
-                <td><i class='icon-".$icon."'></i>$status</td>
-                <td class='center'>
-                    <a class='btn btn-success' href='?module=produk&act=editproduk&id=$r[id_order_sewa]'>
-                        <i class='icon-search icon-white'></i>  
-                        Detail                                            
-                    </a>";
-                if($r['status']==0){
-                    echo"
-                    <a class='btn btn-info' href='?module=produk&act=editproduk&id=$r[id_order_sewa]'>
-                        <i class='icon-pencil icon-white'></i>  
-                        Edit                                            
-                    </a>
-                    <a class='btn btn-danger' href='?module=produk&act=hapus&id=$r[id_order_sewa]'>
-                        <i class='icon-trash icon-white'></i> 
-                        Delete
-                    </a>";
-                }echo "</td>
-            </tr>";
-              $no++;
-            }
-            echo "</tbody></table>";
-            // break;
-        // }
+ /*       case "tambahtag":
+        echo "<section class='content'>
+                    <div class='row'>
+                        <div class='col-md-12'>
+                            <div class='box box-info'>
+                                <div class='box-header'>
+                                    <h3 class='box-title'>Tambah <small>Tag Artikel</small></h3>
+                                    <!-- tools box -->
+                                    <div class='pull-right box-tools'>
+                                        <button class='btn btn-info btn-sm' data-widget='collapse' data-toggle='tooltip' title='Collapse'><i class='fa fa-minus'></i></button>
+                                        <button class='btn btn-info btn-sm' data-widget='remove' data-toggle='tooltip' title='Remove'><i class='fa fa-times'></i></button>
+                                    </div><!-- /. tools -->
+                                </div><!-- /.box-header -->
+                                <div class='box-body pad'>
+                                <form method=POST action='$aksi?module=tag&act=input'>
+                                <div class='form-group'>
+                                            <label>Nama Kategori</label>
+                                            <input type='text' class='form-control' name='nama_tag' placeholder='Nama Tag ...'/>
+                                        </div>
+                                <div class='form-group'>
+                                        <input type=submit class='btn btn-primary btn-lg' value=Simpan>
+                            <input type=button class='btn btn-warning btn-lg' value=Batal onclick=self.history.back()>
+                            </div>
+                                    </form>
+                                </div>
+                            </div><!-- /.box -->
+
+                            
+                        </div><!-- /.col-->
+                    </div><!-- ./row -->
+                                    </section>
+          ";
+        break;
+
+        case "edittag":
+            $edit=mysqli_query($con,"SELECT * FROM tag WHERE id_tag='$_GET[id]'");
+            $r=mysqli_fetch_array($edit);
+            echo "<section class='content'>
+                            <div class='row'>
+                                <div class='col-md-12'>
+                                    <div class='box box-info'>
+                                        <div class='box-header'>
+                                            <h3 class='box-title'>Edit <small>Tag Artikel</small></h3>
+                                            <!-- tools box -->
+                                            <div class='pull-right box-tools'>
+                                                <button class='btn btn-info btn-sm' data-widget='collapse' data-toggle='tooltip' title='Collapse'><i class='fa fa-minus'></i></button>
+                                                <button class='btn btn-info btn-sm' data-widget='remove' data-toggle='tooltip' title='Remove'><i class='fa fa-times'></i></button>
+                                            </div><!-- /. tools -->
+                                        </div><!-- /.box-header -->
+                                        <div class='box-body pad'>
+                                        <form method=POST action='$aksi?module=tag&act=update'>
+                                        <input type=hidden name=id value='$r[id_tag]'>
+                                        <div class='form-group'>
+                                                    <label>Nama Kategori</label>
+                                                    <input type='text' class='form-control' name='nama_tag' value='$r[nama_tag]'>
+                                                </div>
+                                        <div class='form-group'>
+                                                <input type=submit class='btn btn-primary btn-lg' value=Simpan>
+                                    <input type=button class='btn btn-warning btn-lg' value=Batal onclick=self.history.back()>
+                                    </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.box -->
+
+                                    
+                                </div><!-- /.col-->
+                            </div><!-- ./row -->
+                                            </section>
+            
+                  ";
+        break;*/  
     }
+    echo"</section></div>";
+}

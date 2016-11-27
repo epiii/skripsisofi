@@ -1,6 +1,10 @@
 <?php
-     if(!empty($_SESSION))  header('Location:media.php?module=home');
-     else 
+    // vd($_SESSION['levelmember']);
+     if(isset($_SESSION['levelmember'])){
+        echo '<script>
+            location.href="member.html";
+        </script>';
+     }else 
 ?>
        <script type="text/javascript">
         function validasi(form){
@@ -20,12 +24,11 @@
         </script>
     
         <!-- form login  <epi> -->
-        <div class="container">
-            
+    <div class="container">
         <div class="form-box" id="login-box">
             <div class="header">Login</div>
             <!-- <small>demo >> <br> username : memkop1 <br> password : memkop1</small> -->
-           <form id="form-login" name="login" method="post" action="cek_memberlogin.php" onSubmit="return validasi(this)">
+            <form id="form-login" name="login" method="post" action="cek_memberlogin.php" onSubmit="return validasi(this)">
                 <div class="body bg-lime">
                     <div class="form-group">
                         <input type="text" name="username" class="form-control" placeholder="username"/>

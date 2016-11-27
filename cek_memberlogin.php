@@ -20,10 +20,10 @@ $pass     = anti_injection(md5($_POST['password']));
 // }else{
   // $login=mysqli_query($con,"SELECT * FROM users WHERE username='$username' AND password='$pass' AND blokir='N'");
   $s='SELECT * FROM kustomer WHERE email = "'.$username.'" AND  password = "'.$pass.'"';
-vd($s);
   $login  =mysqli_query($con,$s);
   $ketemu =mysqli_num_rows($login);
   $r      =mysqli_fetch_assoc($login);
+// vd($r);
 // vd($r);
 
 // Apabila username dan password ditemukan
@@ -31,16 +31,13 @@ if ($ketemu > 0){
   session_start();
   include "adminpage/timeout.php";
 
-  $_SESSION['idlogin']     = $r['id_login'];
-  $_SESSION['namauser']    = $r['email'];
-  $_SESSION['namalengkap'] = $r['nama_lengkap'];
-  $_SESSION['alamat']      = $r['alamat'];
-  // $_SESSION['passuser']    = $r['password'];
-  $_SESSION['leveluser']   = $r['kategori'];
-  // $_SESSION['leveluser']    = $r['level'];
-  $_SESSION['poto']  = $r['foto'];
- 
-  
+  $_SESSION['idmember']     = $r['id_kustomer'];
+  $_SESSION['levelmember']  = $r['kategori'];
+  $_SESSION['namamember']   = $r['email'];
+  $_SESSION['namamember']   = $r['nama_lengkap'];
+  $_SESSION['alamatmember'] = $r['alamat'];
+  $_SESSION['potomember']   = $r['foto'];
+  // vd($_SESSION);
   // session timeout
   $_SESSION['login'] = 1;
   timer();

@@ -1,7 +1,7 @@
 <?php
      session_start();
      require_once '../config/library.php';
-     if(!empty($_SESSION))  header('Location:media.php?module=home');
+     if(isset($_SESSION['leveluser']))  header('Location:media.php?module=home');
      else 
 ?>
 <!DOCTYPE html>
