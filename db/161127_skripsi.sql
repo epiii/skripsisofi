@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-27 15:06:36
+Date: 2016-11-27 16:20:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5912,13 +5912,13 @@ CREATE TABLE `kustomer` (
   `foto` text COLLATE latin1_general_ci NOT NULL,
   `blokir` enum('N','Y') COLLATE latin1_general_ci NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id_kustomer`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of kustomer
 -- ----------------------------
-INSERT INTO `kustomer` VALUES ('8', 'u', '979f4582d8aabe8d3e4c25aaa1825213', 'cust2', 'jalan cust2', 'cust2@email.com', '078547853847', '1529', '', '', 'N');
-INSERT INTO `kustomer` VALUES ('10', 'u', '8f14e45fceea167a5a36dedd4bea2543', '7', '77', '7', '7', '3164', 'FT', '15202576_1376762425681117_4662238944514298261_n.jpg', 'N');
+INSERT INTO `kustomer` VALUES ('8', 'u', '270ec9b0b74535f78b7899cdf5958bfa', 'member umum 1', 'jalan memum1', 'memum1@email.com', '222222', '1529', '', '15202576_1376762425681117_4662238944514298261_n.jpg', 'N');
+INSERT INTO `kustomer` VALUES ('10', 'k', 'd41d8cd98f00b204e9800998ecf8427e', 'member koperasi 1', 'jalan memkop1', 'memkop1@email.com', '1111111111', '1064', 'FT', '11921650_1170781602937853_2602344976969667705_n.jpg', 'N');
 
 -- ----------------------------
 -- Table structure for kustomer_copy
@@ -6320,7 +6320,7 @@ CREATE TABLE `orders_temp` (
   `jam_order_temp` time NOT NULL,
   `stok_temp` int(5) NOT NULL,
   PRIMARY KEY (`id_orders_temp`)
-) ENGINE=MyISAM AUTO_INCREMENT=202 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=203 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of orders_temp
@@ -6330,6 +6330,7 @@ INSERT INTO `orders_temp` VALUES ('183', '61', 'mt8qs4084uvus8rgfba1r99gh0', '1'
 INSERT INTO `orders_temp` VALUES ('189', '57', 'njcppgmfht0hmdbroaum486cq0', '1', '2016-11-26', '01:59:04', '6');
 INSERT INTO `orders_temp` VALUES ('188', '61', 'njcppgmfht0hmdbroaum486cq0', '2', '2016-11-26', '01:57:24', '5');
 INSERT INTO `orders_temp` VALUES ('190', '60', 'h3impj6sq7rtp4fd8khsj798a5', '1', '2016-11-26', '15:33:09', '3');
+INSERT INTO `orders_temp` VALUES ('202', '61', '5l2dsbijh6ckiarkpnoal8iba5', '1', '2016-11-27', '15:08:21', '5');
 
 -- ----------------------------
 -- Table structure for produk
@@ -6599,7 +6600,7 @@ INSERT INTO `statistik` VALUES ('::1', '2016-11-14', '9', '1479134063');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-20', '27', '1479635172');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-21', '20', '1479747302');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-26', '8', '1480156157');
-INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '6', '1480232454');
+INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '7', '1480234202');
 
 -- ----------------------------
 -- Table structure for submenu
