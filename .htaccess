@@ -3,6 +3,11 @@ RewriteEngine on
 RewriteRule ^home$ media.php?module=home [L]
 #epi
 	RewriteRule ^member\.html$ media.php?module=member [L]
+	RewriteRule ^member-(.*)-([0-9]+)\.html$ media.php?module=member&act=$1&idsewa=$2 [L,NC]
+	
+	#RewriteRule ^member-(.*)\.html$ media.php?module=member&act=$1 [L]
+	#RewriteRule ^member2-(.*)-(.*)\.html$ media.php?module=member&act=$1&idsewa=$2 [L]
+	
 	#RewriteRule ^member-(.*)\.html$ media.php?module=member&act=$1 [L]
 	#RewriteRule ^member-(.*)-(.*)\.html$ media.php?module=member&act=$1&idsewa=$1 [L]
 	RewriteRule ^memberlogin\.html$ media.php?module=memberlogin [L]

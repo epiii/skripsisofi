@@ -66,6 +66,10 @@ if ($_GET['module']=='home'){
 elseif ($_GET['module']=='member'){
   include "member.php";   
 }
+// Modul sewa 
+elseif ($_GET['module']=='membersewa'){
+  include "membersewa.php";   
+}
 // modul  member login 
 elseif ($_GET['module']=='memberlogin'){
   include "memberlogin.php";   
