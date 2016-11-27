@@ -1,11 +1,8 @@
 <?php
 // session_start();
-<<<<<<< HEAD
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
-=======
  // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
-  if (empty($_SESSION['namauser'])){
->>>>>>> 6ba781df4c06a55bc7de1aca47b8bd24852f382d
+ // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+if (empty($_SESSION['namauser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
@@ -32,14 +29,8 @@ echo "<aside class='right-side'>
                         <div class='col-xs-12'>
                    
 <div class='box'>";
-<<<<<<< HEAD
 $act=isset($_GET['act'])?$_GET['act']:'act';
-=======
-// switch($_GET[act]){
-$act=!isset($_GET['act'])?'act':$_GET['act'];
->>>>>>> 6ba781df4c06a55bc7de1aca47b8bd24852f382d
 switch($act){
-  // Tampil testimoni
   default:
     echo " <div class='box-header'>
 <h3 class='box-title'>
@@ -81,7 +72,6 @@ switch($act){
   // Form Tambah testimoni
   case "tambahtestimoni":
     echo "<section class='content'>
-
                     <div class='row'>
                         <div class='col-md-12'>
                             <div class='box box-info'>
@@ -172,6 +162,7 @@ switch($act){
                     </div><!-- ./row -->
                                     </section>";
     break;  
-}
+    }
+    // }
 }
 ?>
