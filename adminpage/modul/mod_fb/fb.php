@@ -1,6 +1,7 @@
 <?php
-session_start();
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+// session_start();
+ // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+  if (empty($_SESSION['namauser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
@@ -28,7 +29,9 @@ echo "
                         <div class='col-xs-12'>
                    
 <div class='box'>";
-switch($_GET[act]){
+// switch($_GET[act]){
+$act=!isset($_GET['act'])?'act':$_GET['act'];
+switch($act){
   // Tampil Profil
   default:
    $edit = mysqli_query($con,"SELECT * FROM facebook ORDER By id_fb");
