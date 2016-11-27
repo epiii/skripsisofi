@@ -37,7 +37,11 @@ else{
           //     FROM member m
           //     JOIN login l ON l.id_login = m.id_login
           //     ORDER BY nama_lengkap";
-          $s='SELECT * FROM kustomer ORDER BY nama_lengkap ';
+          $s='SELECT *
+            FROM kustomer k
+              JOIN kota ko on ko.id_kota = k.id_kota
+            ORDER BY nama_lengkap';
+          // vd($s);
           $tampil = mysqli_query($con,$s);
           // vd($tampil);
           // vd($tampil);
@@ -68,6 +72,9 @@ else{
       <th>No</th>
       <th>Nama Lengkap</th>
       <th>Email</th>
+      <th>Telpon</th>
+      <th>Alamat</th>
+      <th>Kota</th>
       <th>Foto User</th>          
       <th>Kategori</th>
       <th>Blokir</th>
@@ -80,15 +87,18 @@ else{
           <td class='center' width='10'>$no</td>
                <td class='left'>$r[nama_lengkap]</td>
                <td class='left'>$r[email]</td>
+               <td class='left'>$r[telpon]</td>
+               <td class='left'>$r[alamat]</td>
+               <td class='left'>$r[nama_kota]</td>
                <td class='left'><img src='../foto_banner/$r[foto]' width='100' height='100'></td>
-               <td class='left'>".($r['kategori']=='k'?'koperasi':'umum')."</td>
+               <td class='left'>".($r['kategori']=='k'?'koperasi':'umum')."<br>".($r['fakultas']!=''?'('.$r['fakultas'].')':'')."</td>
                <td class='left'>$r[blokir]</td>
                <td class='center'>
-                  <a class='btn btn-info' href='?module=member&act=editmember&id=$r[id_member]'>
+                  <a class='btn btn-info' href='?module=member&act=editmember&id=$r[id_kustomer]'>
           					<i class='icon-edit icon-white'></i>  
           					Edit                                            
           				</a>
-          				<a class='btn btn-danger' href='$aksi?module=member&act=delcon&id=$r[id_session]'>
+          				<a class='btn btn-danger' href='$aksi?module=member&act=delcon&id=$r[id_kustomer]'>
           					<i class='icon-trash icon-white'></i> 
           					Delete
           				</a>
