@@ -1,14 +1,13 @@
 <?php
-session_start();
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
-  echo "<link href='style.css' rel='stylesheet' type='text/css'>
- <center>Untuk mengakses modul, Anda harus login <br>";
-  echo "<a href=../../index.php><b>LOGIN</b></a></center>";
-}
-else{
-$aksi="modul/mod_ongkoskirim/aksi_ongkoskirim.php";
-echo "
-<aside class='right-side'>
+// session_start();
+ // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+if (empty($_SESSION['namauser'])){
+    echo "<link href='style.css' rel='stylesheet' type='text/css'>
+    <center>Untuk mengakses modul, Anda harus login <br>";
+    echo "<a href=../../index.php><b>LOGIN</b></a></center>";
+} else{
+    $aksi="modul/mod_ongkoskirim/aksi_ongkoskirim.php";
+    echo "<aside class='right-side'>
                 <!-- Content Header (Page header) -->
                 <section class='content-header'>
                     <h1>
@@ -27,9 +26,10 @@ echo "
                     <div class='row'>
                         <div class='col-xs-12'>
                    
-<div class='box'>
-                                ";
-switch($_GET[act]){
+<div class='box'>";
+
+$act=isset($_GET['act'])?$_GET['act']:'act';
+switch($act){
   // Tampil Ongkos Kirim
   default:
     echo "
@@ -46,8 +46,8 @@ switch($_GET[act]){
                                         <tr><th>No</th><th>Nama Kota</th><th>Ongkos Kirim</th><th>Aksi</th></tr></thead><tbody>"; 
     $tampil=mysqli_query($con,"SELECT * FROM kota ORDER BY id_kota DESC");
     $no=1;
-    while ($r=mysqli_fetch_array($tampil)){
-       $ongkos = format_rupiah($r[ongkos_kirim]);
+    while ($r=mysqli_fetch_assoc($tampil)){
+       $ongkos = format_rupiah($r['ongkos_kirim']);
        echo "<tr><td>$no</td>
              <td>$r[nama_kota]</td>
              <td align=right>$ongkos</td>

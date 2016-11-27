@@ -17,13 +17,13 @@
             <center>Untuk mengakses modul, Anda harus login <br>";
             echo "<a href=../../index.php><b>LOGIN</b></a></center>";
     }else{ 
-        $aksi="modul/mod_produk/aksi_produk.php";
+        $aksi="modul/mod_produksewa/aksi_produksewa.php";
         echo "<aside class='right-side'>
                 <!-- Content Header (Page header) -->
                 <section class='content-header'>
                     <h1>
                         Data
-                        <small>Produk Penjualan</small>
+                        <small>Produk Persewaan</small>
                     </h1>
                     <ol class='breadcrumb'>
                         <li><a href='?module=home'><i class='fa fa-dashboard'></i> Home</a></li>
@@ -46,48 +46,45 @@ switch($act){
     echo "
     <div class='box-header'>
         <h3 class='box-title'>
-        <input type=button class='btn btn-primary btn' value='Tambah Produk' onclick=\"window.location.href='?module=produk&act=tambahproduk';\">
+        <input type=button class='btn btn-primary btn' value='Tambah Barang' onclick=\"window.location.href='?module=produksewa&act=tambahproduksewa';\">
         </h3>
-                                </div><!-- /.box-header -->
-                                <div class='box-body table-responsive'>
-    
+            </div><!-- /.box-header -->
+            <div class='box-body table-responsive'>
+
     <table id='example1' class='table table-bordered table-striped'>
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
                                                 <th>Nama Produk</th>
-                                                <th>Berat (Kg)</th>
-                                                <th>Harga</th>
-                                                <th>Diskon (%)</th>
-                                                <th>Stok</th>
-                                                <th>Tgl. Masuk</th>
+                                                <th>Durasi Sewa</th>
+                                                <th>Member Koperasi</th>
+                                                <th>Member Umum</th>
+                                                <th>Jumlah</th>
+                                                <th>Sisa</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead><tbody>";
-    
-    
-
-    $tampil = mysqli_query($con,"SELECT * FROM produk WHERE tipe='j' ORDER BY id_produk DESC");
-  
+    $tampil = mysqli_query($con,"SELECT * FROM produk where tipe='s' ORDER BY id_produk DESC");
     // $no = $posisi+1;
     $no=1;
     while($r=mysqli_fetch_assoc($tampil)){
-      $tanggal=tgl_indo($r['tgl_masuk']);
-      $harga=format_rupiah($r['harga']);
+      $tanggal  =tgl_indo($r['tgl_masuk']);
+      $hargaKop =format_rupiah($r['hargakoperasi']);
+      $hargaMum =format_rupiah($r['hargaumum']);
       echo "
       <tr><td>$no</td>
                 <td>$r[nama_produk]</td>
-                <td>$r[berat]</td>
-                <td>$harga</td>
-                <td>$r[diskon]</td>
+                <td>Per $r[durasi] ".($r['jenisdurasi']=='h'?' hari':'jam')."</td>
+                <td>$hargaKop</td>
+                <td>$hargaMum</td>
                 <td>$r[stok]</td>
-                <td>$tanggal</td>
+                <td>$r[stok]</td>
                 <td class='center'>
-		         <a class='btn btn-info' href='?module=produk&act=editproduk&id=$r[id_produk]'>
+		         <a class='btn btn-info' href='?module=produksewa&act=editproduksewa&id=$r[id_produk]'>
 										<i class='icon-edit icon-white'></i>  
 										Edit                                            
 									</a>
-									<a class='btn btn-danger' href='$aksi?module=produk&act=hapus&id=$r[id_produk]'>
+									<a class='btn btn-danger' href='$aksi?module=produksewa&act=hapus&id=$r[id_produk]'>
 										<i class='icon-trash icon-white'></i> 
 										Delete
 									</a>
@@ -100,13 +97,13 @@ switch($act){
  
     break;
   
-  case "tambahproduk":
+  case "tambahproduksewa":
     echo "<section class='content'>
             <div class='row'>
                 <div class='col-md-12'>
                     <div class='box box-info'>
                         <div class='box-header'>
-                            <h3 class='box-title'>Tambah <small>Produk</small></h3>
+                            <h3 class='box-title'>Tambah <small>Barang Persewaan</small></h3>
                             <!-- tools box -->
                             <div class='pull-right box-tools'>
                                 <button class='btn btn-info btn-sm' data-widget='collapse' data-toggle='tooltip' title='Collapse'><i class='fa fa-minus'></i></button>
@@ -116,39 +113,35 @@ switch($act){
                         <div class='box-body pad'>
                             
                             <!--form input-->
-                            <form method=POST action='$aksi?module=produk&act=input' enctype='multipart/form-data'>
+                            <form method=POST action='$aksi?module=produksewa&act=input' enctype='multipart/form-data'>
                                <div class='form-group'>
                                     <label>Nama Produk</label>
                                     <input type='text' class='form-control' name='nama_produk' placeholder='Nama Produk ...'/>
                                 </div>
+                               <div class='form-group'>
+                                    <label>Kategori Durasi</label>
+                                    <select class='form-control' name='jenisdurasi'>
+                                        <option value='h'>Hari</option>
+                                        <option value='j'>Jam</option>
+                                    </select>
+                                </div>
+                               <div class='form-group'>
+                                    <label>Durasi</label>
+                                    <input type='text' class='form-control' name='durasi' placeholder='durasi'/>
+                                </div>
                                 <div class='form-group'>
-                                    <label>Kategori Produk</label>
-                                    <select id='kategoriSB' name='kategori' class='form-control'>";
-            $tampil=mysqli_query($con,"SELECT * FROM kategori ORDER BY nama_kategori");
-            while($r=mysqli_fetch_assoc($tampil)){
-              echo "<option value=$r[id_kategori]>$r[nama_kategori]</option>";
-            }
-                                       echo "
-                                            </select>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label>Berat (Kg)</label>
-                                            <input type='text' class='form-control' name='berat' placeholder='Berat ...'/>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label>Harga</label>
-                                            <input type='text' class='form-control' name='harga' placeholder='Harga ...'/>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label>Diskon (%)</label>
-                                            <input type='text' class='form-control' name='diskon' placeholder='Diskon jika ada ...'/>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label>Stok Produk</label>
-                                            <input type='text' class='form-control' name='stok' placeholder='Jumlah Stok Barang ...'/>
-                                        </div>
-                                        
-                                        <div class='box-body pad'>
+                                    <label>Harga Member Koperasi</label>
+                                    <input type='text' class='form-control' name='hargakoperasi' placeholder='Harga member Koperasi ...'/>
+                                </div>
+                                <div class='form-group'>
+                                    <label>Harga Member Umum</label>
+                                    <input type='text' class='form-control' name='hargaumum' placeholder='Harga member Umum ...'/>
+                                </div>
+                                <div class='form-group'>
+                                    <label>Jumlah Barang</label>
+                                    <input type='text' class='form-control' name='stok' placeholder='Jumlah Stok Barang ...'/>
+                                </div>
+                                <div class='box-body pad'>
                                     <textarea id='editor1' name='deskripsi' rows='10' cols='80'>
                                             Masukkan keterangan produk disini.
                                         </textarea>
@@ -174,17 +167,17 @@ switch($act){
           ";
      break;
     
-  case "editproduk":
+  case "editproduksewa":
     $edit = mysqli_query($con,"SELECT * FROM produk WHERE id_produk='$_GET[id]'");
-    $r    = mysqli_fetch_array($edit);
-
+    $r    = mysqli_fetch_assoc($edit);
+// vd($r);
     echo "
     <section class='content'>
                     <div class='row'>
                         <div class='col-md-12'>
                             <div class='box box-info'>
                                 <div class='box-header'>
-                                    <h3 class='box-title'>Tambah <small>Produk</small></h3>
+                                    <h3 class='box-title'>Ubah <small>Barang Persewaan</small></h3>
                                     <!-- tools box -->
                                     <div class='pull-right box-tools'>
                                         <button class='btn btn-info btn-sm' data-widget='collapse' data-toggle='tooltip' title='Collapse'><i class='fa fa-minus'></i></button>
@@ -193,50 +186,38 @@ switch($act){
                                 </div><!-- /.box-header -->
                                 <div class='box-body pad'>
                                 
-                                <form method=POST enctype='multipart/form-data' action=$aksi?module=produk&act=update>
+                                <form method=POST enctype='multipart/form-data' action=$aksi?module=produksewa&act=update>
                                     <input type=hidden name=id value=$r[id_produk]>
                                    <div class='form-group'>
-                                        <label>Nama Produk</label>
+                                        <label>Nama Barang</label>
                                         <input type='text' class='form-control' name='nama_produk' value='$r[nama_produk]'/>
                                     </div>
+                                   <div class='form-group'>
+                                    <label>Kategori Durasi</label>
+                                    <select class='form-control' name='jenisdurasi'>
+                                        <option ".($r['jenisdurasi']=='h'?'selected':'')." value='h'>Hari</option>
+                                        <option ".($r['jenisdurasi']=='j'?'selected':'')." value='j'>Jam</option>
+                                    </select>
+                                </div>
+                               <div class='form-group'>
+                                    <label>Durasi</label>
+                                    <input type='text' value='$r[durasi]' class='form-control' name='durasi' placeholder='durasi'/>
+                                </div>
+                                <div class='form-group'>
+                                        <label>Harga Member Koperasi</label>
+                                        <input type='text' class='form-control' name='hargakoperasi' value='$r[hargakoperasi]'/>
+                                    </div>
                                     <div class='form-group'>
-                                    <label>Kategori Produk </label>
-                                            <select name='kategori' class='form-control'>
-                                                <option value=0 selected>- Pilih Kategori -</option>";
-            $tampil=mysqli_query($con,"SELECT * FROM kategori ORDER BY nama_kategori");
-          if ($r['id_kategori']==0){
-            echo "<option value=0 selected>- Pilih Kategori -</option>";
-          }   
-
-          while($w=mysqli_fetch_array($tampil)){
-            if ($r['id_kategori']==$w['id_kategori']){
-              echo "<option value=$w[id_kategori] selected>$w[nama_kategori]</option>";
-            }
-            else{
-              echo "<option value=$w[id_kategori]>$w[nama_kategori]</option>";
-            }
-          }
-    echo "</select>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label>Berat (Kg)</label>
-                                            <input type='text' class='form-control' name='berat' value='$r[berat]'/>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label>Harga</label>
-                                            <input type='text' class='form-control' name='harga' value='$r[harga]'/>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label>Diskon (%)</label>
-                                            <input type='text' class='form-control' name='diskon' value='$r[diskon]'/>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label>Stok Produk</label>
-                                            <input type='text' class='form-control' name='stok' value='$r[stok]'/>
-                                        </div>
+                                        <label>Harga Member Umum</label>
+                                        <input type='text' class='form-control' name='hargaumum' value='$r[hargaumum]'/>
+                                    </div>
+                                    <div class='form-group'>
+                                        <label>Jumlah</label>
+                                        <input type='text' class='form-control' name='stok' value='$r[stok]'/>
+                                    </div>
                                         
-                                        <div class='box-body pad'>
-                                    <textarea id='editor1' name='deskripsi' rows='10' cols='80'>
+                                    <div class='box-body pad'>
+                                        <textarea id='editor1' name='deskripsi' rows='10' cols='80'>
                                             $r[deskripsi]
                                         </textarea>
                                           </div>

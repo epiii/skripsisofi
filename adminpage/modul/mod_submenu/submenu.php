@@ -172,10 +172,9 @@ switch($act){
     
   case "editsubmenu":
     $edit = mysqli_query($con,"SELECT * FROM submenu WHERE id_sub='$_GET[id]'");
-    $r    = mysqli_fetch_array($edit);
-
+    $r    = mysqli_fetch_assoc($edit);
+    // vd($r);
     echo "<section class='content'>
-
                     <div class='row'>
                         <div class='col-md-12'>
                             <div class='box box-info'>
@@ -202,11 +201,10 @@ switch($act){
           if ($r['id_main']==0){
             echo "<option value=0 selected>- Pilih Menu Utama -</option>";
           }   
-          while($w=mysqli_fetch_array($tampil)){
+          while($w=mysqli_fetch_assoc($tampil)){
             if ($r['id_main']==0 || ($r['id_main']!=0 && $r['id_submain']!=0)){
               echo "<option value=$w[id_main] selected>$w[nama_menu]</option>";
-            }
-            else{
+            }else{
               echo "<option selected value=$w[id_main]>$w[nama_menu]</option>";
             }
           }

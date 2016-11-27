@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
  if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
@@ -27,7 +27,8 @@ echo "<aside class='right-side'>
                         <div class='col-xs-12'>
                    
 <div class='box'>";
-switch($_GET[act]){
+$act=isset($_GET['act'])?$_GET['act']:'act';
+switch($act){
   // Tampil testimoni
   default:
     echo " <div class='box-header'>
@@ -145,11 +146,9 @@ switch($_GET[act]){
                                         <div class='form-group'>
                                             <label>Status</label>
                                             <select name='aktif' class='form-control'>
-                                            <option value=$r[aktif] selected>$r[aktif]</option>
-                                                <option value=0>- Pilih Kategori -</option>
-                                                <option value='Y'>Y</option>		 
-		   <option value='N'>N</option>
-								  </select> </div>
+                                                <option ".($r['aktif']=='Y'?'selected':'')." value='Y'>Y</option>        
+                                                <option ".($r['aktif']=='N'?'selected':'')." value='N'>N</option>		 
+                                            </select> </div>
     <div class='form-group'>
                                         <input type=submit class='btn btn-primary btn-lg' value=Simpan>
                             <input type=button class='btn btn-warning btn-lg' value=Batal onclick=self.history.back()>

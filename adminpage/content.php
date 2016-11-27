@@ -346,9 +346,13 @@ elseif ($_GET['module']=='label'){
   }
 }      
 elseif ($_GET['module']=='produk'){
-	   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
-  	
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_produk/produk.php";
+  }
+}
+elseif ($_GET['module']=='produksewa'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+    include "modul/mod_produksewa/produksewa.php";
   }
 }
 

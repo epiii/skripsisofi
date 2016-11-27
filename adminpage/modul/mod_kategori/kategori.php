@@ -20,9 +20,9 @@ echo "
                     <div class='row'>
                         <div class='col-xs-12'>
                    
-<div class='box'>
-                                ";
-switch($_GET[act]){
+<div class='box'>";
+$act=isset($_GET['act'])?$_GET['act']:'act';
+switch($act){
   // Tampil Kategori
   default:
   echo "
