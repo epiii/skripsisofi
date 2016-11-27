@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-27 13:11:26
+Date: 2016-11-27 13:19:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -6273,9 +6273,9 @@ CREATE TABLE `orders_sewa` (
   `id_order_sewa` int(11) NOT NULL AUTO_INCREMENT,
   `keterangan` text NOT NULL,
   `id_kustomer` int(11) NOT NULL,
-  `tgl_pinjam` date NOT NULL,
-  `tgl_kembali` date NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '0',
+  `tgl_sewa` datetime NOT NULL,
+  `tgl_kembali` datetime NOT NULL,
+  `status` enum('k','b') NOT NULL DEFAULT 'b',
   PRIMARY KEY (`id_order_sewa`),
   KEY `id_memberFK` (`id_kustomer`) USING BTREE,
   CONSTRAINT `id_kustomerFK` FOREIGN KEY (`id_kustomer`) REFERENCES `kustomer` (`id_kustomer`)
