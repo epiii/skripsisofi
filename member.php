@@ -108,7 +108,7 @@ if(!isset($_SESSION['levelmember'])){
                     $no=1;
                     while ($r=mysqli_fetch_assoc($tampil)){
                         $harga=$_SESSION['levelmember']=='k'?'hargakoperasi':'hargaumum';
-                            var_dump($harga);exit();
+                            // var_dump($harga);exit();
                             echo "<tr><td>$no</td>
                                 <td>".tgl_indo($r['tgl_order'])."</td>                
                                 <td>$r[nama_produk]</td>                
