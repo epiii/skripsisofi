@@ -1,26 +1,12 @@
 <?php    
 if (empty($_SESSION['namauser'])){
-echo "<link href='style.css' rel='stylesheet' type='text/css'>
- <center>Untuk mengakses modul, Anda harus login <br>";
+  echo "<link href='style.css' rel='stylesheet' type='text/css'>
+  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
-}
-else{
-
-function GetCheckboxes($table, $key, $Label, $Nilai='') {
-  $s = "select * from $table order by nama_tag";
-  $r = mysqli_query($con,$s);
-  $_arrNilai = explode(',', $Nilai);
-  $str = '';
-  while ($w = mysqli_fetch_array($r)) {
-    $_ck = (array_search($w[$key], $_arrNilai) === false)? '' : 'checked';
-    $str .= "<input type=checkbox name='".$key."[]' value='$w[$key]' $_ck>$w[$Label] ";
-  }
-  return $str;
-}
-
-$aksi="modul/mod_artikel/aksi_artikel.php";
-echo "
-<aside class='right-side'>
+}else{
+  $aksi="modul/mod_artikel/aksi_artikel.php";
+  echo "
+  <aside class='right-side'>
                 <!-- Content Header (Page header) -->
                 <section class='content-header'>
                     <h1>
@@ -45,7 +31,6 @@ switch($act){
   // Tampil artikel
   default:   
     echo "   
-    
     <div class='box-header'>
 <h3 class='box-title'>
 <input type=button class='btn btn-primary btn' value='Tambahkan Artikel' onclick=\"window.location.href='?module=artikel&act=tambahartikel';\">
@@ -67,10 +52,10 @@ switch($act){
                            WHERE username='$_SESSION[namauser]'       
                            ORDER BY id_artikel DESC");
     }
-  
-    $no = $posisi+1;
-    while($r=mysqli_fetch_array($tampil)){
-      $tgl_posting=tgl_indo($r[tanggal]);
+    // $no = $posisi+1;
+    $no = 1;
+    while($r=mysqli_fetch_assoc($tampil)){
+      $tgl_posting=tgl_indo($r['tanggal']);
       echo "<tr><td>$no</td>
                 <td>$r[judul]</td>
                 <td>$tgl_posting</td>
@@ -91,9 +76,12 @@ switch($act){
 
     if ($_SESSION['leveluser']=='admin'){
       $jmldata = mysqli_num_rows(mysqli_query($con,"SELECT * FROM artikel"));
-    }
-    else{
-      $jmldata = mysqli_num_rows(mysqli_query($con,"SELECT * FROM artikel WHERE username='$_SESSION['namauser']'"));
+    }else{
+      // $jmldata = mysqli_num_rows(mysqli_query($con,"SELECT * FROM artikel WHERE username='$_SESSION['namauser']'"));
+      $s='SELECT * FROM artikel WHERE username="'.$_SESSION['namauser'].'"';
+      vd($s);
+      $e=mysqli_query($con,$s);
+      $jmldata = mysqli_num_rows($e);
     } 
     break; 
     $no = 1;
@@ -235,7 +223,7 @@ switch($act){
                                         </div>
                                          <div class='form-group'>
                                             <label>Tag (Label): </label>";
-                                             $d = GetCheckboxes('tag', 'tag_seo', 'nama_tag', $r[tag]);
+                                             $d = GetCheckboxes('tag', 'tag_seo', 'nama_tag', $r['tag']);
                                             echo "$d
                                             </div>
                                              <div class='form-group'>

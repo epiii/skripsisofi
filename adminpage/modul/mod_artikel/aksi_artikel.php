@@ -1,20 +1,19 @@
 <?php
 session_start();
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
-  echo "<link href='style.css' rel='stylesheet' type='text/css'>
- <center>Untuk mengakses modul, Anda harus login <br>";
-  echo "<a href=../../index.php><b>LOGIN</b></a></center>";
-}
-else{
-
 include "../../../config/koneksi.php";
 include "../../../config/library.php";
 include "../../../config/fungsi_thumb.php";
 include "../../../config/fungsi_seo.php";
+// vd($_SESSION);
 
-$module=$_GET[module];
-$act=$_GET[act];
-
+if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+  echo "<link href='style.css' rel='stylesheet' type='text/css'>
+  <center>Untuk mengakses modul, Anda harus login <br>";
+  echo "<a href=../../index.php><b>LOGIN</b></a></center>";
+} else{
+  $module =$_GET['module'];
+  $act    =$_GET['act'];
+  
 // Hapus artikel
 if ($module=='artikel' AND $act=='hapus'){
   $data=mysqli_fetch_array(mysqli_query($con,"SELECT gambar FROM artikel WHERE id_artikel='$_GET[id]'"));
@@ -37,8 +36,8 @@ elseif ($module=='artikel' AND $act=='input'){
   $acak           = rand(1,99);
   $nama_file_unik = $acak.$nama_file; 
   
-  if (!empty($_POST[tag_seo])){
-    $tag_seo = $_POST[tag_seo];
+  if (!empty($_POST['tag_seo'])){
+    $tag_seo = $_POST['tag_seo'];
     $tag=implode(',',$tag_seo);
   }
   $judul_seo      = seo_title($_POST['judul']);
@@ -46,30 +45,33 @@ elseif ($module=='artikel' AND $act=='input'){
   // Apabila ada gambar yang diupload
   if (!empty($lokasi_file)){
     UploadImage($nama_file_unik);
-
-    mysqli_query($con,"INSERT INTO artikel(judul,
-                                    judul_seo,
-                                    id_label,
-                                    username,
-                                    isi_artikel,
-                                    jam,
-                                    tanggal,
-                                    hari,
-                                    tag, 
-                                    gambar) 
-                            VALUES('$_POST[judul]',
-                                   '$judul_seo',
-                                   '$_POST[label]',
-                                   '$_SESSION['namauser']',
-                                   '$_POST[isi_artikel]',
-                                   '$jam_sekarang',
-                                   '$tgl_sekarang',
-                                   '$hari_ini',
-                                   '$tag',
-                                   '$nama_file_unik')");
+// vd($_SESSION);
+      $s='INSERT INTO artikel(
+                            judul,
+                            judul_seo,
+                            id_label,
+                            username,
+                            isi_artikel,
+                            jam,
+                            tanggal,
+                            hari,
+                            tag, 
+                            gambar) 
+                    VALUES("'.$_POST['judul'].'",
+                           "'.$judul_seo.'",
+                           "'.$_POST['label'].'",
+                           "'.$_SESSION['namauser'].'",
+                           "'.$_POST['isi_artikel'].'",
+                           "'.$jam_sekarang.'",
+                           "'.$tgl_sekarang.'",
+                           "'.$hari_ini.'",
+                           "'.$tag.'",
+                           "'.$nama_file_unik.'")';
+      // vd($s);
+      $e=mysqli_query($con,$s);
   }
   else{
-    mysqli_query($con,"INSERT INTO artikel(judul,
+      $s='INSERT INTO artikel(judul,
                                     judul_seo, 
                                     id_label,
                                     username,
@@ -78,15 +80,16 @@ elseif ($module=='artikel' AND $act=='input'){
                                     tanggal,
                                     tag, 
                                     hari) 
-                            VALUES('$_POST[judul]',
-                                   '$judul_seo',
-                                   '$_POST[label]',
-                                   '$_SESSION['namauser']',
-                                   '$_POST[isi_artikel]',
-                                   '$jam_sekarang',
-                                   '$tgl_sekarang',
-                                   '$tag',
-                                   '$hari_ini')");
+                            VALUES('.$_POST['judul'].',
+                                   '.$judul_seo.',
+                                   '.$_POST['label'].',
+                                   '.$_SESSION['namauser'].',
+                                   '.$_POST['isi_artikel'].',
+                                   '.$jam_sekarang.',
+                                   '.$tgl_sekarang.',
+                                   '.$tag.',
+                                   '.$hari_ini.')';
+    mysqli_query($con,$s);
   }
   
   $jml=count($tag_seo);

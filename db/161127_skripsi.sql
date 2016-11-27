@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-27 17:43:30
+Date: 2016-11-27 18:08:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -74,7 +74,7 @@ CREATE TABLE `artikel` (
   `dibaca` int(5) NOT NULL DEFAULT '1',
   `tag` varchar(100) COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`id_artikel`)
-) ENGINE=MyISAM AUTO_INCREMENT=141 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=143 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of artikel
@@ -5956,7 +5956,7 @@ CREATE TABLE `label` (
   `label_seo` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `aktif` enum('Y','N') COLLATE latin1_general_ci NOT NULL DEFAULT 'Y',
   PRIMARY KEY (`id_label`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of label
@@ -6658,14 +6658,14 @@ CREATE TABLE `tag` (
   `tag_seo` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `count` int(5) NOT NULL,
   PRIMARY KEY (`id_tag`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of tag
 -- ----------------------------
 INSERT INTO `tag` VALUES ('23', 'Musik', 'musik', '0');
-INSERT INTO `tag` VALUES ('16', 'Komputer', 'komputer', '25');
-INSERT INTO `tag` VALUES ('22', 'Hot-News', 'hotnews', '40');
+INSERT INTO `tag` VALUES ('16', 'Komputer', 'komputer', '26');
+INSERT INTO `tag` VALUES ('22', 'Hot-News', 'hotnews', '41');
 
 -- ----------------------------
 -- Table structure for testimoni

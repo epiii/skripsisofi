@@ -1,13 +1,12 @@
 <?php
 // session_start();
 if (empty($_SESSION['namauser'])){
-echo "<link href='style.css' rel='stylesheet' type='text/css'>
- <center>Untuk mengakses modul, Anda harus login <br>";
-  echo "<a href=../../index.php><b>LOGIN</b></a></center>";
-}
-else{
-$aksi="modul/mod_tag/aksi_tag.php";
-echo "<aside class='right-side'>
+    echo "<link href='style.css' rel='stylesheet' type='text/css'>
+    <center>Untuk mengakses modul, Anda harus login <br>";
+    echo "<a href=../../index.php><b>LOGIN</b></a></center>";
+}else{
+    $aksi="modul/mod_tag/aksi_tag.php";
+    echo "<aside class='right-side'>
                 <!-- Content Header (Page header) -->
                 <section class='content-header'>
                     <h1>
@@ -31,10 +30,12 @@ $act=!isset($_GET['act'])?'act':$_GET['act'];
 switch($act){
   // Tampil Tag
   default:
+// <input type=button class='btn btn-primary btn' value='Tambah Banner' onclick=location.href=\"window.location.href='?module=tag&act=tambahtag';\">
     echo "
     <div class='box-header'>
                                     <h3 class='box-title'>
-<input type=button class='btn btn-primary btn' value='Tambah Banner' onclick=location.href=\"window.location.href='?module=tag&act=tambahtag';\">
+<input type=button class='btn btn-primary btn' value='Tambah Banner'
+onclick=\"window.location.href='?module=tag&act=tambahtag';\">
 </h3>
                                 </div><!-- /.box-header -->
                                 <div class='box-body table-responsive'>
