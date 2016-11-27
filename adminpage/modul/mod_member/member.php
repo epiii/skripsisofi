@@ -126,21 +126,36 @@ else{
                     </div><!-- /.box-header -->
                     <div class='box-body pad'>
                      <form method=POST action='$aksi?module=member&act=input' enctype='multipart/form-data'>
-                      <div class='form-group'>
-                                <label>Username</label>
-                                <input type='text' class='form-control' name='username' placeholder='Username Anda ...'/>
+                             <div class='form-group'>
+                                <label>Email</label>
+                                <input type='text' class='form-control' name='email' placeholder='Email ...'/>
                             </div>
                              <div class='form-group'>
                                 <label>Password</label>
                                 <input type='password' class='form-control' name='password' placeholder='Password ...'/>
                             </div>
                              <div class='form-group'>
-                                <label>Nama Lengkap</label>
-                                <input type='text' class='form-control' name='nama_lengkap' placeholder='Nama Lengkap ...'/>
+                                <label>Kategori Member</label>
+                                <select class='form-control' name='kategori'>
+                                  <option value='u'>umum</option>
+                                  <option value='k'>koperasi</option>
+                                </select>
+                            </div>
+                            <div class='form-group'>
+                                <label style='color:red;'>Fakutas <small>(Hanya member koperasi)</small></label>
+                                <select class='form-control' name='fakultas'>
+                                  <option value=''>-Pilih-</option>
+                                  <option value='FT'>FT</option>
+                                  <option value='FE'>FE</option>
+                                  <option value='FIK'>FIK</option>
+                                  <option value='FIP'>FIP</option>
+                                  <option value='FMIPA'>FMIPA</option>
+                                  <option value='FIS'>FIS</option>
+                                </select>
                             </div>
                              <div class='form-group'>
-                                <label>Email</label>
-                                <input type='text' class='form-control' name='email' placeholder='Email ...'/>
+                                <label>Nama Lengkap</label>
+                                <input type='text' class='form-control' name='nama_lengkap' placeholder='Nama Lengkap ...'/>
                             </div>
                              <div class='form-group'>
                                 <label>No.Telp</label>
@@ -159,18 +174,6 @@ else{
                             while ($rk=mysqli_fetch_assoc($ek)) {
                                 echo '<option value="'.$rk['id_kota'].'">'.$rk['nama_kota'].'</option>';
                             }echo"</select>
-                            </div>
-                             <div class='form-group'>
-                                <label>Fakutas</label>
-                                <select class='form-control' name='fakultas'>
-                                  <option value=''>-Pilih-</option>
-                                  <option value='FT'>FT</option>
-                                  <option value='FE'>FE</option>
-                                  <option value='FIK'>FIK</option>
-                                  <option value='FIP'>FIP</option>
-                                  <option value='FMIPA'>FMIPA</option>
-                                  <option value='FIS'>FIS</option>
-                                </select>
                             </div>
                             <div class='form-group'>
                                 <label>Blokir</label>
@@ -203,13 +206,13 @@ else{
     else{
       echo "Anda tidak berhak mengakses halaman ini.";
     }
-     break;
+  break;
     
   case "editmember":
-    $s="SELECT *
-        FROM member m 
-          JOIN login l on l.id_login = m.id_login
-        WHERE m.id_member =$_GET[id]";
+    $s='SELECT *
+        FROM kustomer
+        WHERE id_kustomer ='.$_GET['id'];
+
     $edit=mysqli_query($con,$s);
     $r=mysqli_fetch_assoc($edit);
     // vd($r);
@@ -217,53 +220,79 @@ else{
     if ($_SESSION['leveluser']=='admin'){
     echo "
      <div class='row'>
-                        <div class='col-md-12'>
-                            <div class='box box-info'>
-                                <div class='box-header'>
-                                    <h3 class='box-title'>Edit <small>Data User</small></h3>
-                                    <!-- tools box -->
-                                    <div class='pull-right box-tools'>
-                                        <button class='btn btn-info btn-sm' data-widget='collapse' data-toggle='tooltip' title='Collapse'><i class='fa fa-minus'></i></button>
-                                        <button class='btn btn-info btn-sm' data-widget='remove' data-toggle='tooltip' title='Remove'><i class='fa fa-times'></i></button>
-                                    </div><!-- /. tools -->
-                                </div><!-- /.box-header -->
-                                <div class='box-body pad'>
-                                 <form method=POST action=$aksi?module=member&act=update enctype='multipart/form-data'>
-                                  <input type=hidden name=id value='$r[id_member]'>
-                                  <div class='form-group'>
-                                            <label>Username</label>
-                                             <input type='text' class='form-control' placeholder='$r[username]' disabled/>
-                                        </div>
-                                         <div class='form-group'>
-                                            <label>Password</label>
-                                            <input type='text' class='form-control' name='password' placeholder='Password Baru...'/>
-                                        </div>
-                                         <div class='form-group'>
-                                            <label>Nama Lengkap</label>
-                                            <input type='text' class='form-control' name='nama_lengkap' value='$r[nama_lengkap]'/>
-                                        </div>
-                                        <div class='form-group'>
-                                            <label>Alamat</label>
-                                            <input type='text' class='form-control' name='alamat' value='$r[alamat]'/>
-                                        </div>
-                                         <div class='form-group'>
-                                            <label>Email</label>
-                                            <input type='text' class='form-control' name='email' value='$r[email]'/>
-                                        </div>
-                                         <div class='form-group'>
-                                            <label>No.Telp</label>
-                                            <input type='text' class='form-control' name='no_telp' value='$r[no_telp]'/>
-                                        </div>
-                                         <div class='form-group'>
-                                           ";
-                                                if ($r['blokir']=='N'){
-      echo " <label>Status Blokir </label><input type=radio name='blokir' value='Y'> Y   
-                                           <input type=radio name='blokir' value='N' checked> N ";
-    }
-    else{
-      echo " <label>Status Blokir </label><input type=radio name='blokir' value='Y' checked> Y  
-                                          <input type=radio name='blokir' value='N'> N ";
-    }
+      <div class='col-md-12'>
+      <div class='box box-info'>
+          <div class='box-header'>
+              <h3 class='box-title'>Edit <small>Data User</small></h3>
+              <!-- tools box -->
+              <div class='pull-right box-tools'>
+                  <button class='btn btn-info btn-sm' data-widget='collapse' data-toggle='tooltip' title='Collapse'><i class='fa fa-minus'></i></button>
+                  <button class='btn btn-info btn-sm' data-widget='remove' data-toggle='tooltip' title='Remove'><i class='fa fa-times'></i></button>
+              </div><!-- /. tools -->
+          </div><!-- /.box-header -->
+
+          <div class='box-body pad'>
+           <form method=POST action=$aksi?module=member&act=update enctype='multipart/form-data'>
+            <input type=hidden name=id value='$r[id_kustomer]'>
+            <div class='form-group'>
+                  <label>Email</label>
+                   <input type='text' class='form-control' placeholder='$r[email]' disabled/>
+              </div>
+               <div class='form-group'>
+                  <label>Password</label>
+                  <input type='text' class='form-control' name='password' placeholder='Password Baru...'/>
+              </div>
+               <div class='form-group'>
+                  <label>Kategori Member</label>
+                  <select class='form-control' name='kategori'>
+                    <option ".($r['kategori']=='u'?'selected':'')." value='u'>umum</option>
+                    <option ".($r['kategori']=='k'?'selected':'')." value='k'>koperasi</option>
+                  </select>
+              </div>
+             <div class='form-group'>
+                <label style='color:red;'>Fakutas <small>(hanya untuk member koperasi)</small></label>
+                <select class='form-control' name='fakultas'>
+                  <option value=''>-pilih-</option>
+                  <option ".($r['fakultas']=='FT'?'selected':'')." value=''>FT</option>
+                  <option ".($r['fakultas']=='FE'?'selected':'')." value=''>FE</option>
+                  <option ".($r['fakultas']=='FIK'?'selected':'')." value=''>FIK</option>
+                  <option ".($r['fakultas']=='FMIPA'?'selected':'')." value=''>FMIPA</option>
+                  <option ".($r['fakultas']=='FIP'?'selected':'')." value=''>FIP</option>
+                  <option ".($r['fakultas']=='FIs'?'selected':'')." value=''>FIs</option>
+                </select>
+              </div>
+               <div class='form-group'>
+                  <label>Nama Lengkap</label>
+                  <input type='text' class='form-control' name='nama_lengkap' value='$r[nama_lengkap]'/>
+              </div>
+             <div class='form-group'>
+                  <label>No.Telp</label>
+                  <input type='text' class='form-control' name='no_telp' value='$r[telpon]'/>
+              </div>
+              <div class='form-group'>
+                  <label>Alamat</label>
+                  <input type='text' class='form-control' name='alamat' value='$r[alamat]'/>
+              </div>
+             <div class='form-group'>
+                    <label>Kota</label>
+                    <select class='form-control' name='kota'>";
+                $sk='SELECT * FROM kota order by nama_kota';
+                $ek=mysqli_query($con,$sk);
+                echo '<option value="">-Pilih-</option>';
+                while ($rk=mysqli_fetch_assoc($ek)) {
+                    echo '<option '.($rk['id_kota']==$r['id_kota']?'selected':'').' value="'.$rk['id_kota'].'">'.$rk['nama_kota'].'</option>';
+                }
+                echo"</select>
+                </div>
+                ";
+
+                if ($r['blokir']=='N'){
+                  echo " <label>Status Blokir </label><input type=radio name='blokir' value='Y'> Y   
+                                                       <input type=radio name='blokir' value='N' checked> N ";
+                }else{
+                  echo " <label>Status Blokir </label><input type=radio name='blokir' value='Y' checked> Y  
+                                                      <input type=radio name='blokir' value='N'> N ";
+                }
     echo "
                                         <div class='form-group'>
                                            <label for='exampleInputFile'>Preview Foto</label><br />
@@ -309,7 +338,7 @@ else{
                                         </div>
                                          <div class='form-group'>
                                             <label>Password</label>
-                                            <input type='text' class='form-control' name='password' placeholder='Password Baru...'/>
+                                            <input type='password' class='form-control' name='password' placeholder='Password Baru...'/>
                                         </div>
                                          <div class='form-group'>
                                             <label>Nama Lengkap</label>
