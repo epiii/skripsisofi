@@ -1,6 +1,11 @@
 <?php
 // session_start();
+<<<<<<< HEAD
  if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+=======
+ // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+  if (empty($_SESSION['namauser'])){
+>>>>>>> 6ba781df4c06a55bc7de1aca47b8bd24852f382d
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
@@ -11,12 +16,12 @@ echo "<aside class='right-side'>
                 <!-- Content Header (Page header) -->
                 <section class='content-header'>
                     <h1>
-                        Data
+                        Testimoni
                         <small>Produk</small>
                     </h1>
                     <ol class='breadcrumb'>
                         <li><a href='#'><i class='fa fa-dashboard'></i> Home</a></li>
-                        <li class='active'>Data Produk</li>
+                        <li class='active'>Testimoni Produk</li>
                        
                     </ol>
                 </section>
@@ -27,7 +32,12 @@ echo "<aside class='right-side'>
                         <div class='col-xs-12'>
                    
 <div class='box'>";
+<<<<<<< HEAD
 $act=isset($_GET['act'])?$_GET['act']:'act';
+=======
+// switch($_GET[act]){
+$act=!isset($_GET['act'])?'act':$_GET['act'];
+>>>>>>> 6ba781df4c06a55bc7de1aca47b8bd24852f382d
 switch($act){
   // Tampil testimoni
   default:

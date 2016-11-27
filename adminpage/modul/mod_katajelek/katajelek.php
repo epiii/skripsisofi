@@ -1,6 +1,7 @@
 <?php
-session_start();
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+// session_start();
+ // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+   if (empty($_SESSION['namauser'])){   
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
@@ -12,12 +13,12 @@ echo "
                 <!-- Content Header (Page header) -->
                 <section class='content-header'>
                     <h1>
-                        Data
-                        <small>Kategori Produk</small>
+                        Sensor
+                        <small> Kata</small>
                     </h1>
                     <ol class='breadcrumb'>
                         <li><a href='?module=home'><i class='fa fa-dashboard'></i> Home</a></li>
-                        <li class='active'>Kategori Produk</li>
+                        <li class='active'>Sensor Kata</li>
                         
                     </ol>
                 </section>
@@ -29,8 +30,10 @@ echo "
                    
 <div class='box'>
                                 ";
-switch($_GET[act]){
-  // Tampil Kata Jelek
+// switch($_GET[act]){
+$act=!isset($_GET['act'])?'act':$_GET['act'];
+switch($act){
+// Tampil Kata Jelek
   default:
     echo "<div class='box-header'>
                                     <h3 class='box-title'><input type=button class='btn btn-primary btn' value='Tambah Kategori' 

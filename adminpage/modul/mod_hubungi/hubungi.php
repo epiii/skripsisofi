@@ -10,7 +10,7 @@ echo "
                     </h1>
                     <ol class='breadcrumb'>
                         <li><a href='?module=home'><i class='fa fa-dashboard'></i> Home</a></li>
-                        <li class='active'>hubungi Kami</li>
+                        <li class='active'>Hubungi Kami</li>
                        
                     </ol>
                 </section>
@@ -21,7 +21,9 @@ echo "
                         <div class='col-xs-12'>
                    
 <div class='box'>";
-switch($_GET[act]){
+// switch($_GET[act]){
+$act=!isset($_GET['act'])?'act':$_GET['act'];
+switch($act){
   // Tampil Hubungi Kami
   default:
     echo " <div class='box-header'>
@@ -42,7 +44,7 @@ switch($_GET[act]){
 
     $no = 1;
     while ($r=mysqli_fetch_array($tampil)){
-      $tgl=tgl_indo($r[tanggal]);
+      $tgl=tgl_indo($r['tanggal']);
       echo "<tr><td>$no</td>
                 <td>$r[nama]</td>
                 <td><a href=?module=hubungi&act=balasemail&id=$r[id_hubungi]>$r[email]</a></td>
