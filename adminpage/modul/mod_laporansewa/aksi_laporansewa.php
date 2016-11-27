@@ -1,19 +1,19 @@
 <?php
-session_start();
-if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+// session_start();
+if (empty($_SESSION['leveluser']){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
 }
 else{
-include "../../../setting/koneksi.php";
+include "../../../config/koneksi.php";
 
-$module=$_GET[module];
-$act=$_GET[act];
+$module=$_GET['module'];
+$act=$_GET['act'];
 
 if ($module=='order' AND $act=='update'){
    // Update stok barang saat transaksi sukses (Lunas)
-   if ($_POST[status_order]=='Lunas'){ 
+   if ($_POST['status_order']=='Lunas'){ 
     
       // Update untuk mengurangi stok 
       mysqli_query($con,"UPDATE produk,orders_detail SET produk.stok=produk.stok-orders_detail.jumlah WHERE produk.id_produk=orders_detail.id_produk and orders_detail.id_orders='$_POST[id]'");

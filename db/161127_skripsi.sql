@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-27 21:50:39
+Date: 2016-11-28 05:42:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -6076,7 +6076,7 @@ INSERT INTO `menuutama` VALUES ('21', 'Kontak', '', 'Y', 'Admin', 'user', 'fa fa
 INSERT INTO `menuutama` VALUES ('22', 'Laporan', '', 'Y', 'Admin', 'admin', 'fa fa-bar-chart-o', '6');
 INSERT INTO `menuutama` VALUES ('25', 'Cara Pembelian', 'cara-pembelian.html', 'Y', 'Public', 'admin', '', '3');
 INSERT INTO `menuutama` VALUES ('26', 'Hubungi Kami', 'hubungi-kami.html', 'Y', 'Public', 'admin', '', '4');
-INSERT INTO `menuutama` VALUES ('27', 'Member', 'member.html', 'Y', 'Public', 'user', null, '1');
+INSERT INTO `menuutama` VALUES ('27', 'Member', 'member-viewbeli-0.html', 'Y', 'Public', 'admin', '', '1');
 INSERT INTO `menuutama` VALUES ('28', 'User', '', 'Y', 'Admin', 'admin', 'fa fa-users', '2');
 
 -- ----------------------------
@@ -6197,7 +6197,7 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` VALUES ('89', 'Baru', '2016-11-27', '14:07:51', '8');
 INSERT INTO `orders` VALUES ('90', 'Baru', '2016-11-27', '14:38:53', '8');
 INSERT INTO `orders` VALUES ('91', 'Baru', '2016-11-27', '16:24:48', '10');
-INSERT INTO `orders` VALUES ('92', 'Baru', '2016-11-27', '16:26:15', '8');
+INSERT INTO `orders` VALUES ('92', 'Lunas', '2016-11-27', '16:26:15', '8');
 
 -- ----------------------------
 -- Table structure for orders_detail
@@ -6253,11 +6253,13 @@ CREATE TABLE `orders_detail_sewa` (
   KEY `id_produkFK3` (`id_produk`) USING BTREE,
   CONSTRAINT `id_order_sewaFK` FOREIGN KEY (`id_order_sewa`) REFERENCES `orders_sewa` (`id_order_sewa`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `id_produkFK3` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of orders_detail_sewa
 -- ----------------------------
+INSERT INTO `orders_detail_sewa` VALUES ('1', '1', '73', '1', '2016-11-29 05:35:00', 'b');
+INSERT INTO `orders_detail_sewa` VALUES ('2', '1', '76', '2', '2016-11-28 05:35:14', 'b');
 
 -- ----------------------------
 -- Table structure for orders_detail_sewa_copy
@@ -6284,15 +6286,15 @@ CREATE TABLE `orders_sewa` (
   `keterangan` text NOT NULL,
   `id_kustomer` int(11) NOT NULL,
   `tgl_sewa` datetime NOT NULL,
-  `status` enum('k','b') NOT NULL DEFAULT 'b',
   PRIMARY KEY (`id_order_sewa`),
   KEY `id_memberFK` (`id_kustomer`) USING BTREE,
   CONSTRAINT `id_kustomerFK` FOREIGN KEY (`id_kustomer`) REFERENCES `kustomer` (`id_kustomer`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of orders_sewa
 -- ----------------------------
+INSERT INTO `orders_sewa` VALUES ('1', 'sewa palu dan lcd untuk sidang STNK', '8', '2016-11-27 05:33:17');
 
 -- ----------------------------
 -- Table structure for orders_sewa_copy
@@ -6609,7 +6611,8 @@ INSERT INTO `statistik` VALUES ('::1', '2016-11-14', '9', '1479134063');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-20', '27', '1479635172');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-21', '20', '1479747302');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-26', '8', '1480156157');
-INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '12', '1480250467');
+INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '13', '1480259521');
+INSERT INTO `statistik` VALUES ('::1', '2016-11-28', '8', '1480284891');
 
 -- ----------------------------
 -- Table structure for submenu
@@ -6624,7 +6627,7 @@ CREATE TABLE `submenu` (
   `aktif` enum('Y','N') NOT NULL DEFAULT 'Y',
   `adminsubmenu` enum('Y','N') NOT NULL,
   PRIMARY KEY (`id_sub`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of submenu
@@ -6653,6 +6656,7 @@ INSERT INTO `submenu` VALUES ('25', 'Laporan Order', '?module=laporan', '22', '0
 INSERT INTO `submenu` VALUES ('26', 'Member', '?module=member', '28', '0', 'Y', 'Y');
 INSERT INTO `submenu` VALUES ('27', 'Admin', '?module=admin', '28', '0', 'Y', 'Y');
 INSERT INTO `submenu` VALUES ('29', 'Barang Persewaan', '?module=produksewa', '4', '0', 'Y', 'Y');
+INSERT INTO `submenu` VALUES ('30', 'Laporan Sewa', '?module=laporansewa', '22', '0', 'Y', 'Y');
 
 -- ----------------------------
 -- Table structure for tag

@@ -417,6 +417,12 @@ elseif ($_GET['module']=='laporan'){
     include "modul/mod_laporan/laporan.php";
   }
 }
+// Bagian Laporan sewa
+elseif ($_GET['module']=='laporansewa'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+    include "modul/mod_laporansewa/laporansewa.php";
+  }
+}
 
 //bagian testimoni
 elseif ($_GET['module']=='testimoni'){

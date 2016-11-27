@@ -1,8 +1,10 @@
 <?php
-session_start();
-include "../../../config/library.php";
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
-  echo "<link href='style.css' rel='stylesheet' type='text/css'>
+// session_start();
+// include "../../../config/library.php";
+// include "../config/library.php";
+ // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+if (empty($_SESSION['namauser'])){
+echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
 }
@@ -13,8 +15,8 @@ echo "
                 <!-- Content Header (Page header) -->
                 <section class='content-header'>
                     <h1>
-                        Data
-                        <small>Order</small>
+                        Laporan
+                        <small>Sewa</small>
                     </h1>
                     <ol class='breadcrumb'>
                         <li><a href='?module=home'><i class='fa fa-dashboard'></i> Home</a></li>
@@ -29,8 +31,8 @@ echo "
                         <div class='col-xs-12'>
                    
 <div class='box'>";
-switch($_GET[act]){
-  // Tampil Order
+$act=!isset($_GET['act'])?'':$_GET['act'];
+switch($act){
   default:
     echo "   
     <div class='box-header'>
@@ -42,28 +44,42 @@ switch($_GET[act]){
     
     <table id='example1' class='table table-bordered table-striped'>
                                         <thead>
-          <tr><th>No.</th><th>No.Order</th><th>Nama Kostumer</th><th>Tgl. Order</th><th>Jam Order</th><th>Status</th><th>Aksi</th></tr>
-           </thead><tbody>";
+          <tr><th>No.</th>
+          <th>Nama Kostumer</th>
+          <th>Tgl. Sewa</th>
+          <th>Jam Sewa</th>
+          <th>Aksi</th>
+        </tr></thead><tbody>";
 
     
-$no=1;
-    $tampil = mysqli_query($con,"SELECT * FROM orders,kustomer WHERE orders.id_kustomer=kustomer.id_kustomer ORDER BY id_orders DESC");
+    $no=1;
+    $s="SELECT
+          *
+        FROM
+          orders_sewa s,
+          kustomer k
+        WHERE
+          s.id_kustomer = k.id_kustomer
+        ORDER BY
+          s.id_order_sewa DESC";
+    $tampil = mysqli_query($con,$s);
+    // vd($s);
   
-    while($r=mysqli_fetch_array($tampil)){
-      $tanggal=tgl_indo($r[tgl_order]);
-      echo "<tr><td align=center>$no</td>
-      <td align=center>$r[id_orders]</td>
-                <td>$r[nama_lengkap]</td>
-                <td>$tanggal</td>
-                <td>$r[jam_order]</td>
-                
-                <td>$r[status_order]</td>
-                <td class='center'>
-		         <a class='btn btn-info' href='?module=order&act=detailorder&id=$r[id_orders]'>
-										<i class='icon-edit icon-white'></i>  
-										Detail                                            
-									</a>
-		            </td></tr>";
+    while($r=mysqli_fetch_assoc($tampil)){
+      $tanggal =tgl_indo($r['tgl_sewa']);
+      $jam     =tgl_indo($r['tgl_sewa']);
+      echo "<tr>
+              <td align=center>$no</td>
+              <td>$r[nama_lengkap]</td>
+              <td>$tanggal</td>
+              <td>$jam</td>
+
+              <td class='center'>
+		         <a class='btn btn-info' href='?module=laporansewa&act=detaillaporansewa&id=$r[id_order_sewa]'>
+								<i class='icon-edit icon-white'></i>  
+								Detail                                            
+							</a>
+            </td></tr>";
       $no++;
     }
     echo "</tbody></table>";
@@ -74,15 +90,15 @@ $no=1;
   case "detailorder":
     $edit = mysqli_query($con,"SELECT * FROM orders,kustomer WHERE orders.id_kustomer=kustomer.id_kustomer AND id_orders='$_GET[id]'");
     $r    = mysqli_fetch_array($edit);
-    $tanggal=tgl_indo($r[tgl_order]);
+    $tanggal=tgl_indo($r['tgl_order']);
     
-    if ($r[status_order]=='Baru'){
+    if ($r['status_order']=='Baru'){
         $pilihan_status = array('Baru', 'DP', 'Lunas');
     }
-    elseif ($r[status_order]=='DP'){
+    elseif ($r['status_order']=='DP'){
         $pilihan_status = array('DP','Lunas', 'Batal');    
     }
-    elseif ($r[status_order]=='Lunas'){
+    elseif ($r['status_order']=='Lunas'){
         $pilihan_status = array('Lunas', 'Batal');    
     }
     else{
@@ -92,7 +108,7 @@ $no=1;
     $pilihan_order = '';
     foreach ($pilihan_status as $status) {
 	   $pilihan_order .= "<option value=$status";
-	   if ($status == $r[status_order]) {
+	   if ($status == $r['status_order']) {
 		    $pilihan_order .= " selected";
 	   }
 	   $pilihan_order .= ">$status</option>\r\n";
@@ -182,19 +198,19 @@ $no=1;
                                     </tr>
                                 </thead>
                                 <tbody>";
-                                  
+  $total=$totalberat=0;
   while($s=mysqli_fetch_array($sql2)){
      // rumus untuk menghitung subtotal dan total		
-   $disc        = ($s[diskon]/100)*$s[harga];
-   $hargadisc   = number_format(($s[harga]-$disc),0,",","."); 
-   $subtotal    = ($s[harga]-$disc) * $s[jumlah];
+   $disc        = ($s['diskon']/100)*$s['harga'];
+   $hargadisc   = number_format(($s['harga']-$disc),0,",","."); 
+   $subtotal    = ($s['harga']-$disc) * $s['jumlah'];
 
     $total       = $total + $subtotal;
     $subtotal_rp = format_rupiah($subtotal);    
     $total_rp    = format_rupiah($total);    
-    $harga       = format_rupiah($s[harga]);
+    $harga       = format_rupiah($s['harga']);
 
-   $subtotalberat = $s[berat] * $s[jumlah]; // total berat per item produk 
+   $subtotalberat = $s['berat'] * $s['jumlah']; // total berat per item produk 
    $totalberat  = $totalberat + $subtotalberat; // grand total berat all produk yang dibeli
    echo "
 
@@ -242,8 +258,8 @@ $no=1;
                          $cekpembeli=mysqli_fetch_array(mysqli_query($con,"SELECT * FROM kustomer,orders 
           WHERE orders.id_kustomer=kustomer.id_kustomer AND id_orders='$_GET[id]'"));
           $ongkos=mysqli_fetch_array(mysqli_query($con,"SELECT ongkos_kirim FROM kota WHERE id_kota='$cekpembeli[id_kota]'"));
-$ongkoskirim1=$ongkos[ongkos_kirim];
-  $ongkoskirim1=$ongkos[ongkos_kirim];
+  $ongkoskirim1=$ongkos['ongkos_kirim'];
+  $ongkoskirim1=$ongkos['ongkos_kirim'];
   $ongkoskirim=$ongkoskirim1 * $totalberat;
 
   $grandtotal    = $total + $ongkoskirim; 
@@ -256,7 +272,7 @@ $ongkoskirim1=$ongkos[ongkos_kirim];
                             <div class='table-responsive'>
                                 <table class='table'>
                                  <tr>
-                                        <th style='width:50%'>Ongkos Kirim $cekpembeli[id_kota]:</th>
+                                        <th style='width:50%'>Ongkos Kirim :</th>
                                         <td>Rp. $ongkoskirim_rp</td>
                                     </tr>
                                     <tr>
