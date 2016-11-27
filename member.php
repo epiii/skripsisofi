@@ -6,7 +6,7 @@ function getBarang (nox) {
         data:'aksi=baranglist',
         type:'post',
         success:function(dt){
-            var select='<select name="selectTB[]" id="selectTB_'+nox+'">';
+            var select='<select onchange="getTotal('+nox+')" name="selectTB[]" id="selectTB_'+nox+'">';
             $.each(dt,function (id,item) {
                 select+='<option value="'+item.id_produk+'">'+item.nama_produk+' (per '+item.durasi+' '+(item.jenisdurasi=='j'?'jam':'hari')+')</option>';
             });select+='</select>';

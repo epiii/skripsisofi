@@ -10,6 +10,7 @@ else{
 
 include "class.ezpdf.php";
 include "../../../config/koneksi.php";
+include "../../../config/library.php";
 include "rupiah.php";
   
 $pdf = new Cezpdf();
@@ -41,35 +42,36 @@ $pdf->closeObject();
 $pdf->addObject($all, 'all');
 
 // Baca input tanggal yang dikirimkan user
-$mulai=$_POST[thn_mulai].'-'.$_POST[bln_mulai].'-'.$_POST[tgl_mulai];
-$selesai=$_POST[thn_selesai].'-'.$_POST[bln_selesai].'-'.$_POST[tgl_selesai];
+$mulai=$_POST['thn_mulai'].'-'.$_POST['bln_mulai'].'-'.$_POST['tgl_mulai'];
+$selesai=$_POST['thn_selesai'].'-'.$_POST['bln_selesai'].'-'.$_POST['tgl_selesai'];
 
 // Query untuk merelasikan kedua tabel di filter berdasarkan tanggal
-$sql = mysqli_query($con,"SELECT orders.id_orders as faktur,DATE_FORMAT(tgl_order, '%d-%m-%Y') as tanggal,
+  $s="SELECT orders.id_orders as faktur,DATE_FORMAT(tgl_order, '%d-%m-%Y') as tanggal,
                     nama_produk,jumlah,harga 
                     FROM orders, orders_detail, produk  
                     WHERE (orders_detail.id_produk=produk.id_produk) 
                     AND (orders_detail.id_orders=orders.id_orders) 
                     AND (orders.status_order='Lunas') 
-                    AND (orders.tgl_order BETWEEN '$mulai' AND '$selesai')");
+                    AND (orders.tgl_order BETWEEN '$mulai' AND '$selesai')";
+// vd($s);
+$sql = mysqli_query($con,$s);
 $jml = mysqli_num_rows($sql);
-
 if ($jml > 0){
 $i = 1;
-while($r = mysqli_fetch_array($sql)){
-  $quantityharga=rp($r[jumlah]*$r[harga]);
-  $hargarp=rp($r[harga]); 
-  $faktur=$r[faktur];
+while($r = mysqli_fetch_assoc($sql)){
+  $quantityharga=rp($r['jumlah']*$r['harga']);
+  $hargarp=rp($r['harga']); 
+  $faktur=$r['faktur'];
   
   $data[$i]=array('<b>No</b>'=>$i, 
                   '<b>Faktur</b>'=>$faktur, 
-                  '<b>Tanggal</b>'=>$r[tanggal], 
-                  '<b>Nama Produk</b>'=>$r[nama_produk], 
-                  '<b>Qty</b>'=>$r[jumlah], 
+                  '<b>Tanggal</b>'=>$r['tanggal'], 
+                  '<b>Nama Produk</b>'=>$r['nama_produk'], 
+                  '<b>Qty</b>'=>$r['jumlah'], 
                   '<b>Harga</b>'=>$hargarp,
                   '<b>Sub Total</b>'=>$quantityharga);
-	$total = $total+($r[jumlah]*$r[harga]);
-	$totqu = $totqu + $r[jumlah];
+	$total = $total+($r['jumlah']*$r['harga']);
+	$totqu = $totqu + $r['jumlah'];
   $i++;
 }
 
@@ -85,8 +87,8 @@ $pdf->ezStartPageNumbers(320, 15, 8);
 $pdf->ezStream();
 }
 else{
-  $m=$_POST[tgl_mulai].'-'.$_POST[bln_mulai].'-'.$_POST[thn_mulai];
-  $s=$_POST[tgl_selesai].'-'.$_POST[bln_selesai].'-'.$_POST[thn_selesai];
+  $m=$_POST['tgl_mulai'].'-'.$_POST['bln_mulai'].'-'.$_POST['thn_mulai'];
+  $s=$_POST['tgl_selesai'].'-'.$_POST['bln_selesai'].'-'.$_POST['thn_selesai'];
   echo "Tidak ada transaksi/order pada Tanggal $m s/d $s";
 }
 }
