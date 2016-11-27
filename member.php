@@ -73,10 +73,10 @@ if(!isset($_SESSION['levelmember'])){
                 <thead><tr>
                     <th>no</th>
                     <th>Tgl Order</th>
-                    <th>Produk</th>
+                    <th>Barang</th>
                     <th>Jumlah</th>
-                    <th>harga</th>
-                    <th>total</th>
+                    <th>Harga</th>
+                    <th>Total</th>
                 </tr></thead>
                 <tbody>";
                 $s='SELECT
@@ -84,7 +84,8 @@ if(!isset($_SESSION['levelmember'])){
                         od.jumlah,
                         p.nama_produk,
                         o.tgl_order,
-                        p.harga,    
+                        p.hargakoperasi,    
+                        p.hargaumum,    
                         (p.harga*od.jumlah)total
                     FROM
                         orders o 
@@ -106,12 +107,14 @@ if(!isset($_SESSION['levelmember'])){
                 }else{
                     $no=1;
                     while ($r=mysqli_fetch_assoc($tampil)){
-                        echo "<tr><td>$no</td>
+                        $harga=$_SESSION['levelmember']=='k'?'hargakoperasi':'hargaumum';
+                            var_dump($harga);exit();
+                            echo "<tr><td>$no</td>
                                 <td>".tgl_indo($r['tgl_order'])."</td>                
                                 <td>$r[nama_produk]</td>                
                                 <td>$r[jumlah]</td>                
-                                <td>Rp. ".format_rupiah($r['harga'])."</td>                
-                                <td>Rp. ".format_rupiah($r['total'])."</td>                
+                                <td>Rp. ".format_rupiah($r[$harga])."</td>                
+                                <td>Rp. ".format_rupiah($r['total']*$harga)."</td>                
                             </td>
                         </tr>";
                         $no++;
@@ -173,9 +176,9 @@ if(!isset($_SESSION['levelmember'])){
                     $no=1;
                     while ($r=mysqli_fetch_assoc($tampil)){
                         echo "<tr><td>$no</td>
-                                <td>".tgl_indo($r['tgl_order'])."</td>                
+                                <td>".tgl_indo($r['tgl_sewa'])."</td>                
                                 <td>$r[nama_produk]</td>                
-                                <td>$r[jumlah]</td>                
+                                <td>$r[total]</td>                
                                 <td>Rp. ".format_rupiah($r['harga'])."</td>                
                                 <td>Rp. ".format_rupiah($r['total'])."</td>                
                             </td>

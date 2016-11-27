@@ -70,7 +70,7 @@ switch($act){
       $jam     =tgl_indo($r['tgl_sewa']);
       echo "<tr>
               <td align=center>$no</td>
-              <td>$r[nama_lengkap]</td>
+               <td>$r[nama_lengkap]</td>
               <td>$tanggal</td>
               <td>$jam</td>
 
