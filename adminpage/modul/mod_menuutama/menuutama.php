@@ -1127,7 +1127,7 @@ switch($act){
                                         <div class='form-group'>
                                          <label>Status Menu</label>
                                             <div class='radio'>";
-                                            if ($r[aktif]=='Y'){    
+                                            if ($r['aktif']=='Y'){    
                                             	echo "                                        
                                                 <label>
                                                     <input type='radio' name='aktif' id='optionsRadios1' value='Y' checked>
@@ -1159,7 +1159,7 @@ switch($act){
                                         
                                         <div class='form-group'>
                                         <label>Penempatan Menu</label>";
-                                         if ($r[lokasi]=='Public'){ 
+                                         if ($r['lokasi']=='Public'){ 
                                           echo "  <div class='radio'>                                            
                                                 <label>
                                                     <input type='radio' name='lokasi' id='optionsRadios1' value='Public' checked>
@@ -1190,7 +1190,7 @@ switch($act){
                                         <div class='form-group'>
                                          <label>Hak Akses</label>
                                           <div class='radio'>";
-    	if ($r[hakakses]=='User'){ 
+    	if ($r['hakakses']=='User'){ 
     		echo "                                            
                                                 <label>
                                                     <input type='radio' name='hakakses' id='optionsRadios1' value='User' checked>

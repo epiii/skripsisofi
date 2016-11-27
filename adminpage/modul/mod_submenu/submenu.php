@@ -56,7 +56,7 @@ switch($act){
     while($r=mysqli_fetch_array($tampil)){
 	if($r['id_submain']!=0){
 		$sub = mysqli_fetch_array(mysqli_query($con,"SELECT * FROM submenu WHERE id_sub=$r[id_submain]"));
-		$menuutama = $r['nama_menu']." &gt; ".$sub[nama_sub];
+		$menuutama = $r['nama_menu']." &gt; ".$sub['nama_sub'];
 	} else {
 		$menuutama = $r['nama_menu'];
 	}
