@@ -1,6 +1,7 @@
 <?php
- if(!empty($_SESSION))  header('Location:member.html');
- else{ 
+ if(isset($_SESSION['levelmember']))  {
+    header('Location:member-viewbeli-0.html');
+ }else{ 
 ?>
        <script type="text/javascript">
         function validasi(form){

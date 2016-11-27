@@ -9,6 +9,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Log in Administrator Page</title>
+
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- bootstrap 3.0.2 -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -38,7 +39,9 @@ return (true);
     
         <!-- form login  <epi> -->
         <div class="form-box" id="login-box">
+            <small>demo >> <br> username : admin <br> password : admin</small>
             <div class="header">Sign In</div>
+
            <form id="form-login" name="login" method="post" action="cek_login.php" onSubmit="return validasi(this)">
                 <div class="body bg-lime">
                     <div class="form-group">
