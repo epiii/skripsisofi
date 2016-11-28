@@ -1,19 +1,34 @@
- <script>
-function getBarang (nox) {
-    $.ajax({
-        url:'memberajax.php',
-        dataType:'json',
-        data:'aksi=baranglist',
-        type:'post',
-        success:function(dt){
-            var select='<select onchange="getTotal('+nox+')" name="selectTB[]" id="selectTB_'+nox+'">';
-            $.each(dt,function (id,item) {
-                select+='<option value="'+item.id_produk+'">'+item.nama_produk+' (per '+item.durasi+' '+(item.jenisdurasi=='j'?'jam':'hari')+')</option>';
-            });select+='</select>';
-            $('#selectTD_'+nox).html(select);
-        },
-    });
-}
+        <!-- <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" /> -->
+
+<script>
+    function simpan () {
+
+        $.ajax({
+            url:'memberajax.php',
+            dataType:'json',
+            data:'aksi=simpan&'+$('form').serialize(),
+            type:'post',
+            success:function(dt){
+                alert(dt.hasil);
+            },
+        });
+    }
+
+    function getBarang (nox) {
+        $.ajax({
+            url:'memberajax.php',
+            dataType:'json',
+            data:'aksi=baranglist',
+            type:'post',
+            success:function(dt){
+                var select='<select onchange="getTotal('+nox+')" name="selectTB[]" id="selectTB_'+nox+'">';
+                $.each(dt,function (id,item) {
+                    select+='<option value="'+item.id_produk+'">'+item.nama_produk+' (per '+item.durasi+' '+(item.jenisdurasi=='j'?'jam':'hari')+')</option>';
+                });select+='</select>';
+                $('#selectTD_'+nox).html(select);
+            },
+        });
+    }
 
 function getTotal (nox) {
     $.ajax({
@@ -28,12 +43,17 @@ function getTotal (nox) {
     });
 }
 
+function removeTR(nox){
+    $('#barangTR_'+nox).remove();
+}
+
 var no=1;
 function addBarang () {
-    var barangTR='<tr>'
+    var barangTR='<tr id="barangTR_'+no+'">'
         +'<td id="selectTD_'+no+'"></td>'
         +'<td><input required onkeyup="getTotal('+no+');" value="" min="1" type="number" name="jumlahTB[]" id="jumlahTB_'+no+'" /></td>'
         +'<td id="totalTD_'+no+'">Rp.0</td>'
+        +'<td><a data-toggle="tooltip" title="hapus" class="btn btn-danger" onclick="removeTR('+no+');" href="#"><i class="icon-trash"></i></a></td>'
     +'</tr>';
     $('#barangTR').append(barangTR);
     getBarang(no);
@@ -47,7 +67,7 @@ function addBarang () {
 if(!isset($_SESSION['levelmember'])){
     echo "<script>location.href='memberlogin.html'</script>";
 } else{
-    $aksi="modul/mod_tag/aksi_tag.php";
+    // $aksi="modul/mod_tag/aksi_tag.php";
     echo"<div class='container'>            
     <section class='page'>
     <a class='btn ' href='memberlogout.php'>Logout</a>";
@@ -190,6 +210,7 @@ if(!isset($_SESSION['levelmember'])){
         break;
  
         case "tambahsewa":
+            // <form method=POST action='$aksi?module=tag&act=input'>
             echo "
             <section class='content'>
                 <ol class='breadcrumb'>
@@ -198,28 +219,47 @@ if(!isset($_SESSION['levelmember'])){
                     </li>
                     <li class='active'>/ Sewa</li>
                 </ol>
-                    <div class='row'>
+                <div class='row'>
                         <div class='col-md-12'>
                             <div class='box box-info'>
                                 <div class='box-header'>
                                     <h3 class='box-title'>Tambah <small>Sewa</small></h3>
-                                    <!-- tools box -->
-                                    <div class='pull-right box-tools'>
-                                        <button class='btn btn-info btn-sm' data-widget='collapse' data-toggle='tooltip' title='Collapse'><i class='fa fa-minus'></i></button>
-                                        <button class='btn btn-info btn-sm' data-widget='remove' data-toggle='tooltip' title='Remove'><i class='fa fa-times'></i></button>
-                                    </div><!-- /. tools -->
                                 </div><!-- /.box-header -->
 
                         <div class='box-body pad'>
-                            <form method=POST action='$aksi?module=tag&act=input'>
+                            <form method=POST onsubmit='simpan(); return false;'>
                                 <div class='form-group'>
                                     <label>Keterangan</label>
                                     <input type='text' class='form-control' name='keterangan' placeholder='keterangan'/>
+                                    <input  name='id_kustomer' type='hidden' value='".$_SESSION['idmember']."'>
+                                </div>
+                                <div class='input-group date'  data-date-format='dd-mm-yyyy' data-provide='datepicker'>
+                                    <label>Tanggal Sewa</label>
+                                    <input  readonly placeholder='tanggal sewa' name='tgl_sewa' type='text' class='datepicker form-control'>
+                                    <div class='input-group-addon'>
+                                        <i class='glyphicon glyphicon-th'></i>
+                                    </div>
                                 </div>
                                 <div class='form-group'>
-                                    <label>Tanggal Sewa</label>
-                                    <input type='text' class='form-control' name='tgl_sewa' placeholder='tgl sewa'/>
-                                </div>
+                                    <label>Jam</label>
+                                    <select class='span1 control-input' name='jam'>";
+                                    for ($i=0; $i <=23 ; $i++) { 
+                                        echo'<option value="'.$i.'">'.$i.'</option>';
+                                    }
+                                echo'</select> : <select class="span1 control-input" name="menit">';
+                                    for ($i=0; $i <60 ; $i++) { 
+                                        echo'<option value="'.$i.'">'.$i.'</option>';
+                                    }
+                                echo" </select></div>
+                                <!--<div class='well'>
+                                  <div id='datetimepicker1' class='input-append date'>
+                                    <input data-format='dd/MM/yyyy hh:mm:ss' type='text'></input>
+                                    <span class='add-on'>
+                                      <i data-time-icon='icon-time' data-date-icon='icon-calendar'>
+                                      </i>
+                                    </span>
+                                  </div>
+                                </div>-->
 
                                 <div class='box box-info'>
                                     <a onclick='addBarang();' href='#' class='btn btn-primary'><i class='icon-plus'></i> Barang</a>
@@ -287,3 +327,16 @@ if(!isset($_SESSION['levelmember'])){
     }
     echo"</section></div>";
 }
+?>
+<script>
+    // $(function() {
+    //     $('#datetimepicker1').datetimepicker({
+            // language: 'pt-BR'
+    //     });
+    // });
+
+// $('.datepicker').datepicker({
+//     format: 'mm/dd/yyyy',
+//     startDate: '-3d'
+// });
+</script>

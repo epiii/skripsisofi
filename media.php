@@ -25,16 +25,23 @@
 		
 		
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<!-- 
+		<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+		-->
+		<link href="css/datepicker3.css" rel="stylesheet" type="text/css" /> 
 		<link rel="stylesheet" href="css/font.css" />
 		<link rel="stylesheet" href="css/style.css" />
 		
 		<!-- Favicon -->
 		<link rel="icon" href="favicon.ico">
+	
 		
 		<!-- =========== -->
 		<!-- Google Font -->
 		<!-- =========== -->
-				
+<!--         <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+        <script src="js/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+ -->
 		<script type="text/javascript">
 		
 			// Add Google Font name here
@@ -49,9 +56,10 @@
 			var s = document.getElementsByTagName('script')[0];
 			s.parentNode.insertBefore(wf, s);
 			})();
-			
+			// var datepicker = $.fn.datepicker.noConflict(); // return $.fn.datepicker to previously assigned value
+			// $.fn.bootstrapDP = datepicker;                 // give $().bootstrapDP the bootstrap-datepicker functionality
 		</script>
-		
+
 		<style type="text/css">
 		
 			/* Add Google Font name here */
@@ -399,8 +407,13 @@ include "tengah.php";
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript" src="js/jquery.tweet.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script src="js/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+	<!--
+	<script src="js/datepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+	-->
+
 	<script type="text/javascript" src="js/shop.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
-	
+
 	</body>
 </html>

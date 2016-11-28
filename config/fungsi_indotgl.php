@@ -5,6 +5,13 @@
 			$tahun = substr($tgl,0,4);
 			return $tanggal.' '.$bulan.' '.$tahun;		 
 	}	
+	
+	function tgl_db($tgl){ //23-12-1990
+			$tanggal = substr($tgl,0,2);
+			$bulan   = substr($tgl,3,2);
+			$tahun   = substr($tgl,6,4);
+			return $tahun.'-'.$bulan.'-'.$tanggal;		 
+	}	
 
 	function getBulan($bln){
 				switch ($bln){
