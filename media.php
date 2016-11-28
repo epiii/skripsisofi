@@ -90,7 +90,8 @@
 				<div class="pull-left greet">
 					<?php
 						$welcome=mysqli_query($con,"SELECT * FROM profil");
-						$bb=mysqli_fetch_array($welcome);
+						$bb=mysqli_fetch_assoc($welcome);
+						vd($bb);
 						// $welcome=mysql_query("SELECT * FROM profil");
 						// $bb=mysql_fetch_array($welcome);
 						// var_dump($bb);exit();
