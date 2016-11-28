@@ -6,8 +6,8 @@ require_once('fungsi_validasi.php');
 $server = "localhost";
 $username = "root";
 $password = "";
-// $database = "skripsi";
-$database = "skripsi2";
+$database = "skripsi";
+// $database = "skripsi2";
 
 // Koneksi dan memilih database di server
 $con =mysqli_connect($server,$username,$password) or die("Koneksi gagal");

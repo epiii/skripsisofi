@@ -1,7 +1,7 @@
 <?php
 // include "../config/koneksi.php";
 include "../config/library.php";
-$dbc = new mysqli("localhost","root", "", "skripsi2");
+$dbc = new mysqli("localhost","root", "", "skripsi");
 
 function anti_injection($data){
   // $filter = mysqli_real_escape_string(stripslashes(strip_tags(htmlspecialchars($data,ENT_QUOTES))));
