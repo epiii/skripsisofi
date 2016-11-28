@@ -1,4 +1,11 @@
 <?php
+	function jam_indo($tgl){
+		// vd($tgl);
+		$jam= substr($tgl,11,2);
+		$menit= substr($tgl,14,2);
+		return $jam.':'.$menit;
+	}
+		
 	function tgl_indo($tgl){
 			$tanggal = substr($tgl,8,2);
 			$bulan = getBulan(substr($tgl,5,2));

@@ -2,16 +2,27 @@
 
 <script>
     function simpan () {
-
-        $.ajax({
-            url:'memberajax.php',
-            dataType:'json',
-            data:'aksi=simpan&'+$('form').serialize(),
-            type:'post',
-            success:function(dt){
-                alert(dt.hasil);
-            },
-        });
+        if($('.barangTR').length==0){ 
+            $('tbody').html('<tr><td class="alert alert-danger text-center" colspan="4">pilih barang</td></tr>')
+            setTimeout(function  (argument) {
+                $('tr').fadeOut('slow',function(){
+                    $(this).html('');
+                });
+            },200);
+        }else if($('#tgl_sewa').val()==''){
+            alert('isi tanggal sewa');
+            $('#tgl_sewa').focus();
+        }else
+            $.ajax({
+                url:'memberajax.php',
+                dataType:'json',
+                data:'aksi=simpan&'+$('form').serialize(),
+                type:'post',
+                success:function(dt){
+                    alert(dt.success?'berhasil disimpan':'gagal');
+                    if(dt.success)location.href='member-viewsewa-0.html';
+                },
+            });
     }
 
     function getBarang (nox) {
@@ -49,7 +60,7 @@ function removeTR(nox){
 
 var no=1;
 function addBarang () {
-    var barangTR='<tr id="barangTR_'+no+'">'
+    var barangTR='<tr class="barangTR" id="barangTR_'+no+'">'
         +'<td id="selectTD_'+no+'"></td>'
         +'<td><input required onkeyup="getTotal('+no+');" value="" min="1" type="number" name="jumlahTB[]" id="jumlahTB_'+no+'" /></td>'
         +'<td id="totalTD_'+no+'">Rp.0</td>'
@@ -167,11 +178,16 @@ if(!isset($_SESSION['levelmember'])){
             <table id='example1' class='table table-bordered table-striped'>
                 <thead><tr>
                     <th>no</th>
-                    <th>Tgl Order</th>
+                    <th>Keperluan</th>
+                    <th>Tgl Sewa</th>
+                    <th>Jam Sewa</th>
                     <th>Produk</th>
+                    <th>Durasi</th>
                     <th>Jumlah</th>
                     <th>harga</th>
                     <th>total</th>
+                    <th>status</th>
+                    <th>aksi</th>
                 </tr></thead>
                 <tbody>";
                 $s='SELECT *
@@ -195,12 +211,32 @@ if(!isset($_SESSION['levelmember'])){
                 }else{
                     $no=1;
                     while ($r=mysqli_fetch_assoc($tampil)){
+                        $lev ='harga'.($_SESSION['levelmember']=='k'?'koperasi':'umum');
+                        $hrg =format_rupiah($r[$lev]);
+                        $tot =format_rupiah($r[$lev]*$r['total']);
+                        $btn='';
+                        if($r['status']=='p'){
+                            $stat='Pending';
+                            // $btn='<a class="btn btn-info" href="member-editsewa-'.$r['id_order_detail_sewa'].'.html">Edit</a>';
+                            $btn.='<a class="btn btn-danger" href="member-hapussewa-'.$r['id_order_detail_sewa'].'.html">Delete</a>';
+                        }elseif($r['status']=='b'){
+                            $stat='Belum Kembali';
+                        }elseif($r['status']=='k'){
+                            $stat='Sudah Kembali';
+                        }else{
+                            $stat='Terlambat Kembali';
+                        }
                         echo "<tr><td>$no</td>
+                                <td>$r[keterangan]</td>                
                                 <td>".tgl_indo($r['tgl_sewa'])."</td>                
+                                <td>".jam_indo($r['tgl_sewa'])."</td>                
                                 <td>$r[nama_produk]</td>                
+                                <td>per $r[durasi] ".($r['jenisdurasi']=='h'?'hari':'jam')."</td>                
                                 <td>$r[total]</td>                
-                                <td>Rp. ".format_rupiah($r['harga'])."</td>                
-                                <td>Rp. ".format_rupiah($r['total'])."</td>                
+                                <td>Rp. ".$hrg."</td>                
+                                <td>Rp. ".$tot."</td>                
+                                <td>".$stat."</td>                
+                                <td>".$btn."</td>                
                             </td>
                         </tr>";
                         $no++;
@@ -214,10 +250,14 @@ if(!isset($_SESSION['levelmember'])){
             echo "
             <section class='content'>
                 <ol class='breadcrumb'>
-                    <li class='active'>
+                    <li>
                         <a href='member-viewbeli-0.html'><i class='fa fa-dashboard'></i>Pembelian</a>
                     </li>
-                    <li class='active'>/ Sewa</li>
+                    <li class='active'>/</li>
+                    <li>
+                        <a href='member-viewbeli-0.html'><i class='fa fa-dashboard'></i>Sewa</a>
+                    </li>
+                    <li class='active'>/ Tambah Sewa</li>
                 </ol>
                 <div class='row'>
                         <div class='col-md-12'>
@@ -231,23 +271,28 @@ if(!isset($_SESSION['levelmember'])){
                                 <div class='form-group'>
                                     <label>Keterangan</label>
                                     <input type='text' class='form-control' name='keterangan' placeholder='keterangan'/>
-                                    <input  name='id_kustomer' type='hidden' value='".$_SESSION['idmember']."'>
+                                    <input id='id_order' name='id_order' type='hidden'>
+                                    <input name='id_kustomer' type='hidden' value='".$_SESSION['idmember']."'>
                                 </div>
                                 <div class='input-group date'  data-date-format='dd-mm-yyyy' data-provide='datepicker'>
                                     <label>Tanggal Sewa</label>
-                                    <input  readonly placeholder='tanggal sewa' name='tgl_sewa' type='text' class='datepicker form-control'>
+                                    <input required  readonly placeholder='tanggal sewa' name='tgl_sewa' id='tgl_sewa' type='text' class='datepicker form-control'>
                                     <div class='input-group-addon'>
                                         <i class='glyphicon glyphicon-th'></i>
                                     </div>
                                 </div>
                                 <div class='form-group'>
                                     <label>Jam</label>
-                                    <select class='span1 control-input' name='jam'>";
-                                    for ($i=0; $i <=23 ; $i++) { 
+                                    <select required class='span1 control-input' name='jam'>
+                                        <option value=''>-jam-</option>";
+                                    for ($i=0; $i <=23 ; $i++) {
+                                        $i=$i<10?'0'.$i:$i; 
                                         echo'<option value="'.$i.'">'.$i.'</option>';
                                     }
-                                echo'</select> : <select class="span1 control-input" name="menit">';
+                                echo'</select> : <select required class="span1 control-input" name="menit">
+                                    <option value="">-menit-</option>';
                                     for ($i=0; $i <60 ; $i++) { 
+                                        $i=$i<10?'0'.$i:$i; 
                                         echo'<option value="'.$i.'">'.$i.'</option>';
                                     }
                                 echo" </select></div>
@@ -264,10 +309,11 @@ if(!isset($_SESSION['levelmember'])){
                                 <div class='box box-info'>
                                     <a onclick='addBarang();' href='#' class='btn btn-primary'><i class='icon-plus'></i> Barang</a>
                                     <table class='table table-striped'>
-                                        <thead>
+                                        <thead><tr>
                                             <th>Nama</th>
                                             <th>Jumlah</th>
                                             <th>Harga Total</th>
+                                            </tr></thead>
                                         <tbody id='barangTR'>
                                         </tbody>
                                     </table>
@@ -285,6 +331,15 @@ if(!isset($_SESSION['levelmember'])){
                     </div><!-- ./row -->
                                     </section>
           ";
+        break;
+
+        case "hapussewa":
+
+            $s='DELETE FROM orders_detail_sewa WHERE id_order_detail_sewa='.$_GET['idsewa'];
+            // vd()
+            $e=mysqli_query($con,$s);
+            if($e) echo '<script>location.href="member-viewsewa-0.html"</script>';
+             else echo '<script>alert(\'gagal hapus\');"</script>';
         break;
 /*
         case "edittag":
