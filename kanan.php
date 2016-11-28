@@ -98,6 +98,7 @@
 
   $pengunjung       = mysqli_num_rows(mysqli_query($con,"SELECT * FROM statistik WHERE tanggal='$tanggal' GROUP BY ip"));
   $totalpengunjung  = mysqli_result(mysqli_query($con,"SELECT COUNT(hits) FROM statistik"), 0); 
+  // var_dump($totalpengunjung);exit();
   $hits             = mysql_fetch_assoc(mysqli_query($con,"SELECT SUM(hits) as hitstoday FROM statistik WHERE tanggal='$tanggal' GROUP BY tanggal")); 
   $totalhits        = mysqli_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
   $tothitsgbr       = mysqli_result(mysqli_query($con,"SELECT SUM(hits) FROM statistik"), 0); 
