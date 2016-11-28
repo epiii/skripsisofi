@@ -91,7 +91,7 @@
 					<?php
 						$welcome=mysqli_query($con,"SELECT * FROM profil");
 						$bb=mysqli_fetch_assoc($welcome);
-						vd($bb);
+						// vd($bb['nama_toko']);
 						// $welcome=mysql_query("SELECT * FROM profil");
 						// $bb=mysql_fetch_array($welcome);
 						// var_dump($bb);exit();
