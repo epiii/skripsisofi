@@ -22,12 +22,12 @@
                 <!-- Content Header (Page header) -->
                 <section class='content-header'>
                     <h1>
-                        Data
-                        <small>Produk Persewaan</small>
+                        Produk
+                        <small> Persewaan</small>
                     </h1>
                     <ol class='breadcrumb'>
                         <li><a href='?module=home'><i class='fa fa-dashboard'></i> Home</a></li>
-                        <li class='active'>Data Produk</li>
+                        <li class='active'>Produk Persewaan</li>
                        
                     </ol>
                 </section>

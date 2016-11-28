@@ -1,6 +1,7 @@
 <?php
-session_start();
- if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+// session_start();
+ // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
+   if (empty($_SESSION['namauser'])){   
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
@@ -28,7 +29,9 @@ echo "
                         <div class='col-xs-12'>
                    
 <div class='box'>";
-switch($_GET[act]){
+// switch($_GET[act]){
+  $act=!isset($_GET['act'])?'act':$_GET['act'];
+switch($act){
   // Tampil Bank
   default:
     echo "
@@ -47,7 +50,7 @@ switch($_GET[act]){
     $tampil=mysqli_query($con,"SELECT * FROM mod_bank ORDER BY id_bank DESC");
     $no=1;
     while ($r=mysqli_fetch_array($tampil)){
-      $tgl=tgl_indo($r[tgl_posting]);
+      // $tgl=tgl_indo($r['tgl_posting']);
       echo "<tr><td align=left>$no</td>
                 <td align=left><img src='../foto_banner/$r[gambar]'></td>
                 <td>$r[no_rekening]</td>
