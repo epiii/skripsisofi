@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-28 05:54:15
+Date: 2016-11-28 15:53:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5909,7 +5909,7 @@ CREATE TABLE `kustomer` (
   `foto` text COLLATE latin1_general_ci NOT NULL,
   `blokir` enum('N','Y') COLLATE latin1_general_ci NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id_kustomer`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of kustomer
@@ -6247,19 +6247,21 @@ CREATE TABLE `orders_detail_sewa` (
   `id_produk` int(11) NOT NULL,
   `total` int(11) NOT NULL,
   `tgl_kembali` datetime NOT NULL,
-  `status` enum('b','k','t') NOT NULL DEFAULT 'b' COMMENT '''belum'',''kembali'',''terlambat''',
+  `status` enum('p','b','k','t') NOT NULL DEFAULT 'p' COMMENT '''pending'',''belum'',''kembali'',''terlambat''',
   PRIMARY KEY (`id_order_detail_sewa`),
   KEY `id_order_sewaFK` (`id_order_sewa`) USING BTREE,
   KEY `id_produkFK3` (`id_produk`) USING BTREE,
   CONSTRAINT `id_order_sewaFK` FOREIGN KEY (`id_order_sewa`) REFERENCES `orders_sewa` (`id_order_sewa`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `id_produkFK3` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of orders_detail_sewa
 -- ----------------------------
-INSERT INTO `orders_detail_sewa` VALUES ('1', '1', '73', '1', '2016-11-29 05:35:00', 'b');
-INSERT INTO `orders_detail_sewa` VALUES ('2', '1', '76', '2', '2016-11-28 05:35:14', 'b');
+INSERT INTO `orders_detail_sewa` VALUES ('14', '24', '73', '1', '0000-00-00 00:00:00', 'p');
+INSERT INTO `orders_detail_sewa` VALUES ('15', '24', '76', '2', '0000-00-00 00:00:00', 'p');
+INSERT INTO `orders_detail_sewa` VALUES ('17', '26', '76', '2', '0000-00-00 00:00:00', 'p');
+INSERT INTO `orders_detail_sewa` VALUES ('18', '27', '73', '1', '0000-00-00 00:00:00', 'p');
 
 -- ----------------------------
 -- Table structure for orders_detail_sewa_copy
@@ -6289,12 +6291,17 @@ CREATE TABLE `orders_sewa` (
   PRIMARY KEY (`id_order_sewa`),
   KEY `id_memberFK` (`id_kustomer`) USING BTREE,
   CONSTRAINT `id_kustomerFK` FOREIGN KEY (`id_kustomer`) REFERENCES `kustomer` (`id_kustomer`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of orders_sewa
 -- ----------------------------
-INSERT INTO `orders_sewa` VALUES ('1', 'sewa palu dan lcd untuk sidang STNK', '8', '2016-11-27 05:33:17');
+INSERT INTO `orders_sewa` VALUES ('22', 'seminar ovj', '8', '2016-11-01 03:05:00');
+INSERT INTO `orders_sewa` VALUES ('23', '', '8', '0000-00-00 00:00:00');
+INSERT INTO `orders_sewa` VALUES ('24', '8', '8', '2016-11-15 13:00:00');
+INSERT INTO `orders_sewa` VALUES ('25', '', '8', '2016-11-08 04:12:00');
+INSERT INTO `orders_sewa` VALUES ('26', '', '8', '2016-11-16 02:02:00');
+INSERT INTO `orders_sewa` VALUES ('27', 'pinjam aja', '8', '2016-11-29 15:00:00');
 
 -- ----------------------------
 -- Table structure for orders_sewa_copy
@@ -6360,7 +6367,7 @@ CREATE TABLE `produk` (
   `jenisdurasi` enum('h','j') COLLATE latin1_general_ci NOT NULL DEFAULT 'h' COMMENT '''hari'',''jam''',
   `durasi` int(11) NOT NULL,
   PRIMARY KEY (`id_produk`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- ----------------------------
 -- Records of produk
@@ -6612,7 +6619,7 @@ INSERT INTO `statistik` VALUES ('::1', '2016-11-20', '27', '1479635172');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-21', '20', '1479747302');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-26', '8', '1480156157');
 INSERT INTO `statistik` VALUES ('::1', '2016-11-27', '13', '1480259521');
-INSERT INTO `statistik` VALUES ('::1', '2016-11-28', '8', '1480284891');
+INSERT INTO `statistik` VALUES ('::1', '2016-11-28', '10', '1480322605');
 
 -- ----------------------------
 -- Table structure for submenu

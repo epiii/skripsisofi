@@ -214,16 +214,19 @@ if(!isset($_SESSION['levelmember'])){
                         $lev ='harga'.($_SESSION['levelmember']=='k'?'koperasi':'umum');
                         $hrg =format_rupiah($r[$lev]);
                         $tot =format_rupiah($r[$lev]*$r['total']);
-                        $btn='';
+                        $btn='<a disabled class="btn" href="#">Delete</a>';
                         if($r['status']=='p'){
                             $stat='Pending';
-                            // $btn='<a class="btn btn-info" href="member-editsewa-'.$r['id_order_detail_sewa'].'.html">Edit</a>';
-                            $btn.='<a class="btn btn-danger" href="member-hapussewa-'.$r['id_order_detail_sewa'].'.html">Delete</a>';
+                            $clr='';
+                            $btn='<a class="btn btn-danger" href="member-hapussewa-'.$r['id_order_detail_sewa'].'.html">Delete</a>';
                         }elseif($r['status']=='b'){
+                            $clr='green';
                             $stat='Belum Kembali';
                         }elseif($r['status']=='k'){
+                            $clr='info';
                             $stat='Sudah Kembali';
                         }else{
+                            $clr='danger';
                             $stat='Terlambat Kembali';
                         }
                         echo "<tr><td>$no</td>
@@ -235,7 +238,7 @@ if(!isset($_SESSION['levelmember'])){
                                 <td>$r[total]</td>                
                                 <td>Rp. ".$hrg."</td>                
                                 <td>Rp. ".$tot."</td>                
-                                <td>".$stat."</td>                
+                                <td class='bg-".$clr."'>".$stat."</td>                
                                 <td>".$btn."</td>                
                             </td>
                         </tr>";
