@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2016-11-28 22:27:14
+Date: 2016-11-28 22:36:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -182,6 +182,27 @@ CREATE TABLE `facebook` (
 INSERT INTO `facebook` VALUES ('12', 'Asrifin Sofi', 'https://www.facebook.com/sarungmotorsuper/?fref=ts&ref=br_tf');
 
 -- ----------------------------
+-- Table structure for fakultas
+-- ----------------------------
+DROP TABLE IF EXISTS `fakultas`;
+CREATE TABLE `fakultas` (
+  `id_fakultas` int(11) NOT NULL AUTO_INCREMENT,
+  `fakultas` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_fakultas`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of fakultas
+-- ----------------------------
+INSERT INTO `fakultas` VALUES ('1', 'FT');
+INSERT INTO `fakultas` VALUES ('2', 'FE');
+INSERT INTO `fakultas` VALUES ('3', 'FMIPA');
+INSERT INTO `fakultas` VALUES ('4', 'FIS');
+INSERT INTO `fakultas` VALUES ('5', 'FIP');
+INSERT INTO `fakultas` VALUES ('6', 'FIK');
+INSERT INTO `fakultas` VALUES ('7', 'FIB');
+
+-- ----------------------------
 -- Table structure for header
 -- ----------------------------
 DROP TABLE IF EXISTS `header`;
@@ -251,6 +272,31 @@ CREATE TABLE `hubungi` (
 -- ----------------------------
 INSERT INTO `hubungi` VALUES ('1', 'omah', 'computerz.engineerz@gmail.com', 'Cara konsinyasi bagaimana?', 'Bagaimana Cara Kerjasama Penjualan Produk?', '5', '2016-09-11');
 INSERT INTO `hubungi` VALUES ('2', 'asrifin', 'asrifin_ilham@yahoo.com', 'cara Daftar Koperasi Mahasiswa Di Kopma Unesa Bagaimana Caranya?', 'Nyoba Kirim Pesan', '5', '2016-09-25');
+
+-- ----------------------------
+-- Table structure for jurusan
+-- ----------------------------
+DROP TABLE IF EXISTS `jurusan`;
+CREATE TABLE `jurusan` (
+  `id_jurusan` int(11) NOT NULL AUTO_INCREMENT,
+  `jurusan` varchar(100) NOT NULL,
+  `id_fakultas` int(11) NOT NULL,
+  PRIMARY KEY (`id_jurusan`),
+  KEY `id_fakultasFK` (`id_fakultas`) USING BTREE,
+  CONSTRAINT `jurusan_ibfk_1` FOREIGN KEY (`id_fakultas`) REFERENCES `fakultas` (`id_fakultas`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of jurusan
+-- ----------------------------
+INSERT INTO `jurusan` VALUES ('1', 'Tkenik elektro', '1');
+INSERT INTO `jurusan` VALUES ('2', 'Teknik mesin', '1');
+INSERT INTO `jurusan` VALUES ('4', 'Teknik Informatika', '1');
+INSERT INTO `jurusan` VALUES ('5', 'PKK', '1');
+INSERT INTO `jurusan` VALUES ('7', 'Ekonomi', '2');
+INSERT INTO `jurusan` VALUES ('8', 'Akutansi', '2');
+INSERT INTO `jurusan` VALUES ('9', 'Manajemen Pendidikan', '5');
+INSERT INTO `jurusan` VALUES ('10', 'Teknologi Pendidikan', '5');
 
 -- ----------------------------
 -- Table structure for katajelek
@@ -6175,13 +6221,15 @@ CREATE TABLE `orders_detail_sewa` (
   KEY `id_produkFK3` (`id_produk`) USING BTREE,
   CONSTRAINT `id_order_sewaFK` FOREIGN KEY (`id_order_sewa`) REFERENCES `orders_sewa` (`id_order_sewa`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `id_produkFK3` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of orders_detail_sewa
 -- ----------------------------
 INSERT INTO `orders_detail_sewa` VALUES ('1', '1', '73', '1', '2016-11-29 05:35:00', 'b');
 INSERT INTO `orders_detail_sewa` VALUES ('2', '1', '76', '2', '2016-11-28 05:35:14', 'b');
+INSERT INTO `orders_detail_sewa` VALUES ('3', '2', '83', '1', '0000-00-00 00:00:00', 'p');
+INSERT INTO `orders_detail_sewa` VALUES ('4', '2', '84', '2', '0000-00-00 00:00:00', 'p');
 
 -- ----------------------------
 -- Table structure for orders_sewa
@@ -6195,12 +6243,13 @@ CREATE TABLE `orders_sewa` (
   PRIMARY KEY (`id_order_sewa`),
   KEY `id_memberFK` (`id_kustomer`) USING BTREE,
   CONSTRAINT `id_kustomerFK` FOREIGN KEY (`id_kustomer`) REFERENCES `kustomer` (`id_kustomer`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of orders_sewa
 -- ----------------------------
 INSERT INTO `orders_sewa` VALUES ('1', 'sewa palu dan lcd untuk sidang STNK', '8', '2016-11-27 05:33:17');
+INSERT INTO `orders_sewa` VALUES ('2', 'Sewa untuk sidang skripsi ', '8', '2016-11-23 14:12:00');
 
 -- ----------------------------
 -- Table structure for orders_temp
