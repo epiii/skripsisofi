@@ -253,9 +253,6 @@ $n1 = mysqli_fetch_array($sq1);
         <script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
         
         
-
-
-        
         <script type="text/javascript">
             $(function() {
                 $("#example1").dataTable();
