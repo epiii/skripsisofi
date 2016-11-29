@@ -3,7 +3,7 @@ session_start();
 // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
 include "../../../config/koneksi.php";
 include "../../../config/library.php";
-// vd($_GET);
+// vd($_POST);
 if (empty($_SESSION['namauser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
   <center>Untuk mengakses modul, Anda harus login <br>";
@@ -24,48 +24,32 @@ elseif ($module=='member' AND $act=='input'){
    $tipe_file   = $_FILES['fupload']['type'];
    $nama_file   = $_FILES['fupload']['name'];
    $pass        = md5($_POST['password']);
-    if (!empty($lokasi_file)){
+  if (!empty($lokasi_file)){
   // vd($_POST);
     	UploadBanner($nama_file);
-      $s="INSERT INTO kustomer (alamat,
-                               id_kota,
-                               fakultas,
-                               password,
-                               nama_lengkap,
-                               email, 
-                               telpon,
-                               foto
-                               ) 
-                       VALUES('$_POST[alamat]',
-                              '$_POST[kota]',
-                              '$_POST[fakultas]',
-                              '$pass',
-                              '$_POST[nama_lengkap]',
-                              '$_POST[email]',
-                              '$_POST[no_telp]',
-                              '$nama_file'
-                              )";
-// vd($s);
-      mysqli_query($con,$s); 
-header('location:../../media.php?module='.$module);
+      $s='INSERT INTO kustomer SET 
+                 alamat       ="'.$_POST['alamat'].'",
+                 id_kota      ="'.$_POST['kota'].'",'.
+                 ($_POST['jurusan']==''?'':'id_jurusan="'.$_POST['jurusan'].'",').'
+                 password     ="'.$pass.'",
+                 nama_lengkap ="'.$_POST['nama_lengkap'].'",
+                 email        ="'.$_POST['email'].'", 
+                 telpon       ="'.$_POST['no_telp'].'",
+                 foto         ="'.$nama_file.'"';
+  // vd($s);
+  mysqli_query($con,$s); 
+  header('location:../../media.php?module='.$module);
 }else{
-      $s="INSERT INTO kustomer (alamat,
-                               id_kota,
-                               fakultas,
-                               password,
-                               nama_lengkap,
-                               email, 
-                               telpon
-                               ) 
-                       VALUES('$_POST[alamat]',
-                              '$_POST[kota]',
-                              '$_POST[fakultas]',
-                              '$pass',
-                              '$_POST[nama_lengkap]',
-                              '$_POST[email]',
-                              '$_POST[no_telp]'
-                              )";    
-    mysqli_query($con,$s);
+      $s='INSERT INTO kustomer SET 
+                 alamat       ="'.$_POST['alamat'].'",
+                 id_kota      ="'.$_POST['kota'].'",'.
+                 ($_POST['jurusan']==''?'':'id_jurusan="'.$_POST['jurusan'].'",').'
+                 password     ="'.$pass.'",
+                 nama_lengkap ="'.$_POST['nama_lengkap'].'",
+                 email        ="'.$_POST['email'].'", 
+                 telpon       ="'.$_POST['no_telp'].'"';
+    // vd($s);
+    mysqli_query($con,$s); 
     header('location:../../media.php?module='.$module); 	
   }
 }
@@ -77,16 +61,17 @@ elseif ($module=='member' AND $act=='update'){
   $pass        =md5($_POST['password']);
  
   if ((empty($_POST['password']))AND(empty($lokasi_file))){     
-    // echo 'masuk pass  & lok';
+    // echo 'masuk pass & lok';
     // exit();
       $s='UPDATE kustomer SET 
                   nama_lengkap = "'.$_POST['nama_lengkap'].'",
                   alamat       = "'.$_POST['alamat'].'",
                   kategori     = "'.$_POST['kategori'].'",
                   id_kota      = "'.$_POST['kota'].'",  
+                  id_jurusan="'.($_POST['kategori']=='u'?'0':$_POST['jurusan']).'",
                   blokir       = "'.$_POST['blokir'].'",  
                   telpon       = '.$_POST['no_telp'].'
-          WHERE  id_kustomer = '.$_POST['id'];
+          WHERE  id_kustomer   = '.$_POST['id'];
     // vd($s);
     $e=mysqli_query($con,$s);
     header('location:../../media.php?module='.$module);
@@ -101,7 +86,7 @@ elseif ($module=='member' AND $act=='update'){
                nama_lengkap = "'.$_POST['nama_lengkap'].'",
                blokir       = "'.$_POST['blokir'].'",  
                kategori     = "'.$_POST['kategori'].'",
-               id_kota      = "'.$_POST['kota'].'",  
+               id_jurusan="'.($_POST['kategori']=='u'?'0':$_POST['jurusan']).'",
                telpon       = '.$_POST['no_telp'].',
                foto         = "'.$nama_file.'"
        WHERE id_kustomer  = '.$_POST['id'];
@@ -109,25 +94,32 @@ elseif ($module=='member' AND $act=='update'){
     mysqli_query($con,$s);
     header('location:../../media.php?module='.$module);
   }elseif ((!empty($_POST['password']))AND(empty($lokasi_file))){
+    // echo 'masuk !pass & lok';
+    // exit();
     $pass=md5($_POST['password']);
       $s='UPDATE kustomer SET 
                   password     = "'.$pass.'",
                   nama_lengkap = "'.$_POST['nama_lengkap'].'",
                   kategori     = "'.$_POST['kategori'].'",
-                  id_kota      = "'.$_POST['kota'].'",  
+                  id_jurusan="'.($_POST['kategori']=='u'?'0':$_POST['jurusan']).'",
                   alamat       = "'.$_POST['alamat'].'",
                   blokir       = "'.$_POST['blokir'].'",  
                   telpon       = '.$_POST['no_telp'].'
           WHERE  id_kustomer = '.$_POST['id'];
+          // vd($s);
     $e=mysqli_query($con,$s);
     header('location:../../media.php?module='.$module);
   }elseif ((empty($_POST['password']))AND(!empty($lokasi_file))){
+    // echo 'masuk pass & !lok';
+    // exit();
+
       UploadBanner($nama_file);
       $s='UPDATE kustomer SET 
              password     = "'.$pass.'",
              nama_lengkap = "'.$_POST['nama_lengkap'].'",
              kategori     = "'.$_POST['kategori'].'",
              id_kota      = "'.$_POST['kota'].'",  
+             id_jurusan="'.($_POST['kategori']=='u'?'0':$_POST['jurusan']).'",
              alamat       = "'.$_POST['alamat'].'",
              blokir       = "'.$_POST['blokir'].'",  
              telpon       = '.$_POST['no_telp'].',

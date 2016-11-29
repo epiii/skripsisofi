@@ -336,9 +336,10 @@ elseif ($_GET['module']=='admin'){
 }
 // Bagian User - member
 elseif ($_GET['module']=='member'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user')
     include "modul/mod_member/member.php";
-  }
+  else 
+    include "logout.php";
 }
 // // Bagian User
 // elseif ($_GET['module']=='user'){

@@ -1,3 +1,33 @@
+<script>
+  function memberKat(x){
+    if(x=='u'){
+      $('.fakjur').attr('style','display:none;');
+      $('#jurusan').removeAttr('required');
+    }else{
+      $('.fakjur').removeAttr('style');
+      $('#jurusan').attr('required',true);
+    } 
+  }
+  function combojur(x){
+    $.ajax({
+      url:'modul/mod_member/memberajax.php',
+      data:'aksi=combojur&id_fakultas='+x,
+      dataType:'json',
+      type:'post',
+      success:function(dt){
+        if(dt.msg!=true) {
+          alert(dt.msg);
+        }else{
+          var opt='<option value="">-Pilih Jurusan-</option>';
+          $.each(dt.data,function (id,item) {
+            opt+='<option value="'+item.id_jurusan+'">'+item.jurusan+'</option>'
+          });$('#jurusan').html(opt);
+        }
+      }
+    });
+  }
+</script>
+
 <?php
 // session_start();
  // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
@@ -13,11 +43,11 @@ else{
             <section class='content-header'>
                 <h1>
                     Data
-                    <small>User</small>
+                    <small>Member</small>
                 </h1>
                 <ol class='breadcrumb'>
                     <li><a href='#'><i class='fa fa-dashboard'></i> Home</a></li>
-                    <li class='active'>Data User</li>
+                    <li class='active'>Data Member</li>
                    
                 </ol>
             </section>
@@ -33,17 +63,15 @@ else{
     // Tampil User
     default:
       if ($_SESSION['leveluser']=='admin'){
-          // $s="SELECT *
-          //     FROM member m
-          //     JOIN login l ON l.id_login = m.id_login
-          //     ORDER BY nama_lengkap";
           $s='SELECT *
-            FROM kustomer k
-              JOIN kota ko on ko.id_kota = k.id_kota
-            ORDER BY nama_lengkap';
-          // vd($s);
+              FROM
+                kustomer k
+                LEFT JOIN kota ko ON ko.id_kota = k.id_kota
+                LEFT JOIN jurusan j ON j.id_jurusan = k.id_jurusan
+                LEFT JOIN fakultas f ON f.id_fakultas = j.id_fakultas
+              ORDER BY
+                nama_lengkap';
           $tampil = mysqli_query($con,$s);
-          // vd($tampil);
           // vd($tampil);
           echo "
            <div class='box-header'>
@@ -83,6 +111,7 @@ else{
       $no=1;
       // vd($no);
       while ($r=mysqli_fetch_assoc($tampil)){
+        // vd($r);
         echo "<tr>
           <td class='center' width='10'>$no</td>
                <td class='left'>$r[nama_lengkap]</td>
@@ -91,7 +120,10 @@ else{
                <td class='left'>$r[alamat]</td>
                <td class='left'>$r[nama_kota]</td>
                <td class='left'><img src='../foto_banner/$r[foto]' width='100' height='100'></td>
-               <td class='left'>".($r['kategori']=='k'?'koperasi':'umum')."<br>".($r['fakultas']!=''?'('.$r['fakultas'].')':'')."</td>
+               <td class='left'>".
+                ($r['kategori']=='k'?'koperasi':'umum')."<br>".
+                ($r['id_jurusan']==0?'':'('.$r['fakultas'].'-'.$r['jurusan'].')')
+                ."</td>
                <td class='left'>$r[blokir]</td>
                <td class='center'>
                   <a class='btn btn-info' href='?module=member&act=editmember&id=$r[id_kustomer]'>
@@ -128,34 +160,40 @@ else{
                      <form method=POST action='$aksi?module=member&act=input' enctype='multipart/form-data'>
                              <div class='form-group'>
                                 <label>Email</label>
-                                <input type='text' class='form-control' name='email' placeholder='Email ...'/>
+                                <input required  type='text' class='form-control' name='email' placeholder='Email ...'/>
                             </div>
                              <div class='form-group'>
                                 <label>Password</label>
-                                <input type='password' class='form-control' name='password' placeholder='Password ...'/>
+                                <input required  type='password' class='form-control' name='password' placeholder='Password ...'/>
                             </div>
                              <div class='form-group'>
                                 <label>Kategori Member</label>
-                                <select class='form-control' name='kategori'>
+                                <select onchange='memberKat(this.value);' class='form-control' name='kategori' id='kategori'>
                                   <option value='u'>umum</option>
                                   <option value='k'>koperasi</option>
                                 </select>
                             </div>
-                            <div class='form-group'>
+                            <div style='display:none;' class='fakjur' class='form-group'>
                                 <label style='color:red;'>Fakutas <small>(Hanya member koperasi)</small></label>
-                                <select class='form-control' name='fakultas'>
-                                  <option value=''>-Pilih-</option>
-                                  <option value='FT'>FT</option>
-                                  <option value='FE'>FE</option>
-                                  <option value='FIK'>FIK</option>
-                                  <option value='FIP'>FIP</option>
-                                  <option value='FMIPA'>FMIPA</option>
-                                  <option value='FIS'>FIS</option>
+                                <select onchange='combojur(this.value);' class='form-control' name='fakultas'>
+                                  <option value=''>-Pilih-</option>";
+                                    $s='SELECT * from fakultas order by fakultas';
+                                    $e=mysqli_query($con,$s);
+                                    while ($r=mysqli_fetch_assoc($e)) {
+                                      echo '<option value="'.$r['id_fakultas'].'">'.$r['fakultas'].'</option>';
+                                    }
+                                  echo"
+                                </select>
+                            </div>
+                            <div style='display:none;' class='fakjur' class='form-group'>
+                                <label style='color:red;'>Jurusan <small>(Hanya member koperasi)</small></label>
+                                <select class='form-control' name='jurusan' id='jurusan'>
+                                  <option value=''>-Pilih Fakultas-</option>
                                 </select>
                             </div>
                              <div class='form-group'>
                                 <label>Nama Lengkap</label>
-                                <input type='text' class='form-control' name='nama_lengkap' placeholder='Nama Lengkap ...'/>
+                                <input required type='text' class='form-control' name='nama_lengkap' placeholder='Nama Lengkap ...'/>
                             </div>
                              <div class='form-group'>
                                 <label>No.Telp</label>
@@ -167,7 +205,7 @@ else{
                             </div>
                              <div class='form-group'>
                                 <label>Kota</label>
-                                <select class='form-control' name='kota'>";
+                                <select required class='form-control' name='kota'>";
                             $sk='SELECT * FROM kota order by nama_kota';
                             $ek=mysqli_query($con,$sk);
                             echo '<option value="">-Pilih-</option>';
@@ -210,8 +248,12 @@ else{
     
   case "editmember":
     $s='SELECT *
-        FROM kustomer
-        WHERE id_kustomer ='.$_GET['id'];
+        FROM kustomer k
+          LEFT JOIN kota ko ON ko.id_kota = k.id_kota
+          LEFT JOIN jurusan j ON j.id_jurusan = k.id_jurusan
+          LEFT JOIN fakultas f ON f.id_fakultas = j.id_fakultas
+        WHERE id_kustomer ='.$_GET['id'].' 
+        ORDER BY nama_lengkap';
 
     $edit=mysqli_query($con,$s);
     $r=mysqli_fetch_assoc($edit);
@@ -236,7 +278,7 @@ else{
             <input type=hidden name=id value='$r[id_kustomer]'>
             <div class='form-group'>
                   <label>Email</label>
-                   <input type='text' class='form-control' placeholder='$r[email]' disabled/>
+                   <input required type='email' class='form-control' placeholder='$r[email]' disabled/>
               </div>
                <div class='form-group'>
                   <label>Password</label>
@@ -244,30 +286,42 @@ else{
               </div>
                <div class='form-group'>
                   <label>Kategori Member</label>
-                  <select class='form-control' name='kategori'>
+                  <select onchange='memberKat(this.value);' class='form-control' name='kategori' id='kategori'>
                     <option ".($r['kategori']=='u'?'selected':'')." value='u'>umum</option>
                     <option ".($r['kategori']=='k'?'selected':'')." value='k'>koperasi</option>
                   </select>
               </div>
-             <div class='form-group'>
-                <label style='color:red;'>Fakutas <small>(hanya untuk member koperasi)</small></label>
-                <select class='form-control' name='fakultas'>
-                  <option value=''>-pilih-</option>
-                  <option ".($r['fakultas']=='FT'?'selected':'')." value=''>FT</option>
-                  <option ".($r['fakultas']=='FE'?'selected':'')." value=''>FE</option>
-                  <option ".($r['fakultas']=='FIK'?'selected':'')." value=''>FIK</option>
-                  <option ".($r['fakultas']=='FMIPA'?'selected':'')." value=''>FMIPA</option>
-                  <option ".($r['fakultas']=='FIP'?'selected':'')." value=''>FIP</option>
-                  <option ".($r['fakultas']=='FIs'?'selected':'')." value=''>FIs</option>
-                </select>
+              <div ".($r['id_jurusan']!=0?'':"style='display:none;'")." class='fakjur' class='form-group'>
+                  <label style='color:red;'>Fakutas <small>(Hanya member koperasi)</small></label>
+                  <select onchange='combojur(this.value);' class='form-control' name='fakultas'>
+                    <option value=''>-Pilih-</option>";
+                      $ss='SELECT * from fakultas order by fakultas';
+                      $ee=mysqli_query($con,$ss);
+                      while ($rr=mysqli_fetch_assoc($ee)) {
+                        echo '<option '.($r['id_fakultas']==$rr['id_fakultas']?'selected':'').' 
+                        value="'.$rr['id_fakultas'].'">'.$rr['fakultas'].'</option>';
+                      }echo"
+                  </select>
+              </div>
+              <div ".($r['id_jurusan']!=0?'':"style='display:none;'")." class='fakjur' class='form-group'>
+                  <label style='color:red;'>Jurusan <small>(Hanya member koperasi)</small></label>
+                  <select class='form-control' name='jurusan' id='jurusan'>
+                    <option value=''>-Pilih Jurusan-</option>";
+                      $sj='SELECT * from jurusan where id_fakultas='.$r['id_fakultas'].' order by jurusan';
+                      $ej=mysqli_query($con,$sj);
+                      while ($rj=mysqli_fetch_assoc($ej)) {
+                        echo '<option '.($r['id_jurusan']==$rj['id_jurusan']?'selected':'').' 
+                        value="'.$rj['id_jurusan'].'">'.$rj['jurusan'].'</option>';
+                      }echo"
+                  </select>
               </div>
                <div class='form-group'>
                   <label>Nama Lengkap</label>
-                  <input type='text' class='form-control' name='nama_lengkap' value='$r[nama_lengkap]'/>
+                  <input required type='text' class='form-control' name='nama_lengkap' value='$r[nama_lengkap]'/>
               </div>
              <div class='form-group'>
                   <label>No.Telp</label>
-                  <input type='text' class='form-control' name='no_telp' value='$r[telpon]'/>
+                  <input type='number' class='form-control' name='no_telp' value='$r[telpon]'/>
               </div>
               <div class='form-group'>
                   <label>Alamat</label>
@@ -342,7 +396,7 @@ else{
                                         </div>
                                          <div class='form-group'>
                                             <label>Nama Lengkap</label>
-                                            <input type='text' class='form-control' name='nama_lengkap' value='$r[nama_lengkap]'/>
+                                            <input required type='text' class='form-control' name='nama_lengkap' value='$r[nama_lengkap]'/>
                                         </div>
                                          <div class='form-group'>
                                             <label>Alamat</label>
@@ -350,7 +404,7 @@ else{
                                         </div>
                                          <div class='form-group'>
                                             <label>Email</label>
-                                            <input type='text' class='form-control' name='email' value='$r[email]'/>
+                                            <input required  type='text' class='form-control' name='email' value='$r[email]'/>
                                         </div>
                                          <div class='form-group'>
                                             <label>No.Telp</label>

@@ -5,7 +5,7 @@
 	include "config/fungsi_indotgl.php";
 
 	if(!isset($_POST['aksi'])){
-
+		echo json_encode('invalid post');
 	}else{
 		if($_POST['aksi']=='baranglist'){
 			$s='select * from produk where tipe="s"';

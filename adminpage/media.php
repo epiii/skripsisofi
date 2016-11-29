@@ -209,8 +209,11 @@ $n1 = mysqli_fetch_array($sq1);
         <!-- add new calendar event modal -->
 
 
-        <!-- jQuery 2.0.2 -->
+        <!-- 
+        jQuery 2.0.2 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        -->
+        <script src="js/jquery.min.js"></script>
         <!-- jQuery UI 1.10.3 -->
         <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->
