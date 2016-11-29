@@ -11,6 +11,7 @@ else{
 include "class.ezpdf.php";
 include "../../../config/koneksi.php";
 include "../../../config/library.php";
+include "../../../config/fungsi_indotgl.php";
 include "rupiah.php";
   
 $pdf = new Cezpdf();
@@ -44,43 +45,75 @@ $pdf->addObject($all, 'all');
 // Baca input tanggal yang dikirimkan user
 $mulai=$_POST['thn_mulai'].'-'.$_POST['bln_mulai'].'-'.$_POST['tgl_mulai'];
 $selesai=$_POST['thn_selesai'].'-'.$_POST['bln_selesai'].'-'.$_POST['tgl_selesai'];
-vd($_POST);
+// vd($_POST);
+/*
+Array
+(
+    [tgl_mulai] => 29
+    [bln_mulai] => 11
+    [thn_mulai] => 2000
+
+    [tgl_selesai] => 29
+    [bln_selesai] => 11
+    [thn_selesai] => 2016
+)
+*/
 // Query untuk merelasikan kedua tabel di filter berdasarkan tanggal
-  $s="SELECT orders.id_orders as faktur,DATE_FORMAT(tgl_order, '%d-%m-%Y') as tanggal,
-                    nama_produk,jumlah,harga 
-                    FROM orders, orders_detail, produk  
-                    WHERE (orders_detail.id_produk=produk.id_produk) 
-                    AND (orders_detail.id_orders=orders.id_orders) 
-                    AND (orders.status_order='Lunas') 
-                    AND (orders.tgl_order BETWEEN '$mulai' AND '$selesai')";
+  $s='SELECT 
+        ds.id_order_detail_sewa,
+        k.nama_lengkap,
+        p.nama_produk,
+        IF(k.kategori="k",p.hargakoperasi,p.hargaumum)hargasatuan,
+        p.durasi,
+        IF(p.jenisdurasi="h","hari","jam")jenisdurasi,
+        ds.total,
+        (if(k.kategori="k",p.hargakoperasi,p.hargaumum)*ds.total)subtotal,
+        case ds.status
+          when "b" then "belum kembali"
+          when "k" then "sudah kembali"
+          when "p" then "pending"
+          else "terlambat"
+        end as statussewa,
+        s.tgl_sewa
+
+      FROM
+        orders_sewa s
+        JOIN orders_detail_sewa ds ON ds.id_order_sewa = s.id_order_sewa
+        JOIN kustomer k ON k.id_kustomer = s.id_kustomer
+        JOIN produk p on p.id_produk = ds.id_produk
+      WHERE 
+        s.tgl_sewa BETWEEN "'.$mulai.'" and "'.$selesai.'" and ds.status!="p"';
 // vd($s);
 $sql = mysqli_query($con,$s);
 $jml = mysqli_num_rows($sql);
 if ($jml > 0){
 $i = 1;
 while($r = mysqli_fetch_assoc($sql)){
-  $quantityharga=rp($r['jumlah']*$r['harga']);
-  $hargarp=rp($r['harga']); 
-  $faktur=$r['faktur'];
+  // vd($r);
+  $quantityharga=rp($r['total']*$r['hargasatuan']);
+  $hargarp=rp($r['hargasatuan']); 
+  // $faktur=$r['faktur'];
   
   $data[$i]=array('<b>No</b>'=>$i, 
-                  '<b>Faktur</b>'=>$faktur, 
-                  '<b>Tanggal</b>'=>$r['tanggal'], 
+                  // '<b>Faktur</b>'=>$faktur, 
+                  '<b>Tanggal</b>'=>tgl_indo2($r['tgl_sewa']).' / '.jam_indo($r['tgl_sewa']), 
                   '<b>Nama Produk</b>'=>$r['nama_produk'], 
-                  '<b>Qty</b>'=>$r['jumlah'], 
+                  '<b>Nama Member</b>'=>$r['nama_lengkap'], 
+                  '<b>Qty</b>'=>$r['total'], 
                   '<b>Harga</b>'=>$hargarp,
-                  '<b>Sub Total</b>'=>$quantityharga);
-	$total = $total+($r['jumlah']*$r['harga']);
-	$totqu = $totqu + $r['jumlah'];
+                  '<b>Sub Total</b>'=>$quantityharga
+                );
+	$total = $total+($r['total']*$r['hargasatuan']);
+	$totqu = $totqu + $r['total'];
   $i++;
 }
 
 $pdf->ezTable($data, '', '', '');
 
 $tot=rp($total);
-$pdf->ezText("\n\nTotal keseluruhan : Rp. {$tot}");
-$pdf->ezText("\nJumlah yang terjual : {$jml} unit");
-$pdf->ezText("Jumlah keseluruhan yg terjual: {$totqu} unit");
+$pdf->ezText("\n\nTotal Pendapatan Sewa : Rp. {$tot}");
+$pdf->ezText("\nTotal Persewaan : {$jml} unit");
+$pdf->ezText("Total Item yang disewa: {$totqu} unit");
 
 // Penomoran halaman
 $pdf->ezStartPageNumbers(320, 15, 8);
@@ -89,7 +122,7 @@ $pdf->ezStream();
 else{
   $m=$_POST['tgl_mulai'].'-'.$_POST['bln_mulai'].'-'.$_POST['thn_mulai'];
   $s=$_POST['tgl_selesai'].'-'.$_POST['bln_selesai'].'-'.$_POST['thn_selesai'];
-  echo "Tidak ada transaksi/order pada Tanggal $m s/d $s";
+  echo "Tidak ada transaksi/sewa pada Tanggal $m s/d $s";
 }
 }
 ?>
