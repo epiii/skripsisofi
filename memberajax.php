@@ -44,6 +44,17 @@
 					$ee=mysqli_query($con,$ss);
 				}
 			}echo json_encode(array('success'=>!$e||!$ee?false:true));
+		}elseif($_POST['aksi']=='simpanreg'){
+			$s=' INSERT INTO kustomer set 
+					nama_lengkap ="'.$_POST['nama_lengkap'].'",
+					kategori     ="u",
+					alamat       ="'.$_POST['alamat'].'",
+					email        ="'.$_POST['email'].'",
+					password     =md5("'.$_POST['password'].'"),
+					telpon       ="'.$_POST['telpon'].'",
+					id_kota      ="'.$_POST['id_kota'].'"';
+			$e=mysqli_query($con,$s);
+			echo json_encode(array('success'=>!$e?false:true));
 		}else{
 			$s='DELETE FROM orders WHERE id_order='.$_POST['id_order'];
 			$e=mysqli_query($con,$s);

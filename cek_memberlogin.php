@@ -1,6 +1,7 @@
 <?php
 include "config/koneksi.php";
 include "config/library.php";
+// vd($_POST);
 function anti_injection($data){
   // $filter = mysqli_real_escape_string(stripslashes(strip_tags(htmlspecialchars($data,ENT_QUOTES))));
   // $x=stripslashes(strip_tags(htmlspecialchars($data,ENT_QUOTES)));
@@ -19,11 +20,16 @@ $pass     = anti_injection(md5($_POST['password']));
 //   echo "Sekarang loginnya tidak bisa di injeksi lho.";
 // }else{
   // $login=mysqli_query($con,"SELECT * FROM users WHERE username='$username' AND password='$pass' AND blokir='N'");
-  $s='SELECT * FROM kustomer WHERE email = "'.$username.'" AND  password = "'.$pass.'"';
+  $s='SELECT *
+      FROM kustomer k 
+        JOIN kota ko on ko.id_kota = k.id_kota
+      WHERE
+        email = "'.$username.'"
+        AND PASSWORD = "'.$pass.'"';
+// vd($s);
   $login  =mysqli_query($con,$s);
   $ketemu =mysqli_num_rows($login);
   $r      =mysqli_fetch_assoc($login);
-// vd($r);
 // vd($r);
 
 // Apabila username dan password ditemukan
@@ -37,6 +43,7 @@ if ($ketemu > 0){
   $_SESSION['namamember']   = $r['nama_lengkap'];
   $_SESSION['alamatmember'] = $r['alamat'];
   $_SESSION['potomember']   = $r['foto'];
+  $_SESSION['kotamember']   = $r['nama_kota'];
   // vd($_SESSION);
   // session timeout
   $_SESSION['login'] = 1;

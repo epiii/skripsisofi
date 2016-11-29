@@ -96,9 +96,25 @@ if(!isset($_SESSION['levelmember'])){
             </ol>
 
             <h4><center>History Pembelian</center></h4><br>
-            - Nama : ".$_SESSION['namamember']."<br>
-            - Anggota : ".($_SESSION['levelmember']=='u'?'umum':'koperasi')."<br>
-            - Alamat: ".$_SESSION['alamatmember']." <br>
+            <table class='table table-hovered' >
+                <tr>
+                    <th class='span1'>Nama</th>
+                    <td>: ".$_SESSION['namamember']."</td>
+                </tr>
+                <tr>
+                    <th class='span1'>Anggota</th>
+                    <td>: ".($_SESSION['levelmember']=='u'?'umum':'koperasi')."</td>
+                </tr>
+                <tr>
+                    <th class='span1'>Alamat</th>
+                    <td>: ".$_SESSION['alamatmember']."</td>
+                </tr>
+                <tr>
+                    <th class='span1'>Kota</th>
+                    <td>: ".$_SESSION['kotamember']."</td>
+                </tr>
+            </table>
+
             <div class='box-body table-responsive'>
             <table id='example1' class='table table-bordered table-striped'>
                 <thead><tr>
@@ -165,9 +181,24 @@ if(!isset($_SESSION['levelmember'])){
             </ol>
 
             <h4><center>History Sewa</center></h4><br>
-            - Nama : ".$_SESSION['namamember']."<br>
-            - Anggota : ".($_SESSION['levelmember']=='u'?'umum':'koperasi')."<br>
-            - Alamat: ".$_SESSION['alamatmember']." <br>
+            <table class='table table-hovered' >
+                <tr>
+                    <th class='span1'>Nama</th>
+                    <td>: ".$_SESSION['namamember']."</td>
+                </tr>
+                <tr>
+                    <th class='span1'>Anggota</th>
+                    <td>: ".($_SESSION['levelmember']=='u'?'umum':'koperasi')."</td>
+                </tr>
+                <tr>
+                    <th class='span1'>Alamat</th>
+                    <td>: ".$_SESSION['alamatmember']."</td>
+                </tr>
+                <tr>
+                    <th class='span1'>Kota</th>
+                    <td>: ".$_SESSION['kotamember']."</td>
+                </tr>
+            </table>
             <div class='box-body table-responsive'>
             <div class='box-header'>
                 <h3 class='box-title'>
