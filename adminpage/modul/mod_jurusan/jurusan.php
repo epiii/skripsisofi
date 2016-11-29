@@ -1,15 +1,12 @@
 <?php
-// session_start();
- // if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
-  if (empty($_SESSION['namauser'])){
+if (empty($_SESSION['namauser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
         <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
-}
-else{
-$aksi="modul/mod_jurusan/aksi_jurusan.php";
-echo "
-<aside class='right-side'>
+} else{
+  $aksi="modul/mod_jurusan/aksi_jurusan.php";
+  echo "
+  <aside class='right-side'>
                 <!-- Content Header (Page header) -->
                 <section class='content-header'>
                     <h1>
@@ -34,23 +31,23 @@ switch($act){
   // Tampil Jurusan
   default:
     echo " <div class='box-header'>
-<h3 class='box-title'>
-<input type=button class='btn btn-primary btn' value='Tambah Jurusan' onclick=\"window.location.href='?module=jurusan&act=tambahjurusan';\">
-</h3>
-                                </div><!-- /.box-header -->
-                                <div class='box-body table-responsive'>
-    
-    <table id='example1' class='table table-bordered table-striped'>
-    <thead>
-              <tr><td class='center'>No</td>
+      <h3 class='box-title'>
+      <input type=button class='btn btn-primary btn' value='Tambah Jurusan' onclick=\"window.location.href='?module=jurusan&act=tambahjurusan';\">
+      </h3>
+      </div><!-- /.box-header -->
+      <div class='box-body table-responsive'>
+
+      <table id='example1' class='table table-bordered table-striped'>
+      <thead>
+          <tr><td class='center'>No</td>
           <td class='center'>Jurusan</td>
           <td class='center'>Fakultas</td>
           <td class='center'>aksi</td></tr></thead><tbody>";          
 
-    $tampil = mysqli_query($con,"SELECT * FROM jurusan,fakultas WHERE jurusan.id_jurusan=fakultas.id_fakultas");
-  
-    $no = 1;
-    while($r=mysqli_fetch_array($tampil)){
+  $tampil = mysqli_query($con,"SELECT * FROM jurusan,fakultas WHERE jurusan.id_fakultas=fakultas.id_fakultas");
+
+  $no = 1;
+  while($r=mysqli_fetch_array($tampil)){
 	if($r['id_jurusan']!=0){
 		$sub = mysqli_fetch_array(mysqli_query($con,"SELECT * FROM jurusan WHERE id_jurusan=$r[id_jurusan]"));
 		$fakultas = $r['fakultas'];
@@ -97,27 +94,21 @@ switch($act){
                                             <input type='text' class='form-control' name='jurusan' placeholder='Nama Jurusan ...'/>
                                         </div>
                                         <div class='form-group'>
-                                            <label>Fakultas</label>
-                                            <select name='fakultas' class='form-control'>
-                                                <option value=0 selected>- Pilih Fakultas -</option>";
-                                                $tampil=mysqli_query($con,"SELECT * FROM fakultas ORDER BY fakultas");
-            while($r=mysqli_fetch_array($tampil)){
-              echo "<option value=$r[id_fakultas]>$r[fakultas]</option>";
-            }
-    echo "</select>
-     <div class='form-group'>
-                                            <label>Jurusan</label>
-                                            <select name='jurusan' class='form-control'>
-                                                <option value=0 selected>- Pilih Jurusan Dari Fakultas-</option>";
-                                                $tampil=mysqli_query($con,"SELECT * FROM fakultas ORDER BY fakultas");
-            while($r=mysqli_fetch_array($tampil)){
-              echo "<option value=$r[id_fakultas]>$r[fakultas]</option>";
-            }
-    echo "</select>
-                            <div class='form-group'>
-                                        <input type=submit class='btn btn-primary btn-lg' value=Simpan>
-                            <input type=button class='btn btn-warning btn-lg' value=Batal onclick=self.history.back()>
-                            </div>
+                                          <label>Fakultas</label>
+                                          <select onchange='combojur(this.value);' class='form-control' name='fakultas'>
+                                            <option value=''>-Pilih-</option>";
+                                              $s='SELECT * from fakultas order by fakultas';
+                                              $e=mysqli_query($con,$s);
+                                              while ($r=mysqli_fetch_assoc($e)) {
+                                                echo '<option value="'.$r['id_fakultas'].'">'.$r['fakultas'].'</option>';
+                                              }
+                                            echo"
+                                          </select>
+                                        </div>
+                                        <div class='form-group'>
+                                          <input type=submit class='btn btn-primary btn-lg' value=Simpan>
+                                          <input type=button class='btn btn-warning btn-lg' value=Batal onclick=self.history.back()>
+                                        </div>
                                     </form>
                                 </div>
                             </div><!-- /.box -->
@@ -152,47 +143,23 @@ switch($act){
                                             <input type='text' class='form-control' name='jurusan' value='$r[jurusan]'/>
                                         </div>
                                         <div class='form-group'>
-                                            <label>Menu Fakultas</label>
-                                            <select name='fakultas' class='form-control'>
-                                                <option value=0>- Pilih Fakultas -</option>";
-                                                $tampil=mysqli_query($con,"SELECT * FROM fakultas ORDER BY fakultas");
-          if ($r['id_fakultas']==0){
-            echo "<option value=0 selected>- Pilih Fakultas -</option>";
-          }   
-          while($w=mysqli_fetch_assoc($tampil)){
-            if ($r['id_fakultas']==0 || ($r['id_fakultas']!=0 && $r['id_jurusan']!=0)){
-              echo "<option value=$w[id_fakultas] selected>$w[fakultas]</option>";
-            }else{
-              echo "<option selected value=$w[id_fakultas]>$w[fakultas]</option>";
-            }
-          }
-    echo "</select>
-     <div class='form-group'>
-                                            <label>Jurusan</label>
-                                            <select name='jurusan' class='form-control'>
-                                                <option value=0 selected>- Pilih Jurusan Dari Fakultas -</option>";
-                                                $tampil2=mysqli_query($con,"SELECT * FROM jurusan WHERE id_jurusan=0 ORDER BY jurusan");
-          if ($r['id_jurusan']==0){
-            echo "<option value=0 selected>- Pilih Jurusan -</option>";
-          }   
-          while($s=mysqli_fetch_array($tampil2)){
-            if ($r['id_jurusan']==$s['id_jurusan']){
-              echo "<option value=$s[id_jurusan] selected>$s[jurusan]</option>";
-            }
-            else{
-              echo "<option value=$s[id_jurusan]>$s[jurusan]</option>";
-            }
-          }
-    echo "
-                            <div class='form-group'>
-                                        <input type=submit class='btn btn-primary btn-lg' value=Simpan>
-                            <input type=button class='btn btn-warning btn-lg' value=Batal onclick=self.history.back()>
-                            </div>
+                                          <label>Menu Fakultas</label>
+                                          <select class='form-control' name='fakultas'>
+                                            <option value=''>-Pilih-</option>";
+                                            $ss ='SELECT * from fakultas order by fakultas';
+                                            $ee =mysqli_query($con,$ss);
+                                            while ($rr=mysqli_fetch_assoc($ee)) {
+                                              echo '<option '.($rr['id_fakultas']==$r['id_fakultas']?'selected':'').' value="'.$rr['id_fakultas'].'">'.$rr['fakultas'].'</option>';
+                                            }echo"
+                                          </select>
+                                        </div>
+                                        <div class='form-group'>
+                                          <input type=submit class='btn btn-primary btn-lg' value=Simpan>
+                                          <input type=button class='btn btn-warning btn-lg' value=Batal onclick=self.history.back()>
+                                        </div>
                                     </form>
                                 </div>
                             </div><!-- /.box -->
-
-                            
                         </div><!-- /.col-->
                     </div><!-- ./row -->
                                     </section>";
