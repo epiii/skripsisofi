@@ -10,7 +10,8 @@ function rp($uang){
     $uang  = substr($uang,0,$lebar);
     $digit = strlen($uang);  
   }
-  $rp = $uang . $rp . ",-";
+  // $rp = $uang . $rp . ",-";
+  $rp = $uang . $rp;
   return $rp;
 }
 ?>

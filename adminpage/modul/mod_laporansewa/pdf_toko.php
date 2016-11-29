@@ -96,8 +96,9 @@ while($r = mysqli_fetch_assoc($sql)){
   
   $data[$i]=array('<b>No</b>'=>$i, 
                   // '<b>Faktur</b>'=>$faktur, 
-                  '<b>Tanggal</b>'=>tgl_indo($r['tgl_sewa']).' / '.jam_indo($r['tgl_sewa']), 
+                  '<b>Tanggal</b>'=>tgl_indo2($r['tgl_sewa']).' / '.jam_indo($r['tgl_sewa']), 
                   '<b>Nama Produk</b>'=>$r['nama_produk'], 
+                  '<b>Nama Member</b>'=>$r['nama_lengkap'], 
                   '<b>Qty</b>'=>$r['total'], 
                   '<b>Harga</b>'=>$hargarp,
                   '<b>Sub Total</b>'=>$quantityharga
