@@ -348,6 +348,16 @@ elseif ($_GET['module']=='member'){
 //   }
 // }
  
+elseif ($_GET['module']=='jurusan'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+    include "modul/mod_jurusan/jurusan.php";
+  }
+}  
+elseif ($_GET['module']=='fakultas'){
+   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+    include "modul/mod_fakultas/fakultas.php";
+  }
+}  
 elseif ($_GET['module']=='artikel'){
    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
     include "modul/mod_artikel/artikel.php";

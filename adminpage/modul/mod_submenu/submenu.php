@@ -264,7 +264,7 @@ switch($act){
                                         <div class='form-group'>
                                          <label>Sub Menu Dari Submenu</label>
                                             <div class='radio'>";
-                                            if ($r[aktif]=='Y'){
+                                            if ($r['aktif']=='Y'){
                                             	echo "                                            
                                                 <label>
                                                     <input type='radio' name='adminsubmenu' id='optionsRadios1' value='Y' checked>
