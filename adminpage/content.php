@@ -322,6 +322,18 @@ elseif ($_GET['module']=='admin'){
     include "modul/mod_admin/admins.php";
   }
 }
+// Bagian fakkultas
+elseif ($_GET['module']=='admin'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+    include "modul/mod_fakultas/fakultas.php";
+  }
+}
+// Bagian jurusan
+elseif ($_GET['module']=='admin'){
+  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+    include "modul/mod_jurusan/jurusan.php";
+  }
+}
 // Bagian User - member
 elseif ($_GET['module']=='member'){
   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
