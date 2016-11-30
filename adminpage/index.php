@@ -39,7 +39,7 @@ return (true);
     
         <!-- form login  <epi> -->
         <div class="form-box" id="login-box">
-            <small>demo >> <br> username : admin <br> password : admin</small>
+            <!-- <small>demo >> <br> username : admin <br> password : admin</small> -->
             <div class="header">Sign In</div>
 
            <form id="form-login" name="login" method="post" action="cek_login.php" onSubmit="return validasi(this)">
