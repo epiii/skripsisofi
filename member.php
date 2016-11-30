@@ -62,6 +62,7 @@ var no=1;
 function addBarang () {
     var barangTR='<tr class="barangTR" id="barangTR_'+no+'">'
         +'<td id="selectTD_'+no+'"></td>'
+        // +'<td><select required onchange="getTotal('+no+');" name="jumlahTB[]" id="jumlahTB_'+no+'" /></select></td>'
         +'<td><input required onkeyup="getTotal('+no+');" value="" min="1" type="number" name="jumlahTB[]" id="jumlahTB_'+no+'" /></td>'
         +'<td id="totalTD_'+no+'">Rp.0</td>'
         +'<td><a data-toggle="tooltip" title="hapus" class="btn btn-danger" onclick="removeTR('+no+');" href="#"><i class="icon-trash"></i></a></td>'

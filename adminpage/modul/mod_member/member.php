@@ -76,7 +76,10 @@ else{
           echo "
            <div class='box-header'>
             <h3 class='box-title'>
-            <input type=button class='btn btn-primary btn' value='Tambah Member' onclick=\"window.location.href='?module=member&act=tambahuser';\"></h3>
+            <input type=button class='btn btn-primary btn' value='Tambah Member' onclick=\"window.location.href='?module=member&act=tambahuser';\">
+            <a class='btn btn-success fg-white' target='_blank' href='modul/mod_member/lap_member.php?mode=koperasi'>Laporan Member Koperasi</a>
+            <input type=button class='btn btn-success btn' value='Laporan Member Umum' onclick=\"window.location.href='lap_member?mode=umum';\">
+          </h3>
             </div><!-- /.box-header -->
             <div class='box-body table-responsive'>
 
@@ -257,7 +260,7 @@ else{
 
     $edit=mysqli_query($con,$s);
     $r=mysqli_fetch_assoc($edit);
-    // vd($r);
+  // vd($r);
 
     if ($_SESSION['leveluser']=='admin'){
     echo "

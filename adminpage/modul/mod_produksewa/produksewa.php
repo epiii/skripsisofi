@@ -64,8 +64,10 @@ switch($act){
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead><tbody>";
-    $tampil = mysqli_query($con,"SELECT * FROM produk where tipe='s' ORDER BY id_produk DESC");
-    // $no = $posisi+1;
+    $s='SELECT * FROM produk where tipe="s" ORDER BY id_produk DESC';
+    // vd($s);
+    $tampil = mysqli_query($con,$s);
+
     $no=1;
     while($r=mysqli_fetch_assoc($tampil)){
       $tanggal  =tgl_indo($r['tgl_masuk']);
