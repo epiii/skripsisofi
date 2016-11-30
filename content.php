@@ -61,7 +61,7 @@ while($b=mysqli_fetch_array($banner)){
 						  <!-- Feat tab -->
 						  <div class='tab-pane active' id='feat'>
 						  	<?php
-						  	 $sql=mysqli_query($con,"SELECT * FROM produk ORDER BY id_produk DESC LIMIT 12");
+						  	 $sql=mysqli_query($con,"SELECT * FROM produk WHERE tipe='j' ORDER BY id_produk DESC LIMIT 12");
   while ($r=mysqli_fetch_array($sql)){
     $isi_produk = strip_tags($r['deskripsi']); // membuat paragraf pada isi berita dan mengabaikan tag html
                 $isi = substr($isi_produk,0,42); // ambil sebanyak 200 karakter
