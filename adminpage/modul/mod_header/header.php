@@ -46,12 +46,23 @@ switch($act){
     $no=1;
     while ($r=mysqli_fetch_array($tampil)){
       $tgl=tgl_indo($r['tgl_posting']);
+          //       <td><a href=?module=header&act=editheader&id=$r[id_header]>Edit</a> | 
+	         //          <a href=$aksi?module=header&act=hapus&id=$r[id_header]>Hapus</a>
+		        // </tr>";
       echo "<tr><td>$no</td>
                 <td>$r[judul]</td>
                 <td>$tgl</td>
-                <td><a href=?module=header&act=editheader&id=$r[id_header]>Edit</a> | 
-	                  <a href=$aksi?module=header&act=hapus&id=$r[id_header]>Hapus</a>
-		        </tr>";
+                <td class='center'>
+                 <a class='btn btn-info' href='?module=header&act=editheader&id=$r[id_header]'>
+                                        <i class='icon-edit icon-white'></i>  
+                                        Edit                                            
+                                    </a>
+                                    <a class='btn btn-danger' href='$aksi?module=editheader&act=hapus&id=$r[id_header]'>
+                                        <i class='icon-trash icon-white'></i> 
+                                        Delete
+                                    </a>
+                                </td>
+             </tr>";
     $no++;
     }
     echo "</tbody></table>";
