@@ -32,7 +32,9 @@
             data:'aksi=baranglist',
             type:'post',
             success:function(dt){
-                var select='<select onchange="getTotal('+nox+')" name="selectTB[]" id="selectTB_'+nox+'">';
+                // var select='<select onchange="getTotal('+nox+')" name="selectTB[]" id="selectTB_'+nox+'">';
+                var select='<select onchange="barangChange('+nox+')" name="selectTB[]" id="selectTB_'+nox+'">';
+                    select+='<option required value="">-Pilih Barang-</option>';
                 $.each(dt,function (id,item) {
                     select+='<option value="'+item.id_produk+'">'+item.nama_produk+' (per '+item.durasi+' '+(item.jenisdurasi=='j'?'jam':'hari')+')</option>';
                 });select+='</select>';
@@ -40,6 +42,29 @@
             },
         });
     }
+
+function barangChange (nox) {
+    $.ajax({
+        url:'memberajax.php',
+        data:'aksi=stok&id_produk='+$('#selectTB_'+nox).val(),
+        dataType:'json',
+        type:'post',
+        success:function(dt){
+            var msg='Pilih';
+            if(dt.total==0){
+                msg='maaf barang kosong';
+            }else if(dt.stok==0){
+                msg='maaf semua barang terpinjam';
+            }
+            var sel='<option value="">-'+msg+'-</option>';
+            if(dt.total!=0){
+                for (var i = 1; i<=dt.total; i++) {
+                    sel+='<option '+(i>dt.stok && dt.stok!=dt.total?'disabled style="background-color:#f3f3f3;"':'')+' value="'+i+'">'+i+'</option>';
+                }; 
+            }$('#jumlahTB_'+nox).html(sel);
+        },
+    });
+}
 
 function getTotal (nox) {
     $.ajax({
@@ -62,8 +87,8 @@ var no=1;
 function addBarang () {
     var barangTR='<tr class="barangTR" id="barangTR_'+no+'">'
         +'<td id="selectTD_'+no+'"></td>'
-        // +'<td><select required onchange="getTotal('+no+');" name="jumlahTB[]" id="jumlahTB_'+no+'" /></select></td>'
-        +'<td><input required onkeyup="getTotal('+no+');" value="" min="1" type="number" name="jumlahTB[]" id="jumlahTB_'+no+'" /></td>'
+        +'<td><select required onchange="getTotal('+no+');" name="jumlahTB[]" id="jumlahTB_'+no+'" /></select></td>'
+        // +'<td><input required onkeyup="getTotal('+no+');" value="" min="1" type="number" name="jumlahTB[]" id="jumlahTB_'+no+'" /></td>'
         +'<td id="totalTD_'+no+'">Rp.0</td>'
         +'<td><a data-toggle="tooltip" title="hapus" class="btn btn-danger" onclick="removeTR('+no+');" href="#"><i class="icon-trash"></i></a></td>'
     +'</tr>';
