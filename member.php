@@ -32,11 +32,13 @@
             data:'aksi=baranglist',
             type:'post',
             success:function(dt){
+                console.log(arr);
                 // var select='<select onchange="getTotal('+nox+')" name="selectTB[]" id="selectTB_'+nox+'">';
-                var select='<select onchange="barangChange('+nox+')" name="selectTB[]" id="selectTB_'+nox+'">';
-                    select+='<option required value="">-Pilih Barang-</option>';
+                var select='<select class="barangTB" onchange="barangChange('+nox+')" name="selectTB[]" id="selectTB_'+nox+'">';
+                select+='<option required value="">-Pilih-</option>';
                 $.each(dt,function (id,item) {
-                    select+='<option value="'+item.id_produk+'">'+item.nama_produk+' (per '+item.durasi+' '+(item.jenisdurasi=='j'?'jam':'hari')+')</option>';
+                    console.log('anu ke '+id+': '+arr[id]);
+                    select+='<option '+($.inArray(item.id_produk,arr)>-1?'disabled style="background-color:#f3f3f3;"':'')+' value="'+item.id_produk+'">'+item.nama_produk+' (per '+item.durasi+' '+(item.jenisdurasi=='j'?'jam':'hari')+')</option>';
                 });select+='</select>';
                 $('#selectTD_'+nox).html(select);
             },
@@ -60,7 +62,7 @@ function barangChange (nox) {
             if(dt.total!=0){
                 for (var i = 1; i<=dt.total; i++) {
                     sel+='<option '+(i>dt.stok && dt.stok!=dt.total?'disabled style="background-color:#f3f3f3;"':'')+' value="'+i+'">'+i+'</option>';
-                }; 
+                 }; 
             }$('#jumlahTB_'+nox).html(sel);
         },
     });
@@ -81,14 +83,27 @@ function getTotal (nox) {
 
 function removeTR(nox){
     $('#barangTR_'+nox).remove();
+    updateBarangArr();
 }
 
 var no=1;
+var arr=[];
+function updateBarangArr () {
+    var jum =$('.barangTR').length;
+    arr=[];
+    if(jum!=0){ 
+        $('.barangTB').each(function (id,item) {
+            arr.push($(this).val());
+        });        
+    } 
+}
+
 function addBarang () {
+    updateBarangArr();
+    // console.log(arr);
     var barangTR='<tr class="barangTR" id="barangTR_'+no+'">'
         +'<td id="selectTD_'+no+'"></td>'
-        +'<td><select required onchange="getTotal('+no+');" name="jumlahTB[]" id="jumlahTB_'+no+'" /></select></td>'
-        // +'<td><input required onkeyup="getTotal('+no+');" value="" min="1" type="number" name="jumlahTB[]" id="jumlahTB_'+no+'" /></td>'
+        +'<td><select class="jumlahTB" required onchange="getTotal('+no+');" name="jumlahTB[]" id="jumlahTB_'+no+'"><option value="">-Pilih Barang Dahulu-</option></select></td>'
         +'<td id="totalTD_'+no+'">Rp.0</td>'
         +'<td><a data-toggle="tooltip" title="hapus" class="btn btn-danger" onclick="removeTR('+no+');" href="#"><i class="icon-trash"></i></a></td>'
     +'</tr>';
