@@ -35,8 +35,7 @@ if (empty($_SESSION['namauser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
   <center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
-}
-else{
+} else {
   $aksi="modul/mod_member/aksi_member.php";
   echo " <aside class='right-side'>
             <!-- Content Header (Page header) -->
@@ -77,8 +76,33 @@ else{
            <div class='box-header'>
             <h3 class='box-title'>
             <input type=button class='btn btn-primary btn' value='Tambah Member' onclick=\"window.location.href='?module=member&act=tambahuser';\">
-            <a class='btn btn-success fg-white' target='_blank' href='modul/mod_member/lap_member.php?mode=koperasi'>Laporan Member Koperasi</a>
-            <input type=button class='btn btn-success btn' value='Laporan Member Umum' onclick=\"window.location.href='lap_member?mode=umum';\">
+            
+            <div class='btn-group' role='group' aria-label='...'>
+              <div class='btn-group' role='group'>
+                <button type='button' class='btn btn-success dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                  Cetak Member
+                  <span class='caret'></span>
+                </button>
+                <ul class='dropdown-menu'>
+                  <li><a target='_blank' href='modul/mod_member/lap_member2.php?mode=koperasi'>Koperasi</a></li>
+                  <li><a target='_blank'  href='modul/mod_member/lap_member2.php?mode=umum'>Umum</a></li>
+                </ul>
+              </div>
+            </div>
+  
+            <div class='btn-group' role='group' aria-label='...'>
+              <div class='btn-group' role='group'>
+                <button type='button' class='btn btn-success dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                  Cetak Member (mpdf)
+                  <span class='caret'></span>
+                </button>
+                <ul class='dropdown-menu'>
+                  <li><a target='_blank' href='modul/mod_member/lap_member.php?mode=koperasi'>Koperasi</a></li>
+                  <li><a target='_blank'  href='modul/mod_member/lap_member.php?mode=umum'>Umum</a></li>
+                </ul>
+              </div>
+            </div>
+
           </h3>
             </div><!-- /.box-header -->
             <div class='box-body table-responsive'>
