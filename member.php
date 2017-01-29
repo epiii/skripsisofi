@@ -1,7 +1,7 @@
         <!-- <link href="css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" /> -->
 
 <script>
-    function simpan () {
+    function simpan() {
         if($('.barangTR').length==0){ 
             $('tbody').html('<tr><td class="alert alert-danger text-center" colspan="4">pilih barang</td></tr>')
             setTimeout(function  (argument) {
